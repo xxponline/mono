@@ -34,10 +34,7 @@ namespace System.Security.Cryptography {
 #if !NET_2_1
 	[ComVisible (true)]
 #endif
-	public abstract class RandomNumberGenerator
-#if NET_4_0
-	: IDisposable
-#endif
+	public abstract class RandomNumberGenerator : IDisposable
 	{
 
 		protected RandomNumberGenerator ()
@@ -70,8 +67,6 @@ namespace System.Security.Cryptography {
 		public abstract void GetNonZeroBytes (byte[] data);
 #endif
 		
-		
-#if NET_4_0
 		public void Dispose ()
 		{
 			Dispose (true);
@@ -79,6 +74,5 @@ namespace System.Security.Cryptography {
 
 		protected virtual void Dispose (bool disposing)
 		{}
-#endif
 	}
 }
