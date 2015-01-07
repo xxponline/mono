@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Runtime.InteropServices;
+
 namespace System.Net.Security
 {
 	//From Schannel.h
@@ -57,11 +59,29 @@ namespace System.Net.Security
 		ServerMask = (PctServer | Ssl2Server | Ssl3Server | Tls10Server | Tls11Server | Tls12Server | UniServer)
 	}
 
+	#if !MONO_FEATURE_MARTIN_WORK
 	// FIXME: This will be removed once we have SslStream.cs.
 	public enum EncryptionPolicy
 	{
 		RequireEncryption = 0,
 		AllowNoEncryption,
 		NoEncryption
+	}
+	#endif
+
+	//From Schannel.h
+	[StructLayout(LayoutKind.Sequential)]
+	internal class SslConnectionInfo {
+		public readonly int           Protocol;
+		public readonly int           DataCipherAlg;
+		public readonly int           DataKeySize;
+		public readonly int           DataHashAlg;
+		public readonly int           DataHashKeySize;
+		public readonly int           KeyExchangeAlg;
+		public readonly int           KeyExchKeySize;
+
+		private SslConnectionInfo ()
+		{
+		}
 	}
 }
