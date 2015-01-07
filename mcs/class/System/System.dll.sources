@@ -1106,3 +1106,8 @@ ReferenceSources/Win32Exception.cs
 ../../../external/referencesource/System/misc/invariantcomparer.cs
 ../../../external/referencesource/System/misc/SecurityUtils.cs
 ../../../external/referencesource/System/misc/WeakHashtable.cs
+
+../../../external/referencesource/System/net/System/Net/_BufferOffsetSize.cs
+../../../external/referencesource/System/net/System/Net/Internal.cs
+../../../external/referencesource/System/net/System/Net/Logging.cs
+../../../external/referencesource/System/net/System/Net/_LoggingObject.cs

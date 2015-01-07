@@ -214,4 +214,11 @@ partial class SR
 
 	public const string CollectionReadOnly = "CollectionReadOnly";
 	public const string ArgumentNull_Key = "ArgumentNull_Key";
+
+	public const string net_MethodNotImplementedException = "net_MethodNotImplementedException";
+	public const string net_MethodNotSupportedException = "net_MethodNotSupportedException";
+	public const string net_PropertyNotImplementedException = "net_PropertyNotImplementedException";
+	public const string net_invalid_cast = "net_invalid_cast";
+	public const string net_PropertyNotSupportedException = "net_PropertyNotSupportedException";
+	public const string net_log_exception = "net_log_exception";
 }
