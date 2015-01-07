@@ -140,6 +140,9 @@ namespace System.Collections {
 		//
 		internal Hashtable (Hashtable source)
 		{
+			if (source == null)
+				throw new ArgumentNullException();
+
 			inUse = source.inUse;
 			loadFactor = source.loadFactor;
 
