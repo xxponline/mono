@@ -210,5 +210,8 @@ partial class SR
 	public const string Arg_EnumIllegalVal = "Arg_EnumIllegalVal";
 	public const string Argument_InvalidClassAttribute = "Argument_InvalidClassAttribute";
 	public const string Argument_InvalidPermissionState = "Argument_InvalidPermissionState";
-	public const string Argument_WrongType = "Argument_WrongType";		
+	public const string Argument_WrongType = "Argument_WrongType";
+
+	public const string CollectionReadOnly = "CollectionReadOnly";
+	public const string ArgumentNull_Key = "ArgumentNull_Key";
 }
