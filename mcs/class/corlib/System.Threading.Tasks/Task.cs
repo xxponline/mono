@@ -86,6 +86,11 @@ namespace System.Threading.Tasks
 #endif
 			TaskCreationOptions.PreferFairness | TaskCreationOptions.LongRunning | TaskCreationOptions.AttachedToParent;
 
+		internal enum InternalTaskOptions {
+			None = 0,
+			DoNotDispose = 0x400
+		}
+
 		public Task (Action action)
 			: this (action, TaskCreationOptions.None)
 		{
@@ -900,6 +905,9 @@ namespace System.Threading.Tasks
 			if (!IsCompleted)
 				throw new InvalidOperationException ("A task may only be disposed if it is in a completion state");
 
+			if (((InternalTaskOptions)creationOptions & InternalTaskOptions.DoNotDispose) != 0)
+				return;
+
 			// Set action to null so that the GC can collect the delegate and thus
 			// any big object references that the user might have captured in a anonymous method
 			if (disposing) {
@@ -1416,6 +1424,17 @@ namespace System.Threading.Tasks
 		}
 		
 		#endregion
+
+		private static Task completedTask;
+
+		internal static Task CompletedTask {
+			get {
+				var t = completedTask;
+				if (t == null)
+					t = completedTask = new Task (() => { }, default (CancellationToken), (TaskCreationOptions)InternalTaskOptions.DoNotDispose);
+				return completedTask;
+			}
+		}
 	}
 }
 #endif
