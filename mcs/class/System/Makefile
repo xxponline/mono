@@ -37,7 +37,7 @@ ifeq (monodroid, $(PROFILE))
 LIB_MCS_FLAGS += -d:SECURITY_DEP
 endif
 ifndef PROFILE_ANY_MOBILE
-FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP
+FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP -d:MONO_FEATURE_MARTIN_WORK
 endif
 
 #
@@ -48,11 +48,15 @@ LOCAL_MCS_FLAGS = -lib:$(bare_libdir)
 LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(bare_libdir)/System.dll -r:System.Xml.dll -r:MonoSecurity=Mono.Security.dll
 endif
 
+include ../../build/library.make
+
 #
 # Flags used to build the final version of System (when intermediate is not defined)
 #
-ifndef intermediate
-LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(secxml_libdir)/System.dll -r:System.Xml.dll -r:MonoSecurity=Mono.Security.dll $(FINAL_MCS_FLAGS)
+ifdef intermediate
+sourcefile = bare_System.dll.sources
+else
+LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(secxml_libdir)/System.dll -r:System.Xml.dll -D:MONO_SECURITY_ALIAS -r:MonoSecurity=Mono.Security.dll $(FINAL_MCS_FLAGS)
 endif
 
 EXTRA_DISTFILES = \
@@ -64,8 +68,6 @@ EXTRA_DISTFILES = \
 	Test/System.Security.Cryptography.X509Certificates/pkits/x509build.cs	\
 	$(RESOURCE_FILES)				\
 	$(TEST_RESOURCES)
-
-include ../../build/library.make
 
 system_library_deps := \
 	$(secxml_libdir)/System.dll 		\
