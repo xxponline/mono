@@ -23,3 +23,5 @@
 /libgc-mono.pc
 /libgc-mono-*.tar.gz
 dolt*
+/depcomp
+/missing
