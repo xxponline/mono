@@ -67,64 +67,64 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo-NewMonoSource.cs" />
-    <Compile Include="NewStuff\Helper.cs" />
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\Logging.cs">
-      <Link>src\Net\System\Net\Logging.cs</Link>
+    <Compile Include="ReferenceSources\Helper.cs" />
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">
+      <Link>referencesoure\Net\Logging.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_BufferOffsetSize.cs">
-      <Link>src\Net\System\Net\_BufferOffsetSize.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_BufferOffsetSize.cs">
+      <Link>referencesoure\Net\_BufferOffsetSize.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_SslSessionsCache.cs">
-      <Link>src\Net\System\Net\_SslSessionsCache.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SslSessionsCache.cs">
+      <Link>referencesoure\Net\_SslSessionsCache.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_LazyAsyncResult.cs">
-      <Link>src\Net\System\Net\_LazyAsyncResult.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_LazyAsyncResult.cs">
+      <Link>referencesoure\Net\_LazyAsyncResult.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_LoggingObject.cs">
-      <Link>src\Net\System\Net\_LoggingObject.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_LoggingObject.cs">
+      <Link>referencesoure\Net\_LoggingObject.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_NTAuthentication.cs">
-      <Link>src\Net\System\Net\_NTAuthentication.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_NTAuthentication.cs">
+      <Link>referencesoure\Net\_NTAuthentication.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_TLSstream.cs">
-      <Link>src\Net\System\Net\_TLSstream.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_TLSstream.cs">
+      <Link>referencesoure\Net\_TLSstream.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_SecureChannel.cs">
-      <Link>src\Net\System\Net\_SecureChannel.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SecureChannel.cs">
+      <Link>referencesoure\Net\_SecureChannel.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\SslStream.cs">
-      <Link>src\Net\System\Net\SecureProtocols\SslStream.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\SslStream.cs">
+      <Link>referencesoure\Net\SecureProtocols\SslStream.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_SslState.cs">
-      <Link>src\Net\System\Net\SecureProtocols\_SslState.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_SslState.cs">
+      <Link>referencesoure\Net\SecureProtocols\_SslState.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_SslStream.cs">
-      <Link>src\Net\System\Net\SecureProtocols\_SslStream.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_SslStream.cs">
+      <Link>referencesoure\Net\SecureProtocols\_SslStream.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_FixedSizeReader.cs">
-      <Link>src\Net\System\Net\SecureProtocols\_FixedSizeReader.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_FixedSizeReader.cs">
+      <Link>referencesoure\Net\SecureProtocols\_FixedSizeReader.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_HelperAsyncResults.cs">
-      <Link>src\Net\System\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_HelperAsyncResults.cs">
+      <Link>referencesoure\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\Sockets\NetworkStream.cs">
-      <Link>src\Net\System\Net\Sockets\NetworkStream.cs</Link>
+    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Sockets\NetworkStream.cs">
+      <Link>referencesoure\Net\Sockets\NetworkStream.cs</Link>
     </Compile>
-    <Compile Include="..\..\System\SR.cs">
+    <Compile Include="..\..\System\ReferenceSources\SR.cs">
       <Link>System\SR.cs</Link>
     </Compile>
     <Compile Include="..\..\..\build\common\SR.cs">
       <Link>common\SR.cs</Link>
     </Compile>
-    <Compile Include="..\..\System\NewStuff\SSPIWrapper.cs">
-      <Link>NewStuff\SSPIWrapper.cs</Link>
+    <Compile Include="..\..\System\ReferenceSources\SSPIWrapper.cs">
+      <Link>ReferenceSources\SSPIWrapper.cs</Link>
     </Compile>
-    <Compile Include="..\..\System\NewStuff\SafeHandles.cs">
-      <Link>NewStuff\SafeHandles.cs</Link>
+    <Compile Include="..\..\System\ReferenceSources\SafeHandles.cs">
+      <Link>ReferenceSources\SafeHandles.cs</Link>
     </Compile>
-    <Compile Include="NewStuff\PlaygroundHelper.cs" />
-    <Compile Include="..\..\System\NewStuff\SSPIConfiguration.cs">
-      <Link>NewStuff\SSPIConfiguration.cs</Link>
+    <Compile Include="ReferenceSources\PlaygroundHelper.cs" />
+    <Compile Include="..\..\System\ReferenceSources\SSPIConfiguration.cs">
+      <Link>ReferenceSources\SSPIConfiguration.cs</Link>
     </Compile>
     <Compile Include="..\Mono.Security.Protocol.NewTls\MonoSslStream.cs">
       <Link>Mono.Security.Protocol.NewTls\MonoSslStream.cs</Link>
@@ -132,8 +132,8 @@
     <Compile Include="..\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
       <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
     </Compile>
-    <Compile Include="..\NewStuff\Internal.cs">
-      <Link>NewStuff\Internal.cs</Link>
+    <Compile Include="..\ReferenceSources\Internal.cs">
+      <Link>ReferenceSources\Internal.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
