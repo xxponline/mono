@@ -7,13 +7,15 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Mono.Security.NewMonoSource</RootNamespace>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MartinsPlayground.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -36,15 +38,13 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Test</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ConsolePause>false</ConsolePause>
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MartinsPlayground.snk</AssemblyOriginatorKeyFile>
     <NoWarn>436,649,169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -53,7 +53,7 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -62,7 +62,7 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -88,9 +88,6 @@
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_NTAuthentication.cs">
       <Link>referencesource\Net\_NTAuthentication.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_TLSstream.cs">
-      <Link>referencesource\Net\_TLSstream.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SecureChannel.cs">
       <Link>referencesource\Net\_SecureChannel.cs</Link>
@@ -121,6 +118,9 @@
     </Compile>
     <Compile Include="..\..\..\build\common\SR.cs">
       <Link>common\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\build\common\Consts.cs">
+      <Link>common\Consts.cs</Link>
     </Compile>
     <Compile Include="..\..\System\ReferenceSources\Internal.cs">
       <Link>ReferenceSources\Internal.cs</Link>
