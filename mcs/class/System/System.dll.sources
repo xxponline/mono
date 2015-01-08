@@ -1126,3 +1126,4 @@ ReferenceSources/Internal.cs
 ReferenceSources/SafeHandles.cs
 ReferenceSources/SSPIWrapper.cs
 ReferenceSources/SSPIConfiguration.cs
+ReferenceSources/Socket.cs
