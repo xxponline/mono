@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace System.Net.Security
 {
@@ -67,6 +68,10 @@ namespace System.Net.Security
 		AllowNoEncryption,
 		NoEncryption
 	}
+
+	internal delegate bool RemoteCertValidationCallback(string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
+	internal delegate X509Certificate LocalCertSelectionCallback(string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers);
+
 	#endif
 
 	//From Schannel.h

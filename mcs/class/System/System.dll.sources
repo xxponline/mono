@@ -1125,6 +1125,4 @@ ReferenceSources/Win32Exception.cs
 ReferenceSources/Internal.cs
 ReferenceSources/SafeHandles.cs
 ReferenceSources/SSPIWrapper.cs
-
-../../../external/referencesource/System/net/System/Net/SecureProtocols/_FixedSizeReader.cs
-../../../external/referencesource/System/net/System/Net/SecureProtocols/_HelperAsyncResults.cs
+ReferenceSources/SSPIConfiguration.cs
