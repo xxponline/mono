@@ -128,7 +128,7 @@
     <Compile Include="Mono.Security\StrongName.cs" />
     <Compile Include="Mono.Xml\MiniParser.cs" />
     <Compile Include="Mono.Xml\SecurityParser.cs" />
-    <Compile Include="NewStuff\Internal.cs" />
+    <Compile Include="MartinsPlayground\NewStuff\Internal.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\TlsContext.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls.Handshake\HandshakeMessage.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsClientHello.cs" />

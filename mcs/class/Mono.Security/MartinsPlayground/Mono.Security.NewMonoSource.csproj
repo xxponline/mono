@@ -13,7 +13,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -22,7 +22,6 @@
     <AssemblyName>NewMonoSource</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -37,7 +36,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Test</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -54,6 +53,8 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <NoWarn>436,649,169</NoWarn>
@@ -61,54 +62,59 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;FEATURE_CORECLR;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo-NewMonoSource.cs" />
-    <Compile Include="ReferenceSources\Helper.cs" />
+    <Compile Include="NewStuff\Helper.cs" />
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">
-      <Link>referencesoure\Net\Logging.cs</Link>
+      <Link>referencesource\Net\Logging.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_BufferOffsetSize.cs">
-      <Link>referencesoure\Net\_BufferOffsetSize.cs</Link>
+      <Link>referencesource\Net\_BufferOffsetSize.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SslSessionsCache.cs">
-      <Link>referencesoure\Net\_SslSessionsCache.cs</Link>
+      <Link>referencesource\Net\_SslSessionsCache.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_LazyAsyncResult.cs">
-      <Link>referencesoure\Net\_LazyAsyncResult.cs</Link>
+      <Link>referencesource\Net\_LazyAsyncResult.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_LoggingObject.cs">
-      <Link>referencesoure\Net\_LoggingObject.cs</Link>
+      <Link>referencesource\Net\_LoggingObject.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_NTAuthentication.cs">
-      <Link>referencesoure\Net\_NTAuthentication.cs</Link>
+      <Link>referencesource\Net\_NTAuthentication.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_TLSstream.cs">
-      <Link>referencesoure\Net\_TLSstream.cs</Link>
+      <Link>referencesource\Net\_TLSstream.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SecureChannel.cs">
-      <Link>referencesoure\Net\_SecureChannel.cs</Link>
+      <Link>referencesource\Net\_SecureChannel.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\SslStream.cs">
-      <Link>referencesoure\Net\SecureProtocols\SslStream.cs</Link>
+      <Link>referencesource\Net\SecureProtocols\SslStream.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_SslState.cs">
-      <Link>referencesoure\Net\SecureProtocols\_SslState.cs</Link>
+      <Link>referencesource\Net\SecureProtocols\_SslState.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_SslStream.cs">
-      <Link>referencesoure\Net\SecureProtocols\_SslStream.cs</Link>
+      <Link>referencesource\Net\SecureProtocols\_SslStream.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_FixedSizeReader.cs">
-      <Link>referencesoure\Net\SecureProtocols\_FixedSizeReader.cs</Link>
+      <Link>referencesource\Net\SecureProtocols\_FixedSizeReader.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_HelperAsyncResults.cs">
-      <Link>referencesoure\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
+      <Link>referencesource\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Sockets\NetworkStream.cs">
-      <Link>referencesoure\Net\Sockets\NetworkStream.cs</Link>
+      <Link>referencesource\Net\Sockets\NetworkStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\external\referencesource\mscorlib\InternalApis\NDP_Common\inc\PinnableBufferCache.cs">
+      <Link>referencesource\corlib\NDP_Common\PinnableBufferCache.cs</Link>
     </Compile>
     <Compile Include="..\..\System\ReferenceSources\SR.cs">
       <Link>System\SR.cs</Link>
@@ -116,13 +122,16 @@
     <Compile Include="..\..\..\build\common\SR.cs">
       <Link>common\SR.cs</Link>
     </Compile>
+    <Compile Include="..\..\System\ReferenceSources\Internal.cs">
+      <Link>ReferenceSources\Internal.cs</Link>
+    </Compile>
     <Compile Include="..\..\System\ReferenceSources\SSPIWrapper.cs">
       <Link>ReferenceSources\SSPIWrapper.cs</Link>
     </Compile>
     <Compile Include="..\..\System\ReferenceSources\SafeHandles.cs">
       <Link>ReferenceSources\SafeHandles.cs</Link>
     </Compile>
-    <Compile Include="ReferenceSources\PlaygroundHelper.cs" />
+    <Compile Include="NewStuff\PlaygroundHelper.cs" />
     <Compile Include="..\..\System\ReferenceSources\SSPIConfiguration.cs">
       <Link>ReferenceSources\SSPIConfiguration.cs</Link>
     </Compile>
@@ -132,9 +141,7 @@
     <Compile Include="..\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
       <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
     </Compile>
-    <Compile Include="..\ReferenceSources\Internal.cs">
-      <Link>ReferenceSources\Internal.cs</Link>
-    </Compile>
+    <Compile Include="NewStuff\Internal.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
