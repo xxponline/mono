@@ -134,6 +134,15 @@
 ./Mono.Security.Protocol.Tls.Handshake.Server/TlsServerKeyExchange.cs
 ./Mono.Xml/MiniParser.cs
 ./Mono.Xml/SecurityParser.cs
+
+../corlib/System.Security.Cryptography/IRunningHash.cs
+../corlib/System.Security.Cryptography/MD5CryptoServiceProvider.cs
+../corlib/System.Security.Cryptography/SHA1CryptoServiceProvider.cs
+../corlib/System.Security.Cryptography/SHA256Managed.cs
+../corlib/System.Security.Cryptography/SHA384Managed.cs
+../corlib/System.Security.Cryptography/SHA512Managed.cs
+../corlib/System.Security.Cryptography/SHAConstants.cs
+
 ./Mono.Security.Interface/IMonoHttpsStream.cs
 ./Mono.Security.Interface/MonoDefaultTlsProvider.cs
 ./Mono.Security.Interface/MonoSslStream.cs
