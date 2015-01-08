@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Mono.Security.NewMonoSource</RootNamespace>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>NewMonoSource</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>NewMonoSource</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Test</OutputPath>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MartinsPlayground.snk</AssemblyOriginatorKeyFile>
+    <NoWarn>436,649,169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <NoWarn>436,649,169</NoWarn>
+    <OutputPath>bin\Debug</OutputPath>
+    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <NoWarn>436,649,169</NoWarn>
+    <OutputPath>bin\Release</OutputPath>
+    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo-NewMonoSource.cs" />
+    <Compile Include="NewStuff\Helper.cs" />
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\Logging.cs">
+      <Link>src\Net\System\Net\Logging.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_BufferOffsetSize.cs">
+      <Link>src\Net\System\Net\_BufferOffsetSize.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_SslSessionsCache.cs">
+      <Link>src\Net\System\Net\_SslSessionsCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_LazyAsyncResult.cs">
+      <Link>src\Net\System\Net\_LazyAsyncResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_LoggingObject.cs">
+      <Link>src\Net\System\Net\_LoggingObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_NTAuthentication.cs">
+      <Link>src\Net\System\Net\_NTAuthentication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_TLSstream.cs">
+      <Link>src\Net\System\Net\_TLSstream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\_SecureChannel.cs">
+      <Link>src\Net\System\Net\_SecureChannel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\SslStream.cs">
+      <Link>src\Net\System\Net\SecureProtocols\SslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_SslState.cs">
+      <Link>src\Net\System\Net\SecureProtocols\_SslState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_SslStream.cs">
+      <Link>src\Net\System\Net\SecureProtocols\_SslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_FixedSizeReader.cs">
+      <Link>src\Net\System\Net\SecureProtocols\_FixedSizeReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\SecureProtocols\_HelperAsyncResults.cs">
+      <Link>src\Net\System\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\dnfxreference\ndp\fx\src\Net\System\Net\Sockets\NetworkStream.cs">
+      <Link>src\Net\System\Net\Sockets\NetworkStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\SR.cs">
+      <Link>System\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\build\common\SR.cs">
+      <Link>common\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\NewStuff\SSPIWrapper.cs">
+      <Link>NewStuff\SSPIWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\NewStuff\SafeHandles.cs">
+      <Link>NewStuff\SafeHandles.cs</Link>
+    </Compile>
+    <Compile Include="NewStuff\PlaygroundHelper.cs" />
+    <Compile Include="..\..\System\NewStuff\SSPIConfiguration.cs">
+      <Link>NewStuff\SSPIConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Mono.Security.Protocol.NewTls\MonoSslStream.cs">
+      <Link>Mono.Security.Protocol.NewTls\MonoSslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
+      <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\NewStuff\Internal.cs">
+      <Link>NewStuff\Internal.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" IndentBlocksInsideExpressions="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Mono.Security-martin.csproj">
+      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
+      <Name>Mono.Security-martin</Name>
+      <Aliases>MonoSecurity</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
