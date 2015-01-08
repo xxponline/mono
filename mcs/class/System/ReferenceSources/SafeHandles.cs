@@ -148,7 +148,8 @@ namespace System.Net.Security
 			NoNameCheck = 0x04,
 			ValidateManual = 0x08,
 			NoDefaultCred = 0x10,
-			ValidateAuto = 0x20
+			ValidateAuto = 0x20,
+			UseStrongCrypto = 0x00400000
 		}
 
 		int version;
