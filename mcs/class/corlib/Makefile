@@ -5,7 +5,7 @@ export __SECURITY_BOOTSTRAP_DB=$(topdir)/class/corlib
 
 LIBRARY = corlib.dll
 LIBRARY_NAME = mscorlib.dll
-LIB_MCS_FLAGS = $(RESOURCE_FILES:%=-resource:%)
+LIB_MCS_FLAGS = $(RESOURCE_FILES:%=-resource:%) -d:MARTINS_PLAYGROUND
 #LIBRARY_USE_INTERMEDIATE_FILE = yes
 
 ifeq (2, $(FRAMEWORK_VERSION_MAJOR))

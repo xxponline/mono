@@ -80,3 +80,8 @@ using System.Runtime.InteropServices;
 	[assembly: StringFreezing]
 	[assembly: DefaultDependency (LoadHint.Always)]
 #endif
+
+#if MARTINS_PLAYGROUND
+[assembly: InternalsVisibleTo ("Mono.Security.NewMonoSource, PublicKey=0024000004800000940000000602000000240000525341310004000011000000990dad24771188a27bb12112dff736fc75d80d42b0ad009366b859ec62a4b628d65e99bfae957c3907c4e728ba933316727b16ca62ea951b9ce6050ecdc8daf04613befedbc99007f1210fee0f22e8b822a05cd889241bb12324a9907962adf7e2e976bca92702eddee917b440aff54af6f8511f4863379fac442cf72b01e2a8")]
+#endif
+
