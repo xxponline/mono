@@ -46,11 +46,9 @@
 using System;
 using System.Security.Cryptography;
 
-using Mono.Security.Protocol.Tls;
-
 namespace Mono.Security.Cryptography
 {
-	internal class MD5SHA1 : HashAlgorithm
+	internal class MD5SHA1 : HashAlgorithm, IRunningHash
 	{
 		#region Fields
 
@@ -64,11 +62,37 @@ namespace Mono.Security.Cryptography
 
 		public MD5SHA1() : base()
 		{
+			#if INSIDE_MONO_SECURITY
+			this.md5 = new MD5CryptoServiceProvider ();
+			this.sha = new SHA1CryptoServiceProvider ();
+			#else
 			this.md5 = MD5.Create();
 			this.sha = SHA1.Create();
+			#endif
 
 			// Set HashSizeValue
 			this.HashSizeValue = this.md5.HashSize + this.sha.HashSize;
+		}
+
+		#endregion
+
+		#region Running Hash
+
+		void IRunningHash.TransformBlock (byte[] inputBuffer, int inputOffset, int inputCount)
+		{
+			TransformBlock (inputBuffer, inputOffset, inputCount, null, 0);
+		}
+
+		public byte[] GetRunningHash ()
+		{
+			var runningMD5 = ((IRunningHash)md5).GetRunningHash ();
+			var runningSHA = ((IRunningHash)sha).GetRunningHash ();
+
+			var hash = new byte[36];
+
+			Buffer.BlockCopy(runningMD5, 0, hash, 0, 16);
+			Buffer.BlockCopy(runningSHA, 0, hash, 16, 20);
+			return hash;
 		}
 
 		#endregion
