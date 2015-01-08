@@ -1178,7 +1178,7 @@ try {
 				throw new SmtpException (SmtpStatusCode.GeneralFailure, "Server does not support secure connections.");
 			}
 
-#if   SECURITY_DEP
+#if SECURITY_DEP && !MONO_FEATURE_MARTIN_WORK
 			SslStream sslStream = new SslStream (stream, false, callback, null);
 			CheckCancellation ();
 			sslStream.AuthenticateAsClient (Host, this.ClientCertificates, SslProtocols.Default, false);
