@@ -268,4 +268,13 @@ partial class SR
 	public const string net_ssl_io_cert_validation = "net_ssl_io_cert_validation";
 	public const string net_ssl_io_frame = "net_ssl_io_frame";
 	public const string net_ssl_io_no_server_cert = "net_ssl_io_no_server_cert";
+	public const string net_io_connectionclosed = "net_io_connectionclosed";
+	public const string net_io_readfailure = "net_io_readfailure";
+	public const string net_io_timeout_use_gt_zero = "net_io_timeout_use_gt_zero";
+	public const string net_io_writefailure = "net_io_writefailure";
+	public const string net_notconnected = "net_notconnected";
+	public const string net_notstream = "net_notstream";
+	public const string net_readonlystream = "net_readonlystream";
+	public const string net_sockets_blocking = "net_sockets_blocking";
+	public const string net_writeonlystream = "net_writeonlystream";
 }
