@@ -15,7 +15,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -38,7 +38,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Test</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;NEW_MONO_API;SECURITY_DEP;MONO_SECURITY_ALIAS;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;NET_4_5;MONO_FEATURE_NEW_TLS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -53,7 +53,7 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY;NET_4_5</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -62,7 +62,7 @@
     <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_FEATURE_MARTIN_WORK;MONO_INSIDE_MONO_SECURITY</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

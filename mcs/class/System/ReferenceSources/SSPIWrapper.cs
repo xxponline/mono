@@ -26,11 +26,15 @@
 
 #if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
-#endif
-#if MONO_SECURITY_ALIAS
 using MX = MonoSecurity::Mono.Security.X509;
+#if MONO_FEATURE_NEW_TLS
+using MonoSecurity::Mono.Security.Protocol.NewTls;
+#endif
 #else
 using MX = Mono.Security.X509;
+#if MONO_FEATURE_NEW_TLS
+using Mono.Security.Protocol.NewTls;
+#endif
 #endif
 
 using System.Runtime.InteropServices;

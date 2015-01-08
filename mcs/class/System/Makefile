@@ -22,7 +22,7 @@ TEST_RESOURCES = \
 TEST_MCS_FLAGS = -r:System.Drawing.dll -r:Mono.Security.dll -r:System.Data -r:System.Xml.dll -r:System.Core.dll -nowarn:618,672,219,67,169,612 \
 	$(foreach f, $(TEST_RESOURCES), -resource:$(f),$(notdir $(f)))
 
-REFERENCE_SOURCES_FLAGS = -d:FEATURE_PAL,SYSTEM_NAMESPACE,MONO,MARTINS_PLAYGROUND
+REFERENCE_SOURCES_FLAGS = -d:FEATURE_PAL,SYSTEM_NAMESPACE,MONO,MARTINS_PLAYGROUND,MONO_INSIDE_SYSTEM
 LIB_MCS_FLAGS = -nowarn:618 -d:CONFIGURATION_2_0 $(REFERENCE_SOURCES_FLAGS) -unsafe $(RESOURCE_FILES:%=-resource:%)
 TEST_MCS_FLAGS += -r:System.Configuration
 PROFILE_ANY_MOBILE := $(filter monotouch monotouch_runtime monodroid xammac mobile mobile_static, $(PROFILE))
@@ -37,7 +37,7 @@ ifeq (monodroid, $(PROFILE))
 LIB_MCS_FLAGS += -d:SECURITY_DEP
 endif
 ifndef PROFILE_ANY_MOBILE
-FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP -d:MONO_FEATURE_MARTIN_WORK
+FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP -d:MONO_FEATURE_NEW_TLS
 endif
 
 #
@@ -56,7 +56,7 @@ include ../../build/library.make
 ifdef intermediate
 sourcefile = bare_System.dll.sources
 else
-LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(secxml_libdir)/System.dll -r:System.Xml.dll -D:MONO_SECURITY_ALIAS -r:MonoSecurity=Mono.Security.dll $(FINAL_MCS_FLAGS)
+LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(secxml_libdir)/System.dll -r:System.Xml.dll -r:MonoSecurity=Mono.Security.dll $(FINAL_MCS_FLAGS)
 endif
 
 EXTRA_DISTFILES = \

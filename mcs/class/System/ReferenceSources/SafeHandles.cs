@@ -37,8 +37,6 @@ using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certi
 using TlsContext = Mono.Security.Protocol.NewTls.TlsContext;
 using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
 #endif
-#else
-using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
 #endif
 
 using System.Runtime.InteropServices;

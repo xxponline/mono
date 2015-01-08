@@ -60,20 +60,6 @@ namespace System.Net.Security
 		ServerMask = (PctServer | Ssl2Server | Ssl3Server | Tls10Server | Tls11Server | Tls12Server | UniServer)
 	}
 
-	#if !MONO_FEATURE_MARTIN_WORK
-	// FIXME: This will be removed once we have SslStream.cs.
-	public enum EncryptionPolicy
-	{
-		RequireEncryption = 0,
-		AllowNoEncryption,
-		NoEncryption
-	}
-
-	internal delegate bool RemoteCertValidationCallback(string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
-	internal delegate X509Certificate LocalCertSelectionCallback(string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers);
-
-	#endif
-
 	//From Schannel.h
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SslConnectionInfo {
