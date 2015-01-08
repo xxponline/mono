@@ -1,6 +1,5 @@
 using System;
 
-using Org.BouncyCastle.Crypto.Macs;
 using Org.BouncyCastle.Crypto.Modes.Gcm;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Crypto.Utilities;

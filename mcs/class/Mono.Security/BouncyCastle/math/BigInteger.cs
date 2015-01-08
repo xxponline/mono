@@ -2796,7 +2796,7 @@ namespace Org.BouncyCastle.Math
 			else
 			{
 				// This is algorithm 1a from chapter 4.4 in Seminumerical Algorithms, slow but it works
-				IList S = Platform.CreateArrayList();
+				IList S = new ArrayList ();
 				BigInteger bs = ValueOf(radix);
 
 				// The sign is handled separatly.
