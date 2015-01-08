@@ -22,7 +22,7 @@
 //
 #if SECURITY_DEP
 
-#if MONOTOUCH || MONODROID
+#if MONOTOUCH || MONODROID || INSIDE_MONO_SECURITY
 using MSX = Mono.Security.X509;
 #else
 extern alias MonoSecurity;

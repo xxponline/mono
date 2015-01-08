@@ -31,7 +31,7 @@
 
 #if SECURITY_DEP
 
-#if MONOTOUCH || MONODROID
+#if MONOTOUCH || MONODROID || INSIDE_MONO_SECURITY
 using Mono.Security;
 #else
 extern alias MonoSecurity;
