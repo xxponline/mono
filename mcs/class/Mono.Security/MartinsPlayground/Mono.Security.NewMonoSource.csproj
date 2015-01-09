@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Mono.Security.NewMonoSource</RootNamespace>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MartinsPlayground.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -15,13 +16,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ConsolePause>false</ConsolePause>
-    <AssemblyName>NewMonoSource</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <Optimize>true</Optimize>
@@ -31,38 +31,34 @@
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblyName>NewMonoSource</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Test</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;NET_4_5;MONO_FEATURE_NEW_TLS</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ConsolePause>false</ConsolePause>
-    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <NoWarn>436,649,169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <NoWarn>436,649,169</NoWarn>
     <OutputPath>bin\Debug</OutputPath>
-    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <NoWarn>436,649,169</NoWarn>
     <OutputPath>bin\Release</OutputPath>
-    <AssemblyName>Mono.Security.NewMonoSource</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NET_4_5</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
