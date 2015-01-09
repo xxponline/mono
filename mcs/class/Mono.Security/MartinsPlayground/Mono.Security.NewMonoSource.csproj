@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -37,7 +37,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Test</OutputPath>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -50,7 +50,7 @@
     <OutputPath>bin\Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -58,7 +58,7 @@
     <OutputPath>bin\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;NET_4_5</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_INSIDE_SYSTEM;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

@@ -79,8 +79,6 @@ namespace System.Net.Security
 
 	internal static class GlobalSSPI
 	{
-		public static SSPIInterface SSPISecureChannel = null;
-
 		internal static SSPIInterface Create (string hostname, bool serverMode, SchProtocols protocolFlags, SSCX.X509Certificate serverCertificate, SSCX.X509CertificateCollection clientCertificates,
 		                                      bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus, EncryptionPolicy encryptionPolicy,
 		                                      LocalCertSelectionCallback certSelectionDelegate, RemoteCertValidationCallback remoteValidationCallback, SSPIConfiguration userConfig)
