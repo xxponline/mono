@@ -134,7 +134,9 @@ namespace Mono.Security.Instrumentation.Console
 		public void InitializeCBC (CipherSuiteCode code, byte[] key, byte[] mac, byte[] iv)
 		{
 			Cipher = CipherSuiteFactory.CreateCipherSuite (Protocol, code);
+			#if DEBUG_FULL
 			Cipher.EnableDebugging = EnableDebugging;
+			#endif
 			Crypto = Add (new MyCbcBlockCipher (this, iv));
 
 			Crypto.ServerWriteKey = SecureBuffer.CreateCopy (key);
@@ -148,7 +150,9 @@ namespace Mono.Security.Instrumentation.Console
 		public void InitializeGCM (CipherSuiteCode code, byte[] key, byte[] implNonce, byte[] explNonce)
 		{
 			Cipher = CipherSuiteFactory.CreateCipherSuite (Protocol, code);
+			#if DEBUG_FULL
 			Cipher.EnableDebugging = EnableDebugging;
+			#endif
 			Crypto = Add (new MyGaloisCounterCipher (IsServer, Protocol, Cipher, explNonce));
 
 			Crypto.ServerWriteKey = SecureBuffer.CreateCopy (key);
