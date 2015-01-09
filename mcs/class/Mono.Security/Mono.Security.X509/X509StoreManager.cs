@@ -33,6 +33,7 @@ using System.Collections;
 using System.IO;
 
 using Mono.Security.X509.Extensions;
+using System.Runtime.InteropServices;
 
 namespace Mono.Security.X509 {
 
@@ -67,10 +68,8 @@ namespace Mono.Security.X509 {
 		internal static string LocalMachinePath {
 			get {
 				if (_localMachinePath == null) {
-					_localMachinePath = Path.Combine (
-						Environment.GetFolderPath (Environment.SpecialFolder.CommonApplicationData),
-						".mono");
-					_localMachinePath = Path.Combine (_localMachinePath, "certs");
+					var runtimeDir = Path.GetDirectoryName (Path.GetFullPath (RuntimeEnvironment.SystemConfigurationFile));
+					_localMachinePath = Path.Combine (runtimeDir, "certs");
 				}
 				return _localMachinePath;
 			}
@@ -87,8 +86,11 @@ namespace Mono.Security.X509 {
 
 		static public X509Stores LocalMachine {
 			get {
-				if (_machineStore == null) 
+				if (_machineStore == null) {
+					if (!Directory.Exists (LocalMachinePath))
+						Directory.CreateDirectory (LocalMachinePath);
 					_machineStore = new X509Stores (LocalMachinePath);
+				}
 
 				return _machineStore;
 			}
