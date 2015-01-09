@@ -24,18 +24,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if MONO_FEATURE_NEW_TLS
 #if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
-using TlsContext = MonoSecurity::Mono.Security.Protocol.NewTls.TlsContext;
 #if MONO_SECURITY_ALIAS
 using X509Certificate2 = MonoSecurity::System.Security.Cryptography.X509Certificates.X509Certificate2;
 #else
 using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
 #endif
+#if MONO_FEATURE_NEW_TLS
+using TlsContext = MonoSecurity::Mono.Security.Protocol.NewTls.TlsContext;
+#endif
 #else
+#if MONO_FEATURE_NEW_TLS
 using TlsContext = Mono.Security.Protocol.NewTls.TlsContext;
-using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
 #endif
 #endif
 

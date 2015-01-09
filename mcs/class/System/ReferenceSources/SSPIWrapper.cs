@@ -24,9 +24,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+//
+// When building System.dll, `MONO_INSIDE_SYSTEM' is defined.  We directly
+// include the X509 sources, but pull TLS from the `MonoSecurity' extern alias.
+//
+// When building the tests, `MONO_SECURITY_ALIAS' is defined.  In this case,
+// Mono.Security.dll contains the X509 sources, so we pull everything from the
+// extern alias.
+//
+// MX = Mono.Security.X509.
+// MSCX = System.Security.Cryptography.X509Certificates from Mono.Security.dll
+// (if appropriate, otherwise from System.dll).
+// SSCX = System.Security.Cryptography.X509Certificates from System.dll
+//
+
 #if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MX = MonoSecurity::Mono.Security.X509;
+#if MONO_SECURITY_ALIAS
+using MSCX = MonoSecurity::System.Security.Cryptography.X509Certificates;
+#else
+using MSCX = System.Security.Cryptography.X509Certificates;
+#endif
 #if MONO_FEATURE_NEW_TLS
 using MonoSecurity::Mono.Security.Protocol.NewTls;
 #endif
@@ -69,14 +88,14 @@ namespace System.Net.Security
 			#if MONO_FEATURE_NEW_TLS
 			TlsConfiguration config;
 			if (serverMode) {
-				var cert = (SSCX.X509Certificate2)serverCertificate;
+				var cert = (MSCX.X509Certificate2)serverCertificate;
 				var monoCert = new MX.X509Certificate (cert.RawData);
 				config = new TlsConfiguration ((TlsProtocols)protocolFlags, userConfig != null ? userConfig.Settings : null, monoCert, cert.PrivateKey);
 			} else {
 				config = new TlsConfiguration ((TlsProtocols)protocolFlags, userConfig != null ? userConfig.Settings : null, hostname);
 				#if FIXME
-                if (certSelectionDelegate != null)
-                    config.Client.LocalCertSelectionCallback = (t, l, r, a) => certSelectionDelegate(t, l, r, a);
+				if (certSelectionDelegate != null)
+					config.Client.LocalCertSelectionCallback = (t, l, r, a) => certSelectionDelegate(t, l, r, a);
 				#endif
 				if (remoteValidationCallback != null)
 					config.RemoteCertValidationCallback = (h, c, ch, p) => {
@@ -234,7 +253,7 @@ namespace System.Net.Security
 			return null;
 		}
 
-		internal static SSCX.X509Certificate2 GetRemoteCertificate (SafeDeleteContext safeContext, out SSCX.X509Certificate2Collection remoteCertificateStore)
+		internal static MSCX.X509Certificate2 GetRemoteCertificate (SafeDeleteContext safeContext, out MSCX.X509Certificate2Collection remoteCertificateStore)
 		{
 			#if MONO_FEATURE_NEW_TLS
 			MX.X509CertificateCollection monoCollection;
@@ -248,11 +267,11 @@ namespace System.Net.Security
 				return null;
 			}
 
-			remoteCertificateStore = new SSCX.X509Certificate2Collection ();
+			remoteCertificateStore = new MSCX.X509Certificate2Collection ();
 			foreach (var cert in monoCollection) {
 				remoteCertificateStore.Add (new SSCX.X509Certificate2 (cert.RawData));
 			}
-			return new SSCX.X509Certificate2 (monoCert.RawData);
+			return new MSCX.X509Certificate2 (monoCert.RawData);
 			#else
 			throw new NotImplementedException ();
 			#endif
