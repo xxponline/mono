@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 using Mono.Security.X509.Extensions;
@@ -141,6 +142,15 @@ namespace Mono.Security.X509 {
 			return new X509Store (path, true);
 		}
 
+		public void CreateStores ()
+		{
+			foreach (var name in Names.GetAllNames ()) {
+				var path = Path.Combine (_storePath, name);
+				if (!Directory.Exists (path))
+					Directory.CreateDirectory (path);
+			}
+		}
+
 		// names
 
 		public class Names {
@@ -153,6 +163,15 @@ namespace Mono.Security.X509 {
 			public const string Untrusted = "Disallowed";
 			
 			public Names () {}
+
+			internal static IEnumerable<string> GetAllNames ()
+			{
+				yield return Personal;
+				yield return OtherPeople;
+				yield return IntermediateCA;
+				yield return TrustedRoot;
+				yield return Untrusted;
+			}
 		}
 	}
 }

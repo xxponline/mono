@@ -1,4 +1,5 @@
-﻿using System;
+﻿extern alias MonoSecurity;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -9,6 +10,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using MX = MonoSecurity::Mono.Security.X509;
 
 namespace MartinsPlayground
 {
@@ -20,7 +22,14 @@ namespace MartinsPlayground
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
+            CreateStores();
             TestSSL(Address);
+        }
+
+        static void CreateStores ()
+        {
+            MX.X509StoreManager.LocalMachine.CreateStores();
+            MX.X509StoreManager.CurrentUser.CreateStores();
         }
 
         static X509Certificate2 GetServerCertificate ()

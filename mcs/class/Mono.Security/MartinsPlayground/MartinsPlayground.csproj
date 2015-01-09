@@ -78,4 +78,11 @@
   <ItemGroup>
     <EmbeddedResource Include="CA\server-cert.pfx" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mono.Security-martin.csproj">
+      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
+      <Name>Mono.Security-martin</Name>
+      <Aliases>MonoSecurity</Aliases>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
