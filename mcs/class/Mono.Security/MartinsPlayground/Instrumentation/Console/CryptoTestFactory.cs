@@ -45,6 +45,11 @@ namespace Mono.Security.Instrumentation.Console
 			else
 				throw new NotSupportedException ();
 		}
+
+		public IEnumerable GetParameters (Type fixtureType)
+		{
+			return providers;
+		}
 	}
 }
 

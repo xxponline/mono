@@ -14,6 +14,7 @@ namespace Mono.Security.Instrumentation.Tests
 
 	[Explicit]
 	[Category ("NotWorking")]
+	[ConnectionFactoryParameters (ConnectionType.MonoClient | ConnectionType.MonoServer)]
 	class SimpleInstrumentationTest : ConnectionTest
 	{
 		public SimpleInstrumentationTest (TestConfiguration config, ClientAndServerFactory factory)

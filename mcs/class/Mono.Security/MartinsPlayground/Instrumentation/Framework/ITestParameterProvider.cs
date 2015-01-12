@@ -13,9 +13,7 @@ namespace Mono.Security.Instrumentation.Framework
 			get;
 		}
 
-		IEnumerable Parameters {
-			get;
-		}
+		IEnumerable GetParameters (Type fixtureType);
 	}
 }
 

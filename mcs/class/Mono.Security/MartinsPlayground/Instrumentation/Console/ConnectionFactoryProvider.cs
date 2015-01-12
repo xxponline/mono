@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -99,8 +100,16 @@ namespace Mono.Security.Instrumentation.Console
 				get { return null; }
 			}
 
-			IEnumerable ITestParameterProvider.Parameters {
-				get { return factories; }
+			public IEnumerable GetParameters (Type fixtureType)
+			{
+				var attr = fixtureType.GetCustomAttribute<ConnectionFactoryParametersAttribute> ();
+
+				foreach (var factory in factories) {
+					if (attr != null && attr.ConnectionType != factory.ConnectionType)
+						continue;
+
+					yield return factory;
+				}
 			}
 		}
 	}

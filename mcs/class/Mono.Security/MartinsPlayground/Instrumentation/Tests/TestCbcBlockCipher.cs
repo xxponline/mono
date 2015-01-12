@@ -401,8 +401,5 @@ namespace Mono.Security.Instrumentation.Tests
 				Assert.That (tlsEx.Alert.Description, Is.EqualTo (AlertDescription.BadRecordMAC), "#4");
 			}
 		}
-
-
-
 	}
 }

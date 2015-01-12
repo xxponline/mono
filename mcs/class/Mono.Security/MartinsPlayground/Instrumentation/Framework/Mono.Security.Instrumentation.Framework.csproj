@@ -85,6 +85,7 @@
     <Compile Include="ICryptoTestProvider.cs" />
     <Compile Include="ICryptoTestContext.cs" />
     <Compile Include="SymmetricAlgorithmProxy.cs" />
+    <Compile Include="ConnectionFactoryParametersAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

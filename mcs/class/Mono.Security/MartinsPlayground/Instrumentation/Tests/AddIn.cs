@@ -40,7 +40,7 @@ namespace Mono.Security.Instrumentation.Tests
 			else
 				provider = Configuration.GetProvider (attr.Type);
 
-			foreach (var parameter in provider.Parameters) {
+			foreach (var parameter in provider.GetParameters (type)) {
 				suite.Add (BuildFixture (type, attr, parameter));
 			}
 
