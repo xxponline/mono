@@ -343,7 +343,6 @@ namespace Mono.Security.Instrumentation.Tests
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public void TestDecryptWithExtraPadding ()
 		{
 			var input = GetBuffer (ExtraPaddingResult);
@@ -356,7 +355,6 @@ namespace Mono.Security.Instrumentation.Tests
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public void TestDecryptWithInvalidPadding ()
 		{
 			var input = GetBuffer (ExtraPaddingResult);
@@ -381,7 +379,6 @@ namespace Mono.Security.Instrumentation.Tests
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public void TestDecryptWithInvalidPadding2 ()
 		{
 			var input = GetBuffer (Data11Result);

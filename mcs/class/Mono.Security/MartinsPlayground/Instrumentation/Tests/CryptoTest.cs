@@ -247,7 +247,6 @@ namespace Mono.Security.Instrumentation.Tests
 		#endregion
 
 		[Test]
-		[Category ("Martin")]
 		public void TestMasterSecret_Sha256 ()
 		{
 			var output = Provider.TestPRF (HandshakeHashType.SHA256, TestSecret1, TestSeed1, TestData1, PRF1.Length);
@@ -276,7 +275,6 @@ namespace Mono.Security.Instrumentation.Tests
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public void TestMasterSecret_Sha384 ()
 		{
 			var output = Provider.TestPRF (HandshakeHashType.SHA384, TestSecret3, TestSeed3, TestData3, PRF3.Length);
