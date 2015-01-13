@@ -60,6 +60,7 @@
     <Compile Include="CipherTest.cs" />
     <Compile Include="TestGaloisCounterGipher.cs" />
     <Compile Include="TestGaloisCounterGipher-Generated.cs" />
+    <Compile Include="CloseNotifyTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
