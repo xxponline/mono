@@ -48,18 +48,6 @@ namespace Mono.Security.Protocol.NewTls
 
 		#region Constructors
 		
-		internal TlsException(string message) : base(message)
-		{
-		}
-
-		internal TlsException(SerializationInfo info, StreamingContext context) : base(info, context)
-		{
-		}
-		
-		internal TlsException(string message, Exception ex) : base(message, ex)
-		{
-		}
-
 		public TlsException(
 			AlertLevel		level,
 			AlertDescription	description) 

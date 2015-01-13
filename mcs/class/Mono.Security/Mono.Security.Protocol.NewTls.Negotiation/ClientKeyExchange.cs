@@ -112,7 +112,7 @@ namespace Mono.Security.Protocol.NewTls.Negotiation
 
 			// Check server prf against client prf
 			if (!TlsBuffer.Compare (message.Hash, hash))
-				throw new TlsException ("Invalid ServerFinished message received.");
+				throw new TlsException (AlertDescription.HandshakeFailure);
 
 			Session.ClientVerifyData = hash;
 		}

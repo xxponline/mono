@@ -541,7 +541,8 @@ namespace Mono.Security.Protocol.NewTls
 		bool ReadStandardBuffer (ContentType contentType, ref TlsBuffer buffer)
 		{
 			if (buffer.Remaining < 4)
-				throw new TlsException ("buffer underrun");
+				throw new TlsException (
+					AlertDescription.DecodeError, "buffer underrun");
 
 			short protocolCode = buffer.ReadInt16 ();
 			short length = buffer.ReadInt16 ();
