@@ -61,6 +61,14 @@ namespace Mono.Security.Instrumentation.Tests
 			await Run (MyFlags.None);
 		}
 
+		[Test]
+		[Category ("Martin")]
+		[ExpectedException (typeof (ConnectionException))]
+		public async void ServerSendsExtra ()
+		{
+			await Run (MyFlags.ServerSendsExtra);
+		}
+
 		async Task Run (MyFlags flags, ClientAndServerParameters parameters = null, Action<ClientAndServer> action = null)
 		{
 			if (parameters == null)
@@ -83,7 +91,8 @@ namespace Mono.Security.Instrumentation.Tests
 
 		[Flags]
 		enum MyFlags {
-			None = 0
+			None = 0,
+			ServerSendsExtra = 1
 		}
 
 		class MyConnectionHandler : ClientAndServerHandler
@@ -106,6 +115,8 @@ namespace Mono.Security.Instrumentation.Tests
 				line = await serverStream.ReadLineAsync ();
 				if (!line.Equals ("CLIENT OK"))
 					throw new ConnectionException ("Got unexpected output from client: '{0}'", line);
+				if ((Flags & MyFlags.ServerSendsExtra) != 0)
+					await serverStream.WriteLineAsync ("EXTRA LINE FROM SERVER!");
 				await Connection.Shutdown (true);
 				Connection.Dispose ();
 			}
