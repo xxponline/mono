@@ -6,9 +6,9 @@ namespace System.Net.Security {
 
     partial class SslStream
     {
-        internal IAsyncResult BeginShutdown(AsyncCallback asyncCallback, object asyncState)
+        internal IAsyncResult BeginShutdown(bool waitForReply, AsyncCallback asyncCallback, object asyncState)
         {
-            return _SslState.BeginShutdown(asyncCallback, asyncState);
+            return _SslState.BeginShutdown(waitForReply, asyncCallback, asyncState);
         }
 
         internal void EndShutdown(IAsyncResult asyncResult)

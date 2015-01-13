@@ -6,10 +6,10 @@ namespace System.Net.Security {
 
     partial class SslState
     {
-        internal IAsyncResult BeginShutdown (AsyncCallback asyncCallback, object asyncState)
+        internal IAsyncResult BeginShutdown (bool waitForReply, AsyncCallback asyncCallback, object asyncState)
         {
             LazyAsyncResult lazyResult = new LazyAsyncResult(this, asyncState, asyncCallback);
-            AsyncProtocolRequest asyncRequest = new AsyncProtocolRequest(lazyResult);
+            ShutdownAsyncProtocolRequest asyncRequest = new ShutdownAsyncProtocolRequest(waitForReply, lazyResult);
             ProtocolToken message = Context.CreateShutdownMessage();
             StartWriteShutdown(message.Payload, asyncRequest);
             return lazyResult;
@@ -59,15 +59,22 @@ namespace System.Net.Security {
             if (transportResult.CompletedSynchronously)
                 return;
 
-            AsyncProtocolRequest asyncRequest = (AsyncProtocolRequest)transportResult.AsyncState;
+            ShutdownAsyncProtocolRequest asyncRequest = (ShutdownAsyncProtocolRequest)transportResult.AsyncState;
 
             SslState sslState = (SslState)asyncRequest.AsyncObject;
-            try {
+            try
+            {
                 ((NetworkStream)(sslState.InnerStream)).EndWrite(transportResult);
                 sslState.FinishWrite();
-                sslState.WaitForShutdown(asyncRequest);
-            } catch (Exception e) {
-                if (asyncRequest.IsUserCompleted) {
+                if (asyncRequest.WaitForReply)
+                    sslState.WaitForShutdown(asyncRequest);
+                else
+                    asyncRequest.CompleteUser();
+            }
+            catch (Exception e)
+            {
+                if (asyncRequest.IsUserCompleted)
+                {
                     // This will throw on a worker thread.
                     throw;
                 }
@@ -78,7 +85,7 @@ namespace System.Net.Security {
 
         static void ShutdownReadCallback(IAsyncResult transportResult)
         {
-            AsyncProtocolRequest asyncRequest = (AsyncProtocolRequest)transportResult.AsyncState;
+            ShutdownAsyncProtocolRequest asyncRequest = (ShutdownAsyncProtocolRequest)transportResult.AsyncState;
 
             var buffer = new byte [8];
             SslState sslState = (SslState)asyncRequest.AsyncObject;
@@ -102,6 +109,16 @@ namespace System.Net.Security {
             IAsyncResult ar = SecureStream.BeginRead(buffer, 0, buffer.Length, ShutdownReadCallback, asyncRequest);
             if (ar.CompletedSynchronously)
                 ShutdownReadCallback(ar);
+        }
+
+        class ShutdownAsyncProtocolRequest: AsyncProtocolRequest
+        {
+            public readonly bool WaitForReply;
+
+            internal ShutdownAsyncProtocolRequest(bool wairForReply, LazyAsyncResult userAsyncResult): base (userAsyncResult)
+            {
+                WaitForReply = wairForReply;
+            }
         }
     }
 }

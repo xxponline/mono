@@ -3,6 +3,7 @@ extern alias MonoSecurity;
 using System;
 using System.IO;
 using System.Net.Security;
+using System.Threading.Tasks;
 using TlsSettings = MonoSecurity.Mono.Security.Protocol.NewTls.TlsSettings;
 
 namespace Mono.Security.NewMonoSource
@@ -36,18 +37,9 @@ namespace Mono.Security.NewMonoSource
         {
         }
 
-        public IAsyncResult BeginShutdown(AsyncCallback asyncCallback, object asyncState)
+        public Task Shutdown(bool waitForReply)
         {
-            return base.BeginShutdown(asyncCallback, asyncState);
-        }
-
-        public void EndShutdown(IAsyncResult result)
-        {
-            base.EndShutdown(result);
-        }
-
-        void ShutdownCompleted (IAsyncResult result)
-        {
+            return Task.Factory.FromAsync((state,result) => BeginShutdown (waitForReply, state, result), EndShutdown, null);
         }
 
         static SSPIConfiguration ConvertSettings(TlsSettings settings)

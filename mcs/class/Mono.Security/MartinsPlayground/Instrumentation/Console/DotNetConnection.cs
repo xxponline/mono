@@ -129,10 +129,15 @@ namespace Mono.Security.Instrumentation.Console
 			return tcs.Task;
 		}
 
-		public sealed override Task<bool> Shutdown (bool attemptCleanShutdown)
+		protected virtual Task<bool> TryCleanShutdown ()
+		{
+			throw new NotSupportedException ("Clean shutdown not supported yet.");
+		}
+
+		public sealed override async Task<bool> Shutdown (bool attemptCleanShutdown)
 		{
 			if (attemptCleanShutdown)
-				throw new NotSupportedException ("Clean shutdown not supported yet.");
+				attemptCleanShutdown = await TryCleanShutdown ();
 
 			if (accepted != null) {
 				try {
@@ -148,7 +153,7 @@ namespace Mono.Security.Instrumentation.Console
 				accepted = null;
 			}
 
-			return Task.FromResult (false);
+			return attemptCleanShutdown;
 		}
 
 		protected override void Stop ()

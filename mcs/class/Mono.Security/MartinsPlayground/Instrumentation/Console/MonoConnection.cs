@@ -71,6 +71,12 @@ namespace Mono.Security.Instrumentation.Console
 			monoSslStream = Start (socket, settings);
 			return monoSslStream;
 		}
+
+		protected override async Task<bool> TryCleanShutdown ()
+		{
+			await monoSslStream.Shutdown (true);
+			return true;
+		}
 	}
 }
 
