@@ -36,6 +36,20 @@ namespace Mono.Security.NewMonoSource
         {
         }
 
+        public IAsyncResult BeginShutdown(AsyncCallback asyncCallback, object asyncState)
+        {
+            return base.BeginShutdown(asyncCallback, asyncState);
+        }
+
+        public void EndShutdown(IAsyncResult result)
+        {
+            base.EndShutdown(result);
+        }
+
+        void ShutdownCompleted (IAsyncResult result)
+        {
+        }
+
         static SSPIConfiguration ConvertSettings(TlsSettings settings)
         {
             return settings != null ? new MyConfiguration(settings) : null;

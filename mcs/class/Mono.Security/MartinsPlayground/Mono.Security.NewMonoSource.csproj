@@ -70,9 +70,6 @@
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">
       <Link>referencesource\Net\Logging.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_BufferOffsetSize.cs">
-      <Link>referencesource\Net\_BufferOffsetSize.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\_SslSessionsCache.cs">
       <Link>referencesource\Net\_SslSessionsCache.cs</Link>
     </Compile>
@@ -103,9 +100,6 @@
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\SecureProtocols\_HelperAsyncResults.cs">
       <Link>referencesource\Net\SecureProtocols\_HelperAsyncResults.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Sockets\NetworkStream.cs">
-      <Link>referencesource\Net\Sockets\NetworkStream.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\external\referencesource\mscorlib\InternalApis\NDP_Common\inc\PinnableBufferCache.cs">
       <Link>referencesource\corlib\NDP_Common\PinnableBufferCache.cs</Link>
     </Compile>
@@ -126,6 +120,15 @@
     </Compile>
     <Compile Include="..\..\System\ReferenceSources\SafeHandles.cs">
       <Link>ReferenceSources\SafeHandles.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\ReferenceSources\SslStream.cs">
+      <Link>ReferenceSources\SslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\ReferenceSources\_SslState.cs">
+      <Link>ReferenceSources\_SslState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\ReferenceSources\_SecureChannel.cs">
+      <Link>ReferenceSources\_SecureChannel.cs</Link>
     </Compile>
     <Compile Include="NewStuff\PlaygroundHelper.cs" />
     <Compile Include="..\..\System\ReferenceSources\SSPIConfiguration.cs">

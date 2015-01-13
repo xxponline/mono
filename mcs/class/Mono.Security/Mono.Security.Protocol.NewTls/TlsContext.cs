@@ -307,7 +307,7 @@ namespace Mono.Security.Protocol.NewTls
 
 			if (level == AlertLevel.Warning) {
 				if (description == AlertDescription.CloseNotify)
-					throw new TlsException (AlertDescription.CloseNotify, "Received CloseNotiy alert");
+					return SecurityStatus.ContextExpired;
 
 				DebugHelper.WriteLine ("Received alert: {0}", description);
 				return SecurityStatus.ContinueNeeded;
@@ -422,6 +422,8 @@ namespace Mono.Security.Protocol.NewTls
 				var level = (AlertLevel)incoming.ReadByte ();
 				var description = (AlertDescription)incoming.ReadByte ();
 				DebugHelper.WriteLine ("ALERT: {0} {1}", level, description);
+				if (level == AlertLevel.Warning && description == AlertDescription.CloseNotify)
+					return SecurityStatus.ContextExpired;
 				throw new TlsException (level, description);
 			} else if (contentType == ContentType.ApplicationData)
 				return SecurityStatus.OK;
@@ -576,6 +578,26 @@ namespace Mono.Security.Protocol.NewTls
 			var output = read.Decrypt (contentType, buffer.GetRemaining ());
 			buffer = new TlsBuffer (output);
 			return true;
+		}
+
+		public byte[] CreateAlert (Alert alert)
+		{
+			try {
+				CheckValid ();
+				return _CreateAlert (alert);
+			} catch {
+				Clear ();
+				throw;
+			}
+		}
+
+		byte[] _CreateAlert (Alert alert)
+		{
+			var buffer = new BufferOffsetSize (2);
+			buffer.Buffer [0] = (byte)alert.Level;
+			buffer.Buffer [1] = (byte)alert.Description;
+
+			return EncodeRecord (ContentType.Alert, buffer);
 		}
 
 		#endregion
