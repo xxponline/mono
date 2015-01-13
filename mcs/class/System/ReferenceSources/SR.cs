@@ -277,4 +277,6 @@ partial class SR
 	public const string net_readonlystream = "net_readonlystream";
 	public const string net_sockets_blocking = "net_sockets_blocking";
 	public const string net_writeonlystream = "net_writeonlystream";
+
+	public const string mono_net_io_shutdown = "Shutdown failed.";
 }

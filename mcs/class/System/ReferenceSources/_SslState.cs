@@ -2,6 +2,7 @@
 // Mono-specific additions to Microsoft's _SslState.cs
 //
 namespace System.Net.Security {
+    using System.IO;
     using System.Net.Sockets;
 
     partial class SslState
@@ -17,7 +18,28 @@ namespace System.Net.Security {
 
         internal void EndShutdown(IAsyncResult asyncResult)
         {
+            if (asyncResult == null)
+            {
+                throw new ArgumentNullException("asyncResult");
+            }
 
+            LazyAsyncResult lazyResult = asyncResult as LazyAsyncResult;
+            if (lazyResult == null)
+            {
+                throw new ArgumentException(SR.GetString(SR.net_io_async_result, asyncResult.GetType().FullName), "asyncResult");
+            }
+
+            // No "artificial" timeouts implemented so far, InnerStream controls timeout.
+            lazyResult.InternalWaitForCompletion();
+
+            if (lazyResult.Result is Exception)
+            {
+                if (lazyResult.Result is IOException)
+                {
+                    throw (Exception)lazyResult.Result;
+                }
+                throw new IOException(SR.GetString(SR.mono_net_io_shutdown), (Exception)lazyResult.Result);
+            }
         }
 
         void StartWriteShutdown(byte[] buffer, AsyncProtocolRequest asyncRequest)
@@ -91,6 +113,8 @@ namespace System.Net.Security {
             SslState sslState = (SslState)asyncRequest.AsyncObject;
             try {
                 var ret = sslState.SecureStream.EndRead(transportResult);
+                if (ret != 0)
+                    throw new IOException (SR.GetString(SR.mono_net_io_shutdown));
                 sslState.FinishRead(null);
                 asyncRequest.CompleteUser();
             } catch (Exception e) {

@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Mono.Security.Protocol.NewTls;
@@ -40,6 +41,7 @@ namespace Mono.Security.Instrumentation.Tests
 	[Explicit]
 	[Category ("NotWorking")]
 	[ConnectionFactoryParameters (ConnectionType.OpenSslClient | ConnectionType.OpenSslServer)]
+	[ConnectionFactoryParameters (ConnectionType.MonoClient | ConnectionType.OpenSslServer)]
 	class CloseNotifyTest : ConnectionTest
 	{
 		public CloseNotifyTest (TestConfiguration config, ClientAndServerFactory factory)
@@ -63,13 +65,12 @@ namespace Mono.Security.Instrumentation.Tests
 
 		[Test]
 		[Category ("Martin")]
-		[ExpectedException (typeof (ConnectionException))]
 		public async void ServerSendsExtra ()
 		{
-			await Run (MyFlags.ServerSendsExtra);
+			await Run (MyFlags.ServerSendsExtra, typeof (IOException));
 		}
 
-		async Task Run (MyFlags flags, ClientAndServerParameters parameters = null, Action<ClientAndServer> action = null)
+		async Task Run (MyFlags flags, Type expectedException = null, ClientAndServerParameters parameters = null, Action<ClientAndServer> action = null)
 		{
 			if (parameters == null)
 				parameters = GetDefaultParameters ();
@@ -83,9 +84,15 @@ namespace Mono.Security.Instrumentation.Tests
 					var handler = new MyConnectionHandler (connection, flags);
 					await handler.Run ();
 				}
+				if (expectedException != null)
+					Assert.Fail ("Expected an exception of type {0}", expectedException);
 			} catch (Exception ex) {
-				DebugHelper.WriteLine ("ERROR: {0} {1}", ex.GetType (), ex);
-				throw;
+				if (expectedException != null) {
+					Assert.That (ex, Is.InstanceOf (expectedException));
+				} else {
+					DebugHelper.WriteLine ("ERROR: {0} {1}", ex.GetType (), ex);
+					throw;
+				}
 			}
 		}
 

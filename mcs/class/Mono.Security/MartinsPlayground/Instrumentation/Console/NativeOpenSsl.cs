@@ -436,7 +436,7 @@ namespace Mono.Security.Instrumentation.Console
 			}
 			ret = native_openssl_shutdown (handle);
 			if (ret != 1)
-				throw new ConnectionException ("Shutdown failed.");
+				throw new IOException ("Shutdown failed.");
 			shutdownState = 1;
 			return true;
 		}
