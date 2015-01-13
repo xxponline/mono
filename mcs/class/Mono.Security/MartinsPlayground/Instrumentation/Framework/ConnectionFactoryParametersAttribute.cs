@@ -27,7 +27,7 @@ using System;
 
 namespace Mono.Security.Instrumentation.Framework
 {
-	[AttributeUsage (AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage (AttributeTargets.Class, AllowMultiple = true)]
 	public class ConnectionFactoryParametersAttribute : Attribute
 	{
 		public ConnectionType ConnectionType {

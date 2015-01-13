@@ -102,13 +102,18 @@ namespace Mono.Security.Instrumentation.Console
 
 			public IEnumerable GetParameters (Type fixtureType)
 			{
-				var attr = fixtureType.GetCustomAttribute<ConnectionFactoryParametersAttribute> ();
+				var attrs = fixtureType.GetCustomAttributes<ConnectionFactoryParametersAttribute> ();
 
 				foreach (var factory in factories) {
-					if (attr != null && attr.ConnectionType != factory.ConnectionType)
+					if (attrs == null) {
+						yield return factory;
 						continue;
+					}
 
-					yield return factory;
+					foreach (var attr in attrs) {
+						if (attr.ConnectionType == factory.ConnectionType)
+							yield return factory;
+					}
 				}
 			}
 		}
