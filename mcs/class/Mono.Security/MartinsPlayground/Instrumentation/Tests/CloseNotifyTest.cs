@@ -71,9 +71,30 @@ namespace Mono.Security.Instrumentation.Tests
 
 		[Test]
 		[Category ("Martin")]
+		public async void ClientSendsExtra ()
+		{
+			await Run (MyFlags.ClientSendsExtra, typeof (IOException));
+		}
+
+		[Test]
+		[Category ("Martin")]
 		public async void ServerClosesFirst ()
 		{
 			await Run (MyFlags.ServerClosesFirst);
+		}
+
+		[Test]
+		[Category ("Martin")]
+		public async void ClientClosesFirst ()
+		{
+			await Run (MyFlags.ClientClosesFirst);
+		}
+
+		[Test]
+		[Category ("Martin")]
+		public async void DuplicateClose ()
+		{
+			await Run (MyFlags.DuplicateClose);
 		}
 
 		async Task Run (MyFlags flags, Type expectedException = null, ClientAndServerParameters parameters = null, Action<ClientAndServer> action = null)
@@ -106,7 +127,10 @@ namespace Mono.Security.Instrumentation.Tests
 		enum MyFlags {
 			None = 0,
 			ServerSendsExtra = 1,
-			ServerClosesFirst = 2
+			ClientSendsExtra = 2,
+			ServerClosesFirst = 4,
+			ClientClosesFirst = 8,
+			DuplicateClose = 16
 		}
 
 		class MyConnectionHandler : ClientAndServerHandler
@@ -131,12 +155,22 @@ namespace Mono.Security.Instrumentation.Tests
 					throw new ConnectionException ("Got unexpected output from client: '{0}'", line);
 				if ((Flags & MyFlags.ServerSendsExtra) != 0)
 					await serverStream.WriteLineAsync ("EXTRA LINE FROM SERVER!");
+				if ((Flags & MyFlags.ClientSendsExtra) != 0)
+					await clientStream.WriteLineAsync ("EXTRA LINE FROM CLIENT!");
 				if ((Flags & MyFlags.ServerClosesFirst) != 0) {
 					await Connection.Server.Shutdown (true, false);
 					line = await clientStream.ReadLineAsync ();
 					if (line != null)
 						throw new ConnectionException ("Got unexpected line after server sent close");
 				}
+				if ((Flags & MyFlags.ClientClosesFirst) != 0) {
+					await Connection.Client.Shutdown (true, false);
+					line = await serverStream.ReadLineAsync ();
+					if (line != null)
+						throw new ConnectionException ("Got unexpected line after client sent close");
+				}
+				if ((Flags & MyFlags.DuplicateClose) != 0)
+					await Connection.Shutdown (true, true);
 				await Connection.Shutdown (true, true);
 				Connection.Dispose ();
 			}
