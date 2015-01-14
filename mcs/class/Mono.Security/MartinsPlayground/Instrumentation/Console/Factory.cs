@@ -256,7 +256,7 @@ namespace Mono.Security.Instrumentation.Console
 			}
 
 			public override bool SupportsCleanShutdown {
-				get { return false; }
+				get { return true; }
 			}
 
 			public override bool CanSelectCiphers {
@@ -300,7 +300,7 @@ namespace Mono.Security.Instrumentation.Console
 			}
 
 			public override bool SupportsCleanShutdown {
-				get { return false; }
+				get { return true; }
 			}
 
 			public override bool CanSelectCiphers {
