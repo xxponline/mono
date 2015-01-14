@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,13 +103,11 @@ namespace Mono.Security.Instrumentation.Console
 
 			public IEnumerable GetParameters (Type fixtureType)
 			{
-				var attrs = fixtureType.GetCustomAttributes<ConnectionFactoryParametersAttribute> ();
+				var attrs = fixtureType.GetCustomAttributes<ConnectionFactoryParametersAttribute> ().ToArray ();
 
 				foreach (var factory in factories) {
-					if (attrs == null) {
+					if (attrs.Length == 0)
 						yield return factory;
-						continue;
-					}
 
 					foreach (var attr in attrs) {
 						if (factory.Matches (attr.ConnectionType))
