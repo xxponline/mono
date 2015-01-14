@@ -38,9 +38,6 @@ namespace Mono.Security.Instrumentation.Tests
 	using Framework;
 	using Resources;
 
-	[Explicit]
-	[Category ("NotWorking")]
-	// [ConnectionFactoryParameters (ConnectionType.MonoClient | ConnectionType.MonoServer | ConnectionType.OpenSslClient | ConnectionType.OpenSslServer)]
 	class CloseNotifyTest : ConnectionTest
 	{
 		public CloseNotifyTest (TestConfiguration config, ClientAndServerFactory factory)
@@ -56,42 +53,36 @@ namespace Mono.Security.Instrumentation.Tests
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void Simple ()
 		{
 			await Run (MyFlags.None);
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void ServerSendsExtra ()
 		{
 			await Run (MyFlags.ServerSendsExtra, typeof (IOException));
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void ClientSendsExtra ()
 		{
 			await Run (MyFlags.ClientSendsExtra, typeof (IOException));
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void ServerClosesFirst ()
 		{
 			await Run (MyFlags.ServerClosesFirst);
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void ClientClosesFirst ()
 		{
 			await Run (MyFlags.ClientClosesFirst);
 		}
 
 		[Test]
-		[Category ("Martin")]
 		public async void DuplicateClose ()
 		{
 			await Run (MyFlags.DuplicateClose);
