@@ -70,6 +70,13 @@ namespace Mono.Security.Instrumentation.Tests
 			await Run (MyFlags.ServerSendsExtra, typeof (IOException));
 		}
 
+		[Test]
+		[Category ("Martin")]
+		public async void ServerClosesFirst ()
+		{
+			await Run (MyFlags.ServerClosesFirst);
+		}
+
 		async Task Run (MyFlags flags, Type expectedException = null, ClientAndServerParameters parameters = null, Action<ClientAndServer> action = null)
 		{
 			if (parameters == null)
@@ -99,7 +106,8 @@ namespace Mono.Security.Instrumentation.Tests
 		[Flags]
 		enum MyFlags {
 			None = 0,
-			ServerSendsExtra = 1
+			ServerSendsExtra = 1,
+			ServerClosesFirst = 2
 		}
 
 		class MyConnectionHandler : ClientAndServerHandler
@@ -124,7 +132,14 @@ namespace Mono.Security.Instrumentation.Tests
 					throw new ConnectionException ("Got unexpected output from client: '{0}'", line);
 				if ((Flags & MyFlags.ServerSendsExtra) != 0)
 					await serverStream.WriteLineAsync ("EXTRA LINE FROM SERVER!");
-				await Connection.Shutdown (true);
+				if ((Flags & MyFlags.ServerClosesFirst) != 0) {
+					await Connection.Server.Shutdown (true, false);
+					line = await clientStream.ReadLineAsync ();
+					if (line != null)
+						throw new ConnectionException ("Got unexpected line after server sent close");
+					await Connection.Client.Shutdown (true, true);
+				}
+				await Connection.Shutdown (true, true);
 				Connection.Dispose ();
 			}
 		}

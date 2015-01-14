@@ -49,7 +49,7 @@ namespace Mono.Security.Instrumentation.Console
 		MessageCallback message_callback;
 		VerifyCallback verify_callback;
 		RemoteValidationCallback managed_cert_callback;
-		int shutdownState;
+		ShutdownState shutdownState;
 
 		public delegate bool RemoteValidationCallback (bool ok, X509Certificate certificate);
 
@@ -419,25 +419,32 @@ namespace Mono.Security.Instrumentation.Console
 			native_openssl_set_certificate_verify (handle, (int)mode, verify_callback, null, 10);
 		}
 
+		enum ShutdownState {
+			None,
+			Error,
+			Closed,
+			SentShutdown
+		}
+
 		public bool Shutdown (bool waitForReply)
 		{
-			if (shutdownState == -1)
+			if (shutdownState == ShutdownState.Error)
 				return false;
-			else if (shutdownState == 1)
+			else if (shutdownState == ShutdownState.Closed)
 				return true;
 			var ret = native_openssl_shutdown (handle);
 			if (ret == 1) {
-				shutdownState = 1;
+				shutdownState = ShutdownState.Closed;
 				return true;
 			}
 			if (!waitForReply) {
-				shutdownState = -1;
+				shutdownState = ShutdownState.SentShutdown;
 				return false;
 			}
 			ret = native_openssl_shutdown (handle);
 			if (ret != 1)
 				throw new IOException ("Shutdown failed.");
-			shutdownState = 1;
+			shutdownState = ShutdownState.Closed;
 			return true;
 		}
 

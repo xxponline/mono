@@ -6,6 +6,11 @@ namespace System.Net.Security {
 
     partial class SslStream
     {
+        internal bool IsClosed
+        {
+            get { return _SslState.IsClosed; }
+        }
+
         internal IAsyncResult BeginShutdown(bool waitForReply, AsyncCallback asyncCallback, object asyncState)
         {
             return _SslState.BeginShutdown(waitForReply, asyncCallback, asyncState);

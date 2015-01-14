@@ -43,7 +43,7 @@ namespace Mono.Security.Instrumentation.Framework
 			protected override async Task MainLoop (ILineBasedStream stream)
 			{
 				await stream.WriteLineAsync ("OK");
-				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown);
+				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown, true);
 				Connection.Dispose ();
 			}
 		}
@@ -76,7 +76,7 @@ namespace Mono.Security.Instrumentation.Framework
 				var line = await clientStream.ReadLineAsync ();
 				if (!line.Equals ("OK"))
 					throw new ConnectionException ("Got unexpected output '{0}'", line);
-				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown);
+				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown, true);
 				Connection.Dispose ();
 			}
 		}
@@ -98,7 +98,7 @@ namespace Mono.Security.Instrumentation.Framework
 				line = await serverStream.ReadLineAsync ();
 				if (!line.Equals ("CLIENT OK"))
 					throw new ConnectionException ("Got unexpected output from client: '{0}'", line);
-				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown);
+				await Connection.Shutdown (Connection.Factory.SupportsCleanShutdown, true);
 				Connection.Dispose ();
 			}
 		}

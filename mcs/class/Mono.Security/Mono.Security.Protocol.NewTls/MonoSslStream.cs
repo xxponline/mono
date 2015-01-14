@@ -37,6 +37,11 @@ namespace Mono.Security.NewMonoSource
         {
         }
 
+        public bool IsClosed
+        {
+            get { return base.IsClosed; }
+        }
+
         public Task Shutdown(bool waitForReply)
         {
             return Task.Factory.FromAsync((state,result) => BeginShutdown (waitForReply, state, result), EndShutdown, null);

@@ -3,16 +3,36 @@
 //
 namespace System.Net.Security {
     using System.IO;
+    using System.Threading;
     using System.Net.Sockets;
 
     partial class SslState
     {
+        int sentShutdown;
+
+        internal bool IsClosed
+        {
+            get { return Context.IsClosed; }
+        }
+
         internal IAsyncResult BeginShutdown (bool waitForReply, AsyncCallback asyncCallback, object asyncState)
         {
             LazyAsyncResult lazyResult = new LazyAsyncResult(this, asyncState, asyncCallback);
             ShutdownAsyncProtocolRequest asyncRequest = new ShutdownAsyncProtocolRequest(waitForReply, lazyResult);
-            ProtocolToken message = Context.CreateShutdownMessage();
-            StartWriteShutdown(message.Payload, asyncRequest);
+
+            if (Interlocked.CompareExchange(ref sentShutdown, 1, 0) == 1)
+            {
+                if (Context.IsClosed || !waitForReply)
+                    asyncRequest.CompleteUser();
+                else
+                    WaitForShutdown(asyncRequest);
+            }
+            else
+            {
+                ProtocolToken message = Context.CreateShutdownMessage();
+                StartWriteShutdown(message.Payload, asyncRequest);
+            }
+
             return lazyResult;
         }
 
@@ -88,7 +108,7 @@ namespace System.Net.Security {
             {
                 ((NetworkStream)(sslState.InnerStream)).EndWrite(transportResult);
                 sslState.FinishWrite();
-                if (asyncRequest.WaitForReply)
+                if (!sslState.Context.IsClosed && asyncRequest.WaitForReply)
                     sslState.WaitForShutdown(asyncRequest);
                 else
                     asyncRequest.CompleteUser();

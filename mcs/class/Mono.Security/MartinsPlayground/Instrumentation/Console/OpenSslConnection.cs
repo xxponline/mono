@@ -91,10 +91,10 @@ namespace Mono.Security.Instrumentation.Console
 			return Task.Run (() => CreateConnection ());
 		}
 
-		public sealed override Task<bool> Shutdown (bool attemptCleanShutdown)
+		public sealed override Task<bool> Shutdown (bool attemptCleanShutdown, bool waitForReply)
 		{
 			return Task.Run (() => {
-				return openssl.Shutdown (attemptCleanShutdown);
+				return openssl.Shutdown (waitForReply);
 			});
 		}
 

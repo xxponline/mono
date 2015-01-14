@@ -72,9 +72,9 @@ namespace Mono.Security.Instrumentation.Console
 			return monoSslStream;
 		}
 
-		protected override async Task<bool> TryCleanShutdown ()
+		protected override async Task<bool> TryCleanShutdown (bool waitForReply)
 		{
-			await monoSslStream.Shutdown (true);
+			await monoSslStream.Shutdown (waitForReply);
 			return true;
 		}
 	}

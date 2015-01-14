@@ -250,6 +250,15 @@ namespace System.Net.Security
             #endif
         }
 
+        internal static bool IsClosed (SSPIInterface secModule, SafeDeleteContext safeContext)
+        {
+            #if MONO_FEATURE_NEW_TLS
+            return safeContext.Context.ReceivedCloseNotify;
+            #else
+            throw new NotImplementedException ();
+            #endif
+        }
+
 		internal static SafeFreeCredentials AcquireCredentialsHandle (SSPIInterface SecModule, string package, CredentialUse intent, SecureCredential scc)
 		{
 			return new SafeFreeCredentials (scc);

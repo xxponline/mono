@@ -61,10 +61,10 @@ namespace Mono.Security.Instrumentation.Framework
 			server.Dispose ();
 		}
 
-		public override async Task<bool> Shutdown (bool attemptCleanShutdown)
+		public override async Task<bool> Shutdown (bool attemptCleanShutdown, bool waitForReply)
 		{
-			var clientShutdown = client.Shutdown (attemptCleanShutdown);
-			var serverShutdown = server.Shutdown (attemptCleanShutdown);
+			var clientShutdown = client.Shutdown (attemptCleanShutdown, waitForReply);
+			var serverShutdown = server.Shutdown (attemptCleanShutdown, waitForReply);
 			await Task.WhenAll (clientShutdown, serverShutdown);
 			return clientShutdown.Result && serverShutdown.Result;
 		}

@@ -48,7 +48,7 @@ namespace Mono.Security.Instrumentation.Framework
 
 		Task WaitForConnection ();
 
-		Task<bool> Shutdown (bool attemptCleanShutdown);
+		Task<bool> Shutdown (bool attemptCleanShutdown, bool waitForReply);
 	}
 }
 
