@@ -139,20 +139,6 @@ namespace Mono.Security.Instrumentation.Console
 			if (attemptCleanShutdown)
 				attemptCleanShutdown = await TryCleanShutdown (waitForReply);
 
-			if (accepted != null) {
-				try {
-					accepted.Shutdown (SocketShutdown.Both);
-				} catch {
-					;
-				}
-				try {
-					accepted.Dispose ();
-				} catch {
-					;
-				}
-				accepted = null;
-			}
-
 			return attemptCleanShutdown;
 		}
 
