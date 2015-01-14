@@ -175,12 +175,7 @@ namespace Mono.Security.Protocol.NewTls
 
 		protected override void Clear ()
 		{
-			if (PrivateKey != null) {
-				#if !BOOTSTRAP_BASIC
-				PrivateKey.Dispose ();
-				#endif
-				PrivateKey = null;
-			}
+			PrivateKey = null;
 			Certificate = null;
 		}
 	}
