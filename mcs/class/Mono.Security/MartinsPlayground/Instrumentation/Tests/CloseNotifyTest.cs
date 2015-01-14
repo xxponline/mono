@@ -136,7 +136,6 @@ namespace Mono.Security.Instrumentation.Tests
 					line = await clientStream.ReadLineAsync ();
 					if (line != null)
 						throw new ConnectionException ("Got unexpected line after server sent close");
-					await Connection.Client.Shutdown (true, true);
 				}
 				await Connection.Shutdown (true, true);
 				Connection.Dispose ();

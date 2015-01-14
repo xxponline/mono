@@ -428,11 +428,11 @@ namespace Mono.Security.Protocol.NewTls
 			if (contentType == ContentType.Alert) {
 				var level = (AlertLevel)incoming.ReadByte ();
 				var description = (AlertDescription)incoming.ReadByte ();
-				DebugHelper.WriteLine ("ALERT: {0} {1}", level, description);
 				if (level == AlertLevel.Warning && description == AlertDescription.CloseNotify) {
 					ReceivedCloseNotify = true;
 					return SecurityStatus.ContextExpired;
 				}
+				DebugHelper.WriteLine ("ALERT: {0} {1}", level, description);
 				throw new TlsException (level, description);
 			} else if (contentType == ContentType.ApplicationData)
 				return SecurityStatus.OK;
