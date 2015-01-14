@@ -111,6 +111,15 @@ namespace Mono.Security.Instrumentation.Framework
 			get { return ServerFactory.ConnectionType | ClientFactory.ConnectionType; }
 		}
 
+		public bool Matches (ConnectionType connectionType)
+		{
+			if ((ServerFactory.ConnectionType & connectionType) == 0)
+				return false;
+			if ((ClientFactory.ConnectionType & connectionType) == 0)
+				return false;
+			return true;
+		}
+
 		public override bool HasConnectionInfo {
 			get { return ServerFactory.HasConnectionInfo && ClientFactory.HasConnectionInfo; }
 		}

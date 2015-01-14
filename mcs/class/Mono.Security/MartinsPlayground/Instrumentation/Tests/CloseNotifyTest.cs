@@ -40,8 +40,7 @@ namespace Mono.Security.Instrumentation.Tests
 
 	[Explicit]
 	[Category ("NotWorking")]
-	[ConnectionFactoryParameters (ConnectionType.OpenSslClient | ConnectionType.OpenSslServer)]
-	[ConnectionFactoryParameters (ConnectionType.MonoClient | ConnectionType.OpenSslServer)]
+	[ConnectionFactoryParameters (ConnectionType.MonoClient | ConnectionType.OpenSslClient | ConnectionType.OpenSslServer)]
 	class CloseNotifyTest : ConnectionTest
 	{
 		public CloseNotifyTest (TestConfiguration config, ClientAndServerFactory factory)

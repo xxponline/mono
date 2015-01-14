@@ -111,7 +111,7 @@ namespace Mono.Security.Instrumentation.Console
 					}
 
 					foreach (var attr in attrs) {
-						if (attr.ConnectionType == factory.ConnectionType)
+						if (factory.Matches (attr.ConnectionType))
 							yield return factory;
 					}
 				}

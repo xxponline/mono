@@ -13,7 +13,10 @@ namespace Mono.Security.Instrumentation.Framework
 
 		MonoServer	= 1 << 8,
 		DotNetServer	= 1 << 9,
-		OpenSslServer	= 1 << 10
+		OpenSslServer	= 1 << 10,
+
+		ClientMask	= MonoClient | DotNetClient | OpenSslClient,
+		ServerMask	= MonoServer | DotNetServer | OpenSslServer
 	}
 }
 
