@@ -180,6 +180,11 @@ namespace Mono.Security.Protocol.NewTls
 		
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format ("[Alert: {0}:{1}]", Level, Description);
+		}
+
 		#region Static Methods
 
 		public static string GetAlertMessage(AlertDescription description)

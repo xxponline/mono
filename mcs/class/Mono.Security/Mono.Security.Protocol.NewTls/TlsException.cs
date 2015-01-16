@@ -30,7 +30,7 @@ namespace Mono.Security.Protocol.NewTls
 {
 	[Serializable]
 	public sealed class TlsException : Exception
-	{	
+	{
 		#region Fields
 
 		private Alert alert;
@@ -39,46 +39,42 @@ namespace Mono.Security.Protocol.NewTls
 
 		#region Properties
 
-		public Alert Alert
-		{
+		public Alert Alert {
 			get { return this.alert; }
 		}
 
 		#endregion
 
 		#region Constructors
-		
-		public TlsException(
-			AlertLevel		level,
-			AlertDescription	description) 
-			: this (level, description, Alert.GetAlertMessage(description))
+
+		public TlsException (Alert alert)
+			: this (alert, alert.Description.ToString())
 		{
 		}
 
-		public TlsException(
-			AlertLevel		level,
-			AlertDescription	description,
-			string			message) : base (message)
+		public TlsException (Alert alert, string message)
+			: base (message)
 		{
-			this.alert = new Alert(level, description);
+			this.alert = alert;
 		}
 
-		public TlsException(
-			AlertDescription description) 
-			: this (description, Alert.GetAlertMessage(description))
+		public TlsException (AlertLevel level, AlertDescription description)
+			: this (new Alert (level, description))
 		{
 		}
 
-		public TlsException(
-			AlertDescription	description,
-			string			message) : base (message)
+		public TlsException (AlertDescription description)
+			: this (new Alert (description))
 		{
-			this.alert = new Alert(description);
 		}
 
-		public TlsException(
-			AlertDescription description, string format, params object[] args)
-			: this (description, string.Format (format, args))
+		public TlsException (AlertDescription description, string message)
+			: this (new Alert (description), message)
+		{
+		}
+
+		public TlsException (AlertDescription description, string format, params object[] args)
+			: this (new Alert (description), string.Format (format, args))
 		{
 		}
 
