@@ -106,7 +106,11 @@ namespace Mono.Security.Protocol.NewTls.Negotiation
 
 		protected virtual void SelectCipher (TlsClientHello message)
 		{
-			HandshakeParameters.SupportedCiphers = CipherSuiteFactory.GetSupportedCiphers (Context.NegotiatedProtocol);
+			var supportedCiphers = Config.UserSettings != null ? Config.UserSettings.RequestedCiphers : null;
+			if (supportedCiphers == null)
+				supportedCiphers = CipherSuiteFactory.GetDefaultCiphers (Context.NegotiatedProtocol);
+
+			HandshakeParameters.SupportedCiphers = supportedCiphers;
 
 			CipherSuite selectedCipher = null;
 			foreach (var code in message.ClientCiphers) {

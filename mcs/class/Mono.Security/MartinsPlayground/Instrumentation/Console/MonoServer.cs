@@ -48,6 +48,7 @@ namespace Mono.Security.Instrumentation.Console
 				settings.RequireClientCertificate = true;
 			else if (Parameters.AskForClientCertificate)
 				settings.AskForClientCertificate = true;
+			settings.RequestedCiphers = Parameters.ServerCiphers;
 			return settings;
 		}
 

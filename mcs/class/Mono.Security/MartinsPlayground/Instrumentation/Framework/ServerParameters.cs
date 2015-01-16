@@ -1,4 +1,6 @@
-﻿using System;
+﻿extern alias MonoSecurity;
+using MonoSecurity::Mono.Security.Protocol.NewTls;
+using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
 
 namespace Mono.Security.Instrumentation.Framework
 {
@@ -25,6 +27,9 @@ namespace Mono.Security.Instrumentation.Framework
 			}
 		}
 
+		public CipherSuiteCollection ServerCiphers {
+			get; set;
+		}
 	}
 }
 

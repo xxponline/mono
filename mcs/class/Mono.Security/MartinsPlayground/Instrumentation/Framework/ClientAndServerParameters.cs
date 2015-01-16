@@ -13,6 +13,10 @@ namespace Mono.Security.Instrumentation.Framework
 			get; set;
 		}
 
+		public CipherSuiteCollection ServerCiphers {
+			get; set;
+		}
+
 		public ServerCertificate ServerCertificate {
 			get; set;
 		}

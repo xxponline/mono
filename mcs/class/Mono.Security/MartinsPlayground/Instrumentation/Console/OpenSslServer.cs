@@ -40,6 +40,8 @@ namespace Mono.Security.Instrumentation.Console
 
 		protected override void CreateConnection ()
 		{
+			if (Parameters.ServerCiphers != null)
+				openssl.SetCipherList (Parameters.ServerCiphers);
 			openssl.Accept ();
 		}
 	}
