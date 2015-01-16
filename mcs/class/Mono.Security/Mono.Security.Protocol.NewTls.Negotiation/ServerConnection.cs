@@ -123,7 +123,7 @@ namespace Mono.Security.Protocol.NewTls.Negotiation
 			}
 
 			if (selectedCipher == null)
-				throw new TlsException (AlertDescription.InsuficientSecurity, "Invalid cipher suite received from server");
+				throw new TlsException (AlertDescription.HandshakeFailure, "Invalid cipher suite received from client");
 
 			#if DEBUG_FULL
 			if (Context.EnableDebugging)
