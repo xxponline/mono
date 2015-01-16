@@ -33,10 +33,12 @@ using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certi
 #endif
 #if MONO_FEATURE_NEW_TLS
 using TlsContext = MonoSecurity::Mono.Security.Protocol.NewTls.TlsContext;
+using TlsException = MonoSecurity::Mono.Security.Protocol.NewTls.TlsException;
 #endif
 #else
 #if MONO_FEATURE_NEW_TLS
 using TlsContext = Mono.Security.Protocol.NewTls.TlsContext;
+using TlsException = Mono.Security.Protocol.NewTls.TlsException;
 #endif
 #endif
 
@@ -106,6 +108,14 @@ namespace System.Net.Security
 				if (IsInvalid)
 					throw new ObjectDisposedException ("Context");
 				return context;
+			}
+		}
+
+		public TlsException LastError {
+			get {
+				if (context != null)
+					return context.LastError;
+				return null;
 			}
 		}
 

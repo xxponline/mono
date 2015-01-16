@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Net.Security;
 using System.Threading.Tasks;
-using TlsSettings = MonoSecurity.Mono.Security.Protocol.NewTls.TlsSettings;
+using MonoSecurity::Mono.Security.Protocol.NewTls;
 
 namespace Mono.Security.NewMonoSource
 {
@@ -40,6 +40,11 @@ namespace Mono.Security.NewMonoSource
         public bool IsClosed
         {
             get { return base.IsClosed; }
+        }
+
+        public TlsException LastError
+        {
+            get { return (TlsException)base.LastError; }
         }
 
         public Task Shutdown(bool waitForReply)

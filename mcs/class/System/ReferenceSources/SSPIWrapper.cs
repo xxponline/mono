@@ -241,23 +241,32 @@ namespace System.Net.Security
 			#endif
 		}
 
-        internal static byte[] CreateShutdownMessage (SSPIInterface secModule, SafeDeleteContext safeContext)
-        {
-            #if MONO_FEATURE_NEW_TLS
-            return safeContext.Context.CreateAlert (new Alert (AlertLevel.Warning, AlertDescription.CloseNotify));
-            #else
-            throw new NotImplementedException ();
-            #endif
-        }
+		internal static byte[] CreateShutdownMessage (SSPIInterface secModule, SafeDeleteContext safeContext)
+		{
+			#if MONO_FEATURE_NEW_TLS
+			return safeContext.Context.CreateAlert (new Alert (AlertLevel.Warning, AlertDescription.CloseNotify));
+			#else
+			throw new NotImplementedException ();
+			#endif
+		}
 
-        internal static bool IsClosed (SSPIInterface secModule, SafeDeleteContext safeContext)
-        {
-            #if MONO_FEATURE_NEW_TLS
-            return safeContext.Context.ReceivedCloseNotify;
-            #else
-            throw new NotImplementedException ();
-            #endif
-        }
+		internal static bool IsClosed (SSPIInterface secModule, SafeDeleteContext safeContext)
+		{
+			#if MONO_FEATURE_NEW_TLS
+			return safeContext.Context.ReceivedCloseNotify;
+			#else
+			throw new NotImplementedException ();
+			#endif
+		}
+
+		internal static Exception GetLastError (SSPIInterface secModule, SafeDeleteContext safeContext)
+		{
+			#if MONO_FEATURE_NEW_TLS
+			return safeContext.LastError;
+			#else
+			return null;
+			#endif
+		}
 
 		internal static SafeFreeCredentials AcquireCredentialsHandle (SSPIInterface SecModule, string package, CredentialUse intent, SecureCredential scc)
 		{

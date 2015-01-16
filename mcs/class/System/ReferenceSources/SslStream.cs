@@ -11,6 +11,11 @@ namespace System.Net.Security {
             get { return _SslState.IsClosed; }
         }
 
+        internal Exception LastError
+        {
+            get { return _SslState.LastError; }
+        }
+
         internal IAsyncResult BeginShutdown(bool waitForReply, AsyncCallback asyncCallback, object asyncState)
         {
             return _SslState.BeginShutdown(waitForReply, asyncCallback, asyncState);

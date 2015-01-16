@@ -16,7 +16,17 @@ namespace Mono.Security.NewMonoSource
             X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
         {
             var stream = new MonoSslStream(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, encryptionPolicy, settings);
-            stream.AuthenticateAsServer(serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation);
+            try
+            {
+                stream.AuthenticateAsServer(serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation);
+            }
+            catch (Exception ex)
+            {
+                var tlsEx = stream.LastError;
+                if (tlsEx != null)
+                    throw new AggregateException(ex, tlsEx);
+                throw;
+            }
             return stream;
         }
 
@@ -25,7 +35,17 @@ namespace Mono.Security.NewMonoSource
             string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
         {
             var stream = new MonoSslStream(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, encryptionPolicy, settings);
-            stream.AuthenticateAsClient(targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation);
+            try
+            {
+                stream.AuthenticateAsClient(targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation);
+            }
+            catch (Exception ex)
+            {
+                var tlsEx = stream.LastError;
+                if (tlsEx != null)
+                    throw new AggregateException(ex, tlsEx);
+                throw;
+            }
             return stream;
         }
     }

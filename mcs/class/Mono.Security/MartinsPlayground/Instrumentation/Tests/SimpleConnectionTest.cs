@@ -6,6 +6,7 @@ using NUnit.Framework;
 using NUnit.Core;
 using Mono.Security.Protocol.NewTls;
 using Mono.Security.Protocol.NewTls.Cipher;
+using System.Security.Authentication;
 
 namespace Mono.Security.Instrumentation.Tests
 {
@@ -140,6 +141,12 @@ namespace Mono.Security.Instrumentation.Tests
 		{
 			Assert.That (t.IsFaulted, Is.True, "#1:" + message);
 			var baseException = t.Exception.GetBaseException ();
+			if (baseException is AggregateException) {
+				var aggregate = baseException as AggregateException;
+				Assert.That (aggregate.InnerExceptions.Count, Is.EqualTo (2), "#2a:" + message);
+				Assert.That (aggregate.InnerExceptions [0], Is.InstanceOf<AuthenticationException> (), "#2b:" + message);
+				baseException = aggregate.InnerExceptions [1];
+			}
 			Assert.That (baseException, Is.InstanceOf<TlsException> (), "#2:" + message);
 			var alert = ((TlsException)baseException).Alert;
 			Assert.That (alert.Level, Is.EqualTo (AlertLevel.Fatal), "#3:" + message);

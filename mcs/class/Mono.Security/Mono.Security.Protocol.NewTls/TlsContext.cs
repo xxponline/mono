@@ -58,6 +58,11 @@ namespace Mono.Security.Protocol.NewTls
 			private set;
 		}
 
+		public TlsException LastError {
+			get;
+			private set;
+		}
+
 		public TlsContext (TlsConfiguration configuration, bool isServer)
 		{
 			this.configuration = configuration;
@@ -199,6 +204,12 @@ namespace Mono.Security.Protocol.NewTls
 			try {
 				CheckValid ();
 				return _GenerateNextToken (incoming, outgoing);
+			} catch (TlsException ex) {
+				LastError = ex;
+				var alert = CreateAlert (ex.Alert);
+				outgoing.Add (alert);
+				Clear ();
+				return SecurityStatus.ContextExpired;
 			} catch {
 				Clear ();
 				throw;
