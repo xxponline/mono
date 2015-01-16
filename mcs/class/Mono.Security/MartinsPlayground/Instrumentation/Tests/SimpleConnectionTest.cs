@@ -121,6 +121,49 @@ namespace Mono.Security.Instrumentation.Tests
 			});
 		}
 
+		[Test]
+		[Category ("Martin")]
+		public async void TestInvalidCipher ()
+		{
+			if (!Factory.CanSelectCiphers)
+				throw new IgnoreException ("Current implementation does not let us select ciphers.");
+
+			var requestedCipher = new CipherSuiteCollection (TlsProtocolCode.Tls12, CipherSuiteCode.TLS_DHE_RSA_WITH_AES_256_CBC_SHA256);
+			var supportedCipher = new CipherSuiteCollection (TlsProtocolCode.Tls12, CipherSuiteCode.TLS_DHE_RSA_WITH_AES_128_CBC_SHA);
+
+			await ExpectAlert (new ClientAndServerParameters {
+				VerifyPeerCertificate = false, ClientCiphers = requestedCipher, ServerCiphers = supportedCipher
+			}, AlertDescription.HandshakeFailure);
+		}
+
+		void ExpectAlert (Task t, AlertDescription expectedAlert, string message)
+		{
+			Assert.That (t.IsFaulted, Is.True, "#1:" + message);
+			var baseException = t.Exception.GetBaseException ();
+			Assert.That (baseException, Is.InstanceOf<TlsException> (), "#2:" + message);
+			var alert = ((TlsException)baseException).Alert;
+			Assert.That (alert.Level, Is.EqualTo (AlertLevel.Fatal), "#3:" + message);
+			Assert.That (alert.Description, Is.EqualTo (expectedAlert), "#4:" + message);
+		}
+
+		async Task ExpectAlert (ClientAndServerParameters parameters, AlertDescription alert)
+		{
+			if (Configuration.EnableDebugging)
+				parameters.EnableDebugging = true;
+			using (var connection = (ClientAndServer)Factory.Create (parameters)) {
+				await connection.Server.Start ();
+				await connection.Client.Start ();
+
+				var serverTask = connection.Server.WaitForConnection ();
+				var clientTask = connection.Client.WaitForConnection ();
+
+				var t1 = clientTask.ContinueWith (t => ExpectAlert (t, alert, "client"));
+				var t2 = serverTask.ContinueWith (t => ExpectAlert (t, alert, "server"));
+
+				await Task.WhenAll (t1, t2);
+			}
+		}
+
 		async Task Run (ClientAndServerParameters parameters, Action<ClientAndServer> action = null)
 		{
 			try {
