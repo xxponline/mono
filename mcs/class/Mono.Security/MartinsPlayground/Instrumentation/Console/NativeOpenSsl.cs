@@ -42,6 +42,7 @@ namespace Mono.Security.Instrumentation.Console
 	public class NativeOpenSsl : Stream
 	{
 		bool isClient;
+		bool enableDebugging;
 		OpenSslHandle handle;
 		CertificateHandle certificate;
 		PrivateKeyHandle privateKey;
@@ -50,6 +51,7 @@ namespace Mono.Security.Instrumentation.Console
 		VerifyCallback verify_callback;
 		RemoteValidationCallback managed_cert_callback;
 		ShutdownState shutdownState;
+		TlsException lastAlert;
 
 		public delegate bool RemoteValidationCallback (bool ok, X509Certificate certificate);
 
@@ -136,11 +138,21 @@ namespace Mono.Security.Instrumentation.Console
 		void OnMessageCallback (int write_p, int version, int content_type, IntPtr buf, int size)
 		{
 			try {
-				DebugHelper.WriteLine ("MESSAGE CALLBACK: {0} {1:x} {2:x} {3:x} {4:x}",
-					write_p, version, content_type, size, buf.ToInt32 ());
+				if (enableDebugging)
+					DebugHelper.WriteLine ("MESSAGE CALLBACK: {0} {1:x} {2:x} {3:x} {4:x}",
+						write_p, version, content_type, size, buf.ToInt32 ());
+
 				var buffer = new byte [size];
 				Marshal.Copy (buf, buffer, 0, size);
-				DebugHelper.WriteLine ("MESSAGE", buffer);
+				if (enableDebugging)
+					DebugHelper.WriteLine ("MESSAGE", buffer);
+
+				if ((ContentType)content_type == ContentType.Alert) {
+					var alert = new Alert ((AlertLevel)buffer [0], (AlertDescription)buffer [1]);
+					if (enableDebugging)
+						DebugHelper.WriteLine ("ALERT: {0}", alert);
+					lastAlert = new TlsException (alert);
+				}
 			} catch (Exception ex) {
 				DebugHelper.WriteLine ("EXCEPTION IN MESSAGE CALLBACK: {0}", ex);
 			}
@@ -152,8 +164,11 @@ namespace Mono.Security.Instrumentation.Console
 
 		void CheckError (int ret)
 		{
-			if (ret != 0)
+			if (ret != 0) {
+				if (lastAlert != null)
+					throw lastAlert;
 				throw new NativeOpenSslException ((NativeOpenSslError)ret);
+			}
 		}
 
 		internal const string DLL = "NativeOpenSsl";
@@ -292,6 +307,7 @@ namespace Mono.Security.Instrumentation.Console
 		public NativeOpenSsl (bool isClient, bool debug)
 		{
 			this.isClient = isClient;
+			this.enableDebugging = debug;
 
 			handle = native_openssl_initialize ();
 			if (handle.IsInvalid)
@@ -300,10 +316,10 @@ namespace Mono.Security.Instrumentation.Console
 			if (debug) {
 				debug_callback = new DebugCallback (OnDebugCallback);
 				native_openssl_set_debug_callback (handle, debug_callback);
-
-				message_callback = new MessageCallback (OnMessageCallback);
-				native_openssl_set_message_callback (handle, message_callback);
 			}
+
+			message_callback = new MessageCallback (OnMessageCallback);
+			native_openssl_set_message_callback (handle, message_callback);
 
 			var ret = native_openssl_create_context (handle, isClient);
 			CheckError (ret);
