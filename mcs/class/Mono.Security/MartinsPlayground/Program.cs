@@ -20,10 +20,20 @@ namespace MartinsPlayground
         const string Address2 = "https://www.xamarin.com/";
         public static void Main(string[] args)
         {
+            TestException();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             CreateStores();
             TestSSL(Address);
+        }
+
+        static void TestException()
+        {
+            try {
+                throw new InvalidOperationException("Out of coffee.");
+            } catch (Exception ex) {
+                throw new IOException("Problem in the kitchen.", ex);
+            }
         }
 
         static void CreateStores ()
