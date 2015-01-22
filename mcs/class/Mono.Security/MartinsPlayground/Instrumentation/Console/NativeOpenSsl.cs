@@ -174,7 +174,7 @@ namespace Mono.Security.Instrumentation.Console
 		internal const string DLL = "NativeOpenSsl";
 
 		[DllImport (DLL)]
-		extern static OpenSslHandle native_openssl_initialize ();
+		extern static OpenSslHandle native_openssl_initialize (int debug, DebugCallback debug_callback, MessageCallback message_callback);
 
 		[DllImport (DLL)]
 		extern static int native_openssl_create_context (OpenSslHandle handle, bool client);
@@ -190,12 +190,6 @@ namespace Mono.Security.Instrumentation.Console
 
 		[DllImport (DLL)]
 		extern static int native_openssl_accept (OpenSslHandle handle);
-
-		[DllImport (DLL)]
-		extern static void native_openssl_set_debug_callback (OpenSslHandle handle, DebugCallback callback);
-
-		[DllImport (DLL)]
-		extern static void native_openssl_set_message_callback (OpenSslHandle handle, MessageCallback callback);
 
 		[DllImport (DLL)]
 		extern static int native_openssl_write (OpenSslHandle handle, byte[] buffer, int offset, int size);
@@ -309,17 +303,14 @@ namespace Mono.Security.Instrumentation.Console
 			this.isClient = isClient;
 			this.enableDebugging = debug;
 
-			handle = native_openssl_initialize ();
-			if (handle.IsInvalid)
-				throw new ConnectionException ("Handle invalid.");
-
-			if (debug) {
+			if (debug)
 				debug_callback = new DebugCallback (OnDebugCallback);
-				native_openssl_set_debug_callback (handle, debug_callback);
-			}
 
 			message_callback = new MessageCallback (OnMessageCallback);
-			native_openssl_set_message_callback (handle, message_callback);
+
+			handle = native_openssl_initialize (debug ? 1 : 0, debug_callback, message_callback);
+			if (handle.IsInvalid)
+				throw new ConnectionException ("Handle invalid.");
 
 			var ret = native_openssl_create_context (handle, isClient);
 			CheckError (ret);

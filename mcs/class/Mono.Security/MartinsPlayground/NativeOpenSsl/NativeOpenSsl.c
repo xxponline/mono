@@ -150,18 +150,6 @@ message_callback (int write_p, int version, int content_type, const void *buf,
 		ptr->message_callback (write_p, version, content_type, buf, len);
 }
 
-void
-native_openssl_set_debug_callback (NativeOpenSsl *ptr, DebugCallback callback)
-{
-	ptr->debug_callback = callback;
-}
-
-void
-native_openssl_set_message_callback (NativeOpenSsl *ptr, MessageCallback callback)
-{
-	ptr->message_callback = callback;
-}
-
 static void
 native_openssl_init_fd (NativeOpenSsl *ptr, int s)
 {
@@ -181,16 +169,25 @@ native_openssl_init_fd (NativeOpenSsl *ptr, int s)
 }
 
 NativeOpenSsl *
-native_openssl_initialize (void)
+native_openssl_initialize (int debug, DebugCallback debug_callback, MessageCallback message_callback)
 {
+	NativeOpenSsl *ptr;
+
 	SSL_library_init ();
 	
-	return calloc (1, sizeof (NativeOpenSsl));
+	ptr = calloc (1, sizeof (NativeOpenSsl));
+	ptr->debug = debug;
+	ptr->debug_callback = debug_callback;
+	ptr->message_callback = message_callback;
+	return ptr;
 }
 
 static void
 native_openssl_error (NativeOpenSsl *ptr, const char *message)
 {
+	if (!ptr->debug)
+		return;
+
 	BIO *bio_err;
 	bio_err = BIO_new_fp (stderr, BIO_NOCLOSE);
 	printf ("ERROR: %s\n", message);
@@ -214,11 +211,6 @@ native_openssl_connect (NativeOpenSsl *ptr, unsigned char ip[4], int port)
 	
 	ret = SSL_connect (ptr->ssl);
 	if (ret != 1) {
-		long code;
-		ret = SSL_get_error(ptr->ssl, ret);
-		fprintf (stderr, "SSL_connect() failed: %d\n", ret);
-		code = SSL_get_verify_result(ptr->ssl);
-		fprintf (stderr, "VERIFY CODE: %lx\n", code);
 		native_openssl_error (ptr, "Connect failed");
 		return NATIVE_OPENSSL_ERROR_SSL_CONNECT;
 	}

@@ -38,6 +38,7 @@ typedef enum {
 } NativeOpenSslError;
 
 typedef struct {
+    int debug;
 	int socket;
 	int accepted;
 	SSL_CTX *ctx;
@@ -50,7 +51,7 @@ typedef struct {
 } NativeOpenSsl;
 
 NativeOpenSsl *
-native_openssl_initialize (void);
+native_openssl_initialize (int debug, DebugCallback debug_callback, MessageCallback message_callback);
 
 int
 native_openssl_connect (NativeOpenSsl *ptr, unsigned char ip[4], int port);
@@ -60,12 +61,6 @@ native_openssl_bind (NativeOpenSsl *ptr, unsigned char ip[4], int port);
 
 int
 native_openssl_accept (NativeOpenSsl *ptr);
-
-void
-native_openssl_set_debug_callback (NativeOpenSsl *ptr, DebugCallback callback);
-
-void
-native_openssl_set_message_callback (NativeOpenSsl *ptr, MessageCallback callback);
 
 int
 native_openssl_write (NativeOpenSsl *ptr, const void *buf, int offset, int size);
