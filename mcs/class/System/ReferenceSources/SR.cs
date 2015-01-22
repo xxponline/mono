@@ -884,5 +884,7 @@ partial class SR
 	public const string net_writestarted = "net_writestarted";
 	public const string net_wrongversion = "net_wrongversion";
 	public const string security_ExtendedProtection_NoOSSupport = "security_ExtendedProtection_NoOSSupport";
+	
+	public const string mono_net_io_shutdown = "mono_net_io_shutdown";
 
 }
