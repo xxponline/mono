@@ -29,7 +29,7 @@
 [submodule "external/referencesource"]
 	path = external/referencesource
 	url = git://github.com/mono/referencesource
-	branch = martin-ssl-integration
+	branch = mono
 [submodule "external/reference-assemblies"]
 	path = external/reference-assemblies
 	url = git://github.com/mono/reference-assemblies.git
