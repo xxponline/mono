@@ -1072,7 +1072,11 @@ ReferenceSources/Win32Exception.cs
 ../../../external/referencesource/System/compmod/system/componentmodel/Win32Exception.cs
 
 ../../../external/referencesource/System/net/System/Net/_BufferOffsetSize.cs
+../../../external/referencesource/System/net/System/Net/_ContextAwareResult.cs
+../../../external/referencesource/System/net/System/Net/_IStreams.cs
 ../../../external/referencesource/System/net/System/Net/_LazyAsyncResult.cs
+../../../external/referencesource/System/net/System/Net/_NestedSingleAsyncResult.cs
+../../../external/referencesource/System/net/System/Net/_NestedMultipleAsyncResult.cs
 ../../../external/referencesource/System/net/System/Net/_ScatterGatherBuffers.cs
 ../../../external/referencesource/System/net/System/Net/cookie.cs
 ../../../external/referencesource/System/net/System/Net/cookiecollection.cs
