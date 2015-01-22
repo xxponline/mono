@@ -1,5 +1,5 @@
 //
-// Socket.cs.cs
+// Socket.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>

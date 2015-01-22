@@ -32,7 +32,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
 
 using NUnit.Framework;
-#if NET_2_0
 namespace MonoTests.System
 {
 	public class TimeZoneInfoTest
@@ -287,6 +286,20 @@ namespace MonoTests.System
 				dt = new DateTime (2014, 10, 9, 23, 0, 0, DateTimeKind.Utc);
 				Assert.IsTrue (tz.IsDaylightSavingTime (dt), "#3.1");
 			}
+
+			[Test] //Covers #26008
+			public void DSTWithFloatingDateRule ()
+			{
+				// Construct a custom time zone where daylight saving time starts on the
+				// 2nd Sunday in March.
+				var transitionToDaylight = TimeZoneInfo.TransitionTime.CreateFloatingDateRule (new DateTime (1, 1, 1, 2, 0, 0), 3, 2, DayOfWeek.Sunday);
+				var transitionToStandard = TimeZoneInfo.TransitionTime.CreateFloatingDateRule (new DateTime (1, 1, 1, 2, 0, 0), 11, 1, DayOfWeek.Sunday);
+				var adjustment = TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule (DateTime.MinValue.Date, DateTime.MaxValue.Date, new TimeSpan (1, 0, 0), transitionToDaylight, transitionToStandard);
+				var timeZone = TimeZoneInfo.CreateCustomTimeZone ("BugCheck", new TimeSpan (-8, 0, 0), "Testing", "Testing Standard", "Testing Daylight", new TimeZoneInfo.AdjustmentRule [] { adjustment });
+				// See if March 7, 2014 is listed as being during daylight saving time.
+				// If it is DST, then the runtime has the bug that we are looking for.
+				Assert.IsFalse (timeZone.IsDaylightSavingTime (new DateTime (2014, 3, 7, 12, 0, 0, DateTimeKind.Unspecified)));
+			}
 		}
 		
 		[TestFixture]
@@ -518,6 +531,34 @@ namespace MonoTests.System
 				Assert.AreEqual (12, ddt.Hour, "#3.4");
 				Assert.AreEqual (0, ddt.Minute, "#3.5");
 				Assert.AreEqual (0, ddt.Second, "#3.6");
+			}
+
+			[Test (Description="Fix the bug https://bugzilla.xamarin.com/show_bug.cgi?id=1849")]
+			public void ConvertTime_AjustmentConvertTimeWithSourceTimeZone () {
+				
+				TimeZoneInfo easternTimeZone;
+				TimeZoneInfo pacificTimeZone;
+
+				if (Environment.OSVersion.Platform == PlatformID.Unix) {
+					// *nix
+					easternTimeZone = TimeZoneInfo.FindSystemTimeZoneById ("US/Eastern");
+					pacificTimeZone = TimeZoneInfo.FindSystemTimeZoneById ("US/Pacific");	
+				}
+				else {
+					// Windows
+					easternTimeZone = TimeZoneInfo.FindSystemTimeZoneById ("Eastern Standard Time");
+					pacificTimeZone = TimeZoneInfo.FindSystemTimeZoneById ("Pacific Standard Time");
+				}
+
+				DateTime lastMidnight = new DateTime (new DateTime (2012, 06, 13).Ticks, DateTimeKind.Unspecified);
+				DateTime lastMidnightAsEST = TimeZoneInfo.ConvertTime (lastMidnight, pacificTimeZone, easternTimeZone);
+				DateTime lastMidnightAsPST = TimeZoneInfo.ConvertTime (lastMidnightAsEST, easternTimeZone, pacificTimeZone);
+			
+				// Last midnight in PST as EST should be 3AM
+				DateTime expectedDate = new DateTime (2012, 06, 13, 3, 0, 0);
+
+				Assert.AreEqual (expectedDate, lastMidnightAsEST);
+				Assert.AreEqual (lastMidnight, lastMidnightAsPST);
 			}
 		}
 		
@@ -943,4 +984,3 @@ namespace MonoTests.System
 		}
 	}
 }
-#endif

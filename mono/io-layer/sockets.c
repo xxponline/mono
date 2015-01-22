@@ -45,10 +45,12 @@
 
 #include <netinet/in.h>
 #include <netinet/tcp.h>
-#include <netdb.h>
 #include <arpa/inet.h>
 #ifdef HAVE_SYS_SENDFILE_H
 #include <sys/sendfile.h>
+#endif
+#ifdef HAVE_NETDB_H
+#include <netdb.h>
 #endif
 
 #if 0
@@ -346,7 +348,7 @@ int _wapi_connect(guint32 fd, const struct sockaddr *serv_addr,
 		}
 
 		fds.fd = fd;
-		fds.events = POLLOUT;
+		fds.events = MONO_POLLOUT;
 		while (mono_poll (&fds, 1, -1) == -1 &&
 		       !_wapi_thread_cur_apc_pending ()) {
 			if (errno != EINTR) {
@@ -978,45 +980,6 @@ guint32 _wapi_socket(int domain, int type, int protocol, void *unused,
 	DEBUG ("%s: returning socket handle %p", __func__, handle);
 
 	return(fd);
-}
-
-struct hostent *_wapi_gethostbyname(const char *hostname)
-{
-	struct hostent *he;
-	
-	if (startup_count == 0) {
-		WSASetLastError (WSANOTINITIALISED);
-		return(NULL);
-	}
-
-	he = gethostbyname (hostname);
-	if (he == NULL) {
-		DEBUG ("%s: gethostbyname error: %s", __func__,
-			   strerror (h_errno));
-
-		switch(h_errno) {
-		case HOST_NOT_FOUND:
-			WSASetLastError (WSAHOST_NOT_FOUND);
-			break;
-#if NO_ADDRESS != NO_DATA
-		case NO_ADDRESS:
-#endif
-		case NO_DATA:
-			WSASetLastError (WSANO_DATA);
-			break;
-		case NO_RECOVERY:
-			WSASetLastError (WSANO_RECOVERY);
-			break;
-		case TRY_AGAIN:
-			WSASetLastError (WSATRY_AGAIN);
-			break;
-		default:
-			g_warning ("%s: Need to translate %d into winsock error", __func__, h_errno);
-			break;
-		}
-	}
-	
-	return(he);
 }
 
 static gboolean socket_disconnect (guint32 fd)

@@ -379,9 +379,7 @@ namespace System.Globalization
 			RegionInfo.ClearCachedData ();
 			TimeZone.ClearCachedData ();
 			DateTime.ClearCachedData ();
-#if NET_4_5
 			TimeZoneInfo.ClearCachedData ();
-#endif
 		}
 
 		public virtual object Clone()
@@ -484,14 +482,6 @@ namespace System.Globalization
 
 		internal void CheckNeutral ()
 		{
-#if !NET_4_0
-			if (IsNeutralCulture) {
-				throw new NotSupportedException ("Culture \"" + m_name + "\" is " +
-						"a neutral culture. It can not be used in formatting " +
-						"and parsing and therefore cannot be set as the thread's " +
-						"current culture.");
-			}
-#endif
 		}
 
 		public virtual NumberFormatInfo NumberFormat {
@@ -639,7 +629,7 @@ namespace System.Globalization
 			iso3lang="IVL";
 			iso2lang="iv";
 			win3lang="IVL";
-			default_calendar_type = 1 << CalendarTypeBits;
+			default_calendar_type = 1 << CalendarTypeBits | (int) GregorianCalendarTypes.Localized;
 		}
 
 		private unsafe TextInfo CreateTextInfo (bool readOnly)
@@ -673,11 +663,7 @@ namespace System.Globalization
 				// Be careful not to cause recursive CultureInfo initialization
 				//
 				var msg = string.Format (InvariantCulture, "Culture ID {0} (0x{1}) is not a supported culture.", culture.ToString (InvariantCulture), culture.ToString ("X4", InvariantCulture));
-#if NET_4_0
 				throw new CultureNotFoundException ("culture", msg);
-#else
-				throw new ArgumentException (msg, "culture");
-#endif
 			}
 		}
 
@@ -1016,20 +1002,15 @@ namespace System.Globalization
 
 			Type type = Type.GetType (name, false);
 			if (type == null)
-				return CreateCalendar (1 << CalendarTypeBits); // return invariant calandar if not found
+				return new GregorianCalendar (GregorianCalendarTypes.Localized); // return invariant calendar if not found
 			return (Calendar) Activator.CreateInstance (type);
 		}
 
 		static Exception CreateNotFoundException (string name)
 		{
-#if NET_4_0
 			return new CultureNotFoundException ("name", "Culture name " + name + " is not supported.");
-#else
-			return new ArgumentException ("Culture name " + name + " is not supported.", "name");
-#endif
 		}
 		
-#if NET_4_5
 		public static CultureInfo DefaultThreadCurrentCulture {
 			get {
 				return Thread.default_culture;
@@ -1047,6 +1028,5 @@ namespace System.Globalization
 				Thread.default_ui_culture = value;
 			}
 		}
-#endif
 	}
 }
