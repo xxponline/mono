@@ -412,7 +412,6 @@ System.Net/FtpStatus.cs
 System.Net/FtpWebResponse.cs
 System.Net/GlobalProxySelection.cs
 System.Net/HttpConnection.cs
-System.Net/HttpContinueDelegate.cs
 System.Net/HttpListenerBasicIdentity.cs
 System.Net/HttpListenerContext.cs
 System.Net/HttpListener.cs
@@ -736,7 +735,6 @@ System.Net/DnsAsyncResult.cs
 System.Windows.Input/ICommand.cs
 
 ReferenceSources/BinaryCompatibility.cs
-ReferenceSources/HttpKnownHeaderNames.cs
 ReferenceSources/NativeMethods.cs
 ReferenceSources/SettingsSectionInternal.cs
 ReferenceSources/SR.cs
