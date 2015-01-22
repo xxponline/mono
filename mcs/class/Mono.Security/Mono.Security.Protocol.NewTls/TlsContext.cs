@@ -414,11 +414,17 @@ namespace Mono.Security.Protocol.NewTls
 
 		#region Crypto
 
-		public int DecryptMessage (ref TlsBuffer incoming)
+		public SecurityStatus DecryptMessage (ref TlsBuffer incoming)
 		{
 			try {
 				CheckValid ();
-				return (int)_DecryptMessage (ref incoming);
+				return _DecryptMessage (ref incoming);
+			} catch (TlsException ex) {
+				LastError = ex;
+				var alert = CreateAlert (ex.Alert);
+				incoming = new TlsBuffer (alert);
+				Clear ();
+				return SecurityStatus.ContextExpired;
 			} catch {
 				Clear ();
 				throw;
@@ -461,11 +467,17 @@ namespace Mono.Security.Protocol.NewTls
 			}
 		}
 
-		public int EncryptMessage (ref TlsBuffer incoming)
+		public SecurityStatus EncryptMessage (ref TlsBuffer incoming)
 		{
 			try {
 				CheckValid ();
-				return (int)_EncryptMessage (ref incoming);
+				return _EncryptMessage (ref incoming);
+			} catch (TlsException ex) {
+				LastError = ex;
+				var alert = CreateAlert (ex.Alert);
+				incoming = new TlsBuffer (alert);
+				Clear ();
+				return SecurityStatus.ContextExpired;
 			} catch {
 				Clear ();
 				throw;
