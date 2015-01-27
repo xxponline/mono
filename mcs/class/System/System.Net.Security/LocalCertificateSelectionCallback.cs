@@ -29,9 +29,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if SECURITY_DEP
-
-#if !MONOTOUCH && !MONODROID
+#if SECURITY_DEP && !MONOTOUCH && !MONODROID
 extern alias PrebuiltSystem;
 using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
@@ -47,4 +45,3 @@ namespace System.Net.Security
 		X509Certificate remoteCertificate,
 		string [] acceptableIssuers);
 }
-#endif
