@@ -30,6 +30,7 @@ using Mono.Security.Protocol.Tls;
 #else
 extern alias MonoSecurity;
 using MonoSecurity::Mono.Security.Protocol.Tls;
+using System.Reflection;
 #endif
 
 using System;
@@ -78,15 +79,18 @@ namespace Mono.Net.Security
 			sslStream = (SslClientStream) Activator.CreateInstance (implType, args);
 #endif
 #endif
-			return new MonoHttpsStreamWrapper (sslStream);
+			return new MonoHttpsStreamWrapper (implType, sslStream);
 		}
 
 		class MonoHttpsStreamWrapper : IMonoHttpsStream
 		{
 			SslClientStream sslStream;
 			CertificateValidationCallback2 validationCallback;
+#if !MONOTOUCH && !MONODROID
+			PropertyInfo piTrustFailure;
+#endif
 
-			public MonoHttpsStreamWrapper (SslClientStream sslStream)
+			public MonoHttpsStreamWrapper (Type implType, SslClientStream sslStream)
 			{
 				this.sslStream = sslStream;
 
@@ -95,6 +99,10 @@ namespace Mono.Net.Security
 						return null;
 					return validationCallback (collection);
 				};
+
+#if !MONOTOUCH && !MONODROID
+				piTrustFailure = implType.GetProperty ("TrustFailure");
+#endif
 			}
 
 			public Stream Stream {
@@ -104,6 +112,24 @@ namespace Mono.Net.Security
 			public CertificateValidationCallback2 ServerCertValidationCallback2 {
 				get { return validationCallback; }
 				set { validationCallback = value; }
+			}
+
+			public X509Certificate SelectedClientCertificate {
+				get { return sslStream.SelectedClientCertificate; }
+			}
+
+			public X509Certificate ServerCertificate {
+				get { return sslStream.ServerCertificate; }
+			}
+
+			public bool TrustFailure {
+				get {
+#if MONOTOUCH || MONODROID
+					return sslStream.TrustFailure;
+#else
+					return (bool)piTrustFailure.GetValue (sslStream, null);
+#endif
+				}
 			}
 		}
 	}
