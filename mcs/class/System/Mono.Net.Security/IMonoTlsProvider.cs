@@ -25,8 +25,12 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
+#if MOBILE
+using Mono.Security.Protocol.Tls;
+#else
 extern alias MonoSecurity;
 using MonoSecurity::Mono.Security.Protocol.Tls;
+#endif
 #endif
 
 using System;
