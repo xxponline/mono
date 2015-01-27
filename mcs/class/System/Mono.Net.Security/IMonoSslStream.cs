@@ -24,10 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SECURITY_DEP
+#if SECURITY_DEP && !MOBILE
 extern alias PrebuiltSystem;
-extern alias MonoSecurity;
-
 using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
 
