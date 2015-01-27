@@ -77,7 +77,7 @@ using System.Threading.Tasks;
 namespace Mono.Net.Security 
 {
 	[MonoTODO ("Non-X509Certificate2 certificate is not supported")]
-	internal class LegacySslStream : AuthenticatedStream
+	internal class LegacySslStream : AuthenticatedStream, IMonoSslStream
 	{
 		#region Fields
 
@@ -627,6 +627,18 @@ namespace Mono.Net.Security
 		}
 
 		#endregion // Methods
+
+		#region IMonoSslStream
+
+		AuthenticatedStream IMonoSslStream.AuthenticatedStream {
+			get { return this; }
+		}
+
+		TransportContext IMonoSslStream.TransportContext {
+			get { throw new NotSupportedException (); }
+		}
+
+		#endregion
 	}
 }
 
