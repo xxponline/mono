@@ -30,6 +30,7 @@ using MonoSecurity::Mono.Security.Protocol.Tls;
 
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mono.Net.Security
 {
@@ -41,6 +42,18 @@ namespace Mono.Net.Security
 
 		CertificateValidationCallback2 ServerCertValidationCallback2 {
 			get; set;
+		}
+
+		X509Certificate SelectedClientCertificate {
+			get;
+		}
+
+		X509Certificate ServerCertificate {
+			get;
+		}
+
+		bool TrustFailure {
+			get;
 		}
 	}
 }
