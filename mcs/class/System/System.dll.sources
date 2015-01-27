@@ -732,6 +732,8 @@ Mono.Net.Dns/SimpleResolverEventArgs.cs
 System.Net/DnsAsyncResult.cs
 System.Windows.Input/ICommand.cs
 
+
+ReferenceSources/BootstrapHelper.cs
 ReferenceSources/BinaryCompatibility.cs
 ReferenceSources/NativeMethods.cs
 ReferenceSources/SettingsSectionInternal.cs
