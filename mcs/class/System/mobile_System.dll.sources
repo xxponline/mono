@@ -188,7 +188,6 @@ System.Net/FtpWebRequest.cs
 System.Net/FtpWebResponse.cs
 System.Net/GlobalProxySelection.cs
 System.Net/HttpConnection.cs
-System.Net/HttpContinueDelegate.cs
 System.Net/HttpListener.cs
 System.Net/HttpListenerBasicIdentity.cs
 System.Net/HttpListenerContext.cs
@@ -237,7 +236,6 @@ System.Net/ServicePointManager.cs
 System.Net/ServicePointManager.extra.cs
 System.Net/SimpleAsyncResult.cs
 System.Net/SocketAddress.cs
-System.Net/TransportContext.cs
 System.Net/TransportType.cs
 System.Net/WebAsyncResult.cs
 System.Net/WebConnection.cs
@@ -359,15 +357,20 @@ System.Runtime.InteropServices/DefaultParameterValueAttribute.cs
 System.Runtime.InteropServices/HandleCollector.cs
 System.Windows.Input/ICommand.cs
 
-ReferenceSources/ExceptionHelper.cs
-ReferenceSources/GlobalLog.cs
-ReferenceSources/HttpKnownHeaderNames.cs
-ReferenceSources/Logging.cs
+Mono.Net.Security/IMonoTlsProvider.cs
+Mono.Net.Security/IMonoSslStream.cs
+Mono.Net.Security/IMonoHttpsStream.cs
+Mono.Net.Security/MonoDefaultTlsProvider.cs
+Mono.Net.Security/MonoTlsProviderFactory.cs
+
+ReferenceSources/BootstrapHelper.cs
+ReferenceSources/BinaryCompatibility.cs
 ReferenceSources/NativeMethods.cs
+ReferenceSources/Socket.cs
 ReferenceSources/SR.cs
 ReferenceSources/SRCategoryAttribute.cs
 ReferenceSources/SystemNetworkCredential.cs
-ReferenceSources/ValidationHelper.cs
+ReferenceSources/TraceSource.cs
 ReferenceSources/WebHeaderCollectionType.cs
 ReferenceSources/Win32Exception.cs
 
@@ -705,6 +708,7 @@ ReferenceSources/Win32Exception.cs
 ../../../external/referencesource/System/net/System/Net/cookiecollection.cs
 ../../../external/referencesource/System/net/System/Net/cookiecontainer.cs
 ../../../external/referencesource/System/net/System/Net/cookieexception.cs
+../../../external/referencesource/System/net/System/Net/TransportContext.cs
 ../../../external/referencesource/System/net/System/Net/webclient.cs
 ../../../external/referencesource/System/net/System/Net/WebPermission.cs
 ../../../external/referencesource/System/net/System/Net/WriteStreamClosedEventArgs.cs
@@ -721,3 +725,7 @@ ReferenceSources/Win32Exception.cs
 ../../../external/referencesource/System/misc/invariantcomparer.cs
 ../../../external/referencesource/System/misc/SecurityUtils.cs
 ../../../external/referencesource/System/misc/WeakHashtable.cs
+
+../../../external/referencesource/System/net/System/Net/Internal.cs
+../../../external/referencesource/System/net/System/Net/Logging.cs
+../../../external/referencesource/System/net/System/Net/_LoggingObject.cs
