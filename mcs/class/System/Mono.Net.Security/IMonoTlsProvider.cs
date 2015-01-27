@@ -41,9 +41,9 @@ namespace Mono.Net.Security
 	{
 		bool IsHttpsStream (Stream stream);
 
-#if SECURITY_DEP
 		IMonoHttpsStream GetHttpsStream (Stream stream);
 
+#if SECURITY_DEP
 		IMonoHttpsStream CreateHttpsClientStream (
 			Stream innerStream, X509CertificateCollection clientCertificates,
 			HttpWebRequest request, byte[] buffer,
