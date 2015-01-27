@@ -62,20 +62,18 @@ namespace Mono.Net.Security
 
 		public bool IsHttpsStream (Stream stream)
 		{
-			return stream.GetType () == implType;
+			return stream is IMonoHttpsStream;
 		}
 
 		public IMonoHttpsStream GetHttpsStream (Stream stream)
 		{
-			var sslStream = (SslClientStream)stream;
-			return new MonoHttpsStreamWrapper (implType, sslStream);
+			return (IMonoHttpsStream)stream;
 		}
 
 		public IMonoHttpsStream CreateHttpsClientStream (
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback)
 		{
-
 			SslClientStream sslStream;
 #if SECURITY_DEP
 #if MONOTOUCH || MONODROID
@@ -92,46 +90,7 @@ namespace Mono.Net.Security
 			if (validationCallback != null)
 				sslStream.ServerCertValidation2 += validationCallback;
 
-			return new MonoHttpsStreamWrapper (implType, sslStream);
-		}
-
-		class MonoHttpsStreamWrapper : IMonoHttpsStream
-		{
-			SslClientStream sslStream;
-#if !MONOTOUCH && !MONODROID
-			PropertyInfo piTrustFailure;
-#endif
-
-			public MonoHttpsStreamWrapper (Type implType, SslClientStream sslStream)
-			{
-				this.sslStream = sslStream;
-
-#if !MONOTOUCH && !MONODROID
-				piTrustFailure = implType.GetProperty ("TrustFailure");
-#endif
-			}
-
-			public Stream Stream {
-				get { return sslStream; }
-			}
-
-			public X509Certificate SelectedClientCertificate {
-				get { return sslStream.SelectedClientCertificate; }
-			}
-
-			public X509Certificate ServerCertificate {
-				get { return sslStream.ServerCertificate; }
-			}
-
-			public bool TrustFailure {
-				get {
-#if MONOTOUCH || MONODROID
-					return sslStream.TrustFailure;
-#else
-					return (bool)piTrustFailure.GetValue (sslStream, null);
-#endif
-				}
-			}
+			return (IMonoHttpsStream)sslStream;
 		}
 	}
 }
