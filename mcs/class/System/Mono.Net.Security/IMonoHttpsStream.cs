@@ -40,10 +40,6 @@ namespace Mono.Net.Security
 			get;
 		}
 
-		CertificateValidationCallback2 ServerCertValidationCallback2 {
-			get; set;
-		}
-
 		X509Certificate SelectedClientCertificate {
 			get;
 		}

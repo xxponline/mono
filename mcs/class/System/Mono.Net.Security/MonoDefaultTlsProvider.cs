@@ -60,13 +60,22 @@ namespace Mono.Net.Security
 #endif
 		}
 
-		public bool IsTlsStream (Stream stream)
+		public bool IsHttpsStream (Stream stream)
 		{
-			throw new NotImplementedException ();
+			return stream.GetType () == implType;
 		}
 
-		public IMonoHttpsStream CreateHttpsClientStream (Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer)
+		public IMonoHttpsStream GetHttpsStream (Stream stream)
 		{
+			var sslStream = (SslClientStream)stream;
+			return new MonoHttpsStreamWrapper (implType, sslStream);
+		}
+
+		public IMonoHttpsStream CreateHttpsClientStream (
+			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
+			CertificateValidationCallback2	validationCallback)
+		{
+
 			SslClientStream sslStream;
 #if SECURITY_DEP
 #if MONOTOUCH || MONODROID
@@ -79,13 +88,16 @@ namespace Mono.Net.Security
 			sslStream = (SslClientStream) Activator.CreateInstance (implType, args);
 #endif
 #endif
+
+			if (validationCallback != null)
+				sslStream.ServerCertValidation2 += validationCallback;
+
 			return new MonoHttpsStreamWrapper (implType, sslStream);
 		}
 
 		class MonoHttpsStreamWrapper : IMonoHttpsStream
 		{
 			SslClientStream sslStream;
-			CertificateValidationCallback2 validationCallback;
 #if !MONOTOUCH && !MONODROID
 			PropertyInfo piTrustFailure;
 #endif
@@ -94,12 +106,6 @@ namespace Mono.Net.Security
 			{
 				this.sslStream = sslStream;
 
-				sslStream.ServerCertValidation2 += (collection) => {
-					if (validationCallback == null)
-						return null;
-					return validationCallback (collection);
-				};
-
 #if !MONOTOUCH && !MONODROID
 				piTrustFailure = implType.GetProperty ("TrustFailure");
 #endif
@@ -107,11 +113,6 @@ namespace Mono.Net.Security
 
 			public Stream Stream {
 				get { return sslStream; }
-			}
-
-			public CertificateValidationCallback2 ServerCertValidationCallback2 {
-				get { return validationCallback; }
-				set { validationCallback = value; }
 			}
 
 			public X509Certificate SelectedClientCertificate {
