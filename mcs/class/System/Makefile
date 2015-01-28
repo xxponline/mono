@@ -48,14 +48,10 @@ LOCAL_MCS_FLAGS = -lib:$(bare_libdir)
 LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(bare_libdir)/System.dll -r:System.Xml.dll -r:MonoSecurity=Mono.Security.dll
 endif
 
-include ../../build/library.make
-
 #
 # Flags used to build the final version of System (when intermediate is not defined)
 #
-ifdef intermediate
-sourcefile = bare_System.dll.sources
-else
+ifndef intermediate
 LIB_MCS_FLAGS += -d:SECURITY_DEP -d:XML_DEP -r:PrebuiltSystem=$(secxml_libdir)/System.dll -r:System.Xml.dll -r:MonoSecurity=Mono.Security.dll $(FINAL_MCS_FLAGS)
 endif
 
@@ -68,6 +64,8 @@ EXTRA_DISTFILES = \
 	Test/System.Security.Cryptography.X509Certificates/pkits/x509build.cs	\
 	$(RESOURCE_FILES)				\
 	$(TEST_RESOURCES)
+
+include ../../build/library.make
 
 system_library_deps := \
 	$(secxml_libdir)/System.dll 		\
