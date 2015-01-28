@@ -39,48 +39,27 @@ namespace Mono.Security.Interface
 	public class MonoTlsProvider
 	{
 		IMonoTlsProvider provider;
-		#if !MOBILE
-		Type providerType;
-		MethodInfo createSslStreamMethod;
-		#endif
 
 		internal MonoTlsProvider (IMonoTlsProvider provider)
 		{
 			this.provider = provider;
-
-			#if !MOBILE
-			InitReflection ();
-			#endif
 		}
-
-		#if !MOBILE
-		void InitReflection ()
-		{
-			providerType = typeof(IMonoTlsProvider);
-			createSslStreamMethod = providerType.GetMethod ("CreateSslStream", BindingFlags.Instance | BindingFlags.Public);
-			if (createSslStreamMethod == null)
-				throw new NotSupportedException ("Internal error.");
-		}
-		#endif
 
 		public MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
 			LocalCertificateSelectionCallback userCertificateSelectionCallback)
 		{
-			IMonoSslStream sslStream;
+			MonoSslStream sslStream;
 			#if MOBILE
-			sslStream = provider.CreateSslStream (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
-			return new MonoSslStreamImpl (sslStream);
+			sslStream = new MonoSslStreamImpl ();
 			#else
-			sslStream = (IMonoSslStream)createSslStreamMethod.Invoke (provider, new object[] {
-				innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback
-			});
-			var obj = Activator.CreateInstance (
-				Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl", false, BindingFlags.Instance | BindingFlags.NonPublic,
-				null, new object[] { sslStream }, null, null);
-			return (MonoSslStream)obj.Unwrap();
+			var obj = Activator.CreateInstance (Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl");
+			sslStream = (MonoSslStream)obj.Unwrap ();
 			#endif
+
+			sslStream.Initialize (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
+			return sslStream;
 		}
 	}
 }

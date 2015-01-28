@@ -30,6 +30,9 @@ using Mono.Security.Interface;
 
 using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
 using XTransportContext = System.Net.TransportContext;
 using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
 
@@ -42,6 +45,9 @@ extern alias MonoSecurity;
 extern alias PrebuiltSystem;
 
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+
+using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
 
 using XTransportContext = PrebuiltSystem::System.Net.TransportContext;
 using XAuthenticatedStream = PrebuiltSystem::System.Net.Security.AuthenticatedStream;
@@ -70,16 +76,22 @@ namespace Mono.Net.Security
 	{
 		IMonoSslStream impl;
 
-		internal MonoSslStreamImpl (IMonoSslStream impl)
-		{
-			this.impl = impl;
-		}
-
 		IMonoSslStream Impl {
 			get {
 				CheckDisposed ();
 				return impl;
 			}
+		}
+
+		public override void Initialize (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			XRemoteCertificateValidationCallback userCertificateValidationCallback,
+			XLocalCertificateSelectionCallback userCertificateSelectionCallback)
+		{
+			impl = new LegacySslStream (
+				innerStream, leaveInnerStreamOpen,
+				(RemoteCertificateValidationCallback)(Delegate)userCertificateValidationCallback,
+				(LocalCertificateSelectionCallback)(Delegate)userCertificateSelectionCallback);
 		}
 
 		public override void AuthenticateAsClient (string targetHost)
