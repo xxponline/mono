@@ -606,7 +606,7 @@ namespace Mono.Net.Security
 			var t = Tuple.Create (targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation, this);
 
 			return Task.Factory.FromAsync ((callback, state) => {
-				var d = (Tuple<string, X509CertificateCollection, SslProtocols, bool, SslStream>) state;
+				var d = (Tuple<string, X509CertificateCollection, SslProtocols, bool, LegacySslStream>) state;
 				return d.Item5.BeginAuthenticateAsClient (d.Item1, d.Item2, d.Item3, d.Item4, callback, null);
 			}, EndAuthenticateAsClient, t);
 		}
@@ -621,7 +621,7 @@ namespace Mono.Net.Security
 			var t = Tuple.Create (serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation, this);
 
 			return Task.Factory.FromAsync ((callback, state) => {
-				var d = (Tuple<X509Certificate, bool, SslProtocols, bool, SslStream>) state;
+				var d = (Tuple<X509Certificate, bool, SslProtocols, bool, LegacySslStream>) state;
 				return d.Item5.BeginAuthenticateAsServer (d.Item1, d.Item2, d.Item3, d.Item4, callback, null);
 			}, EndAuthenticateAsServer, t);
 		}
