@@ -128,7 +128,9 @@ System.Net.Security/ProtectionLevel.cs
 System.Net.Security/RemoteCertificateValidationCallback.cs
 System.Net.Security/SslPolicyErrors.cs
 System.Net.Security/SslStream.cs
-System.Net.Sockets/AddressFamily.cs
+System.Net/SocketAddress.cs
+System.Net/SocketPermissionAttribute.cs
+System.Net/SocketPermission.cs
 System.Net.Sockets/AddressFamily.cs
 System.Net.Sockets/IOControlCode.cs
 System.Net.Sockets/IPPacketInformation.cs
@@ -176,6 +178,7 @@ System.Net/DnsEndPoint.cs
 System.Net/EndPoint.cs
 System.Net/EndPointListener.cs
 System.Net/EndPointManager.cs
+System.Net/EndpointPermission.cs
 System.Net/FileWebRequest.cs
 System.Net/FileWebRequestCreator.cs
 System.Net/FileWebResponse.cs
@@ -704,6 +707,7 @@ ReferenceSources/Win32Exception.cs
 
 ../../../external/referencesource/System/net/System/Net/_BufferOffsetSize.cs
 ../../../external/referencesource/System/net/System/Net/_LazyAsyncResult.cs
+../../../external/referencesource/System/net/System/Net/_LoggingObject.cs
 ../../../external/referencesource/System/net/System/Net/_ScatterGatherBuffers.cs
 ../../../external/referencesource/System/net/System/Net/cookie.cs
 ../../../external/referencesource/System/net/System/Net/cookiecollection.cs
