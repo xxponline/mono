@@ -38,6 +38,7 @@
 // SSCX = System.Security.Cryptography.X509Certificates from System.dll
 //
 
+#if MONO_FEATURE_NEW_TLS
 #if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MX = MonoSecurity::Mono.Security.X509;
@@ -362,3 +363,4 @@ namespace System.Net.Security
         #endif
     }
 }
+#endif
