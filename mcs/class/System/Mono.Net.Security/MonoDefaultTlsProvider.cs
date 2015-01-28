@@ -75,7 +75,6 @@ namespace Mono.Net.Security
 			CertificateValidationCallback2	validationCallback)
 		{
 			SslClientStream sslStream;
-#if SECURITY_DEP
 #if MONOTOUCH || MONODROID
 			sslStream = new HttpsClientStream (innerStream, request.ClientCertificates, request, buffer);
 #else
@@ -85,12 +84,21 @@ namespace Mono.Net.Security
 				request, buffer};
 			sslStream = (SslClientStream) Activator.CreateInstance (implType, args);
 #endif
-#endif
 
 			if (validationCallback != null)
 				sslStream.ServerCertValidation2 += validationCallback;
 
 			return (IMonoHttpsStream)sslStream;
+		}
+
+		public IMonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		{
+			return new LegacySslStream (
+				innerStream, leaveInnerStreamOpen,
+				userCertificateValidationCallback, userCertificateSelectionCallback);
 		}
 	}
 }

@@ -52,6 +52,11 @@ namespace Mono.Net.Security
 			Stream innerStream, X509CertificateCollection clientCertificates,
 			HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2 certValidationCallback);
+
+		IMonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback);
 #endif
 	}
 }
