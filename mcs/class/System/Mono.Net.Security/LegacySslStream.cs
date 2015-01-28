@@ -32,7 +32,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if SECURITY_DEP && !MONO_FEATURE_NEW_TLS
+#if SECURITY_DEP
 
 #if MONOTOUCH || MONODROID
 using Mono.Security.Protocol.Tls;
@@ -76,6 +76,13 @@ using System.Threading.Tasks;
 
 namespace Mono.Net.Security 
 {
+	internal delegate X509Certificate LegacyLocalCertificateSelectionCallback (
+		object sender,
+		string targetHost,
+		X509CertificateCollection localCertificates,
+		X509Certificate remoteCertificate,
+		string [] acceptableIssuers);
+
 	[MonoTODO ("Non-X509Certificate2 certificate is not supported")]
 	internal class LegacySslStream : AuthenticatedStream, IMonoSslStream
 	{
@@ -83,7 +90,7 @@ namespace Mono.Net.Security
 
 		SslStreamBase ssl_stream;
 		RemoteCertificateValidationCallback validation_callback;
-		LocalCertificateSelectionCallback selection_callback;
+		LegacyLocalCertificateSelectionCallback selection_callback;
 
 		#endregion // Fields
 
@@ -106,7 +113,7 @@ namespace Mono.Net.Security
 		}
 
 		[MonoTODO ("userCertificateValidationCallback is not passed X509Chain and SslPolicyErrors correctly")]
-		public LegacySslStream (Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		public LegacySslStream (Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, LegacyLocalCertificateSelectionCallback userCertificateSelectionCallback)
 			: base (innerStream, leaveInnerStreamOpen)
 		{
 			// they are nullable.
@@ -606,7 +613,7 @@ namespace Mono.Net.Security
 			var t = Tuple.Create (targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation, this);
 
 			return Task.Factory.FromAsync ((callback, state) => {
-				var d = (Tuple<string, X509CertificateCollection, SslProtocols, bool, SslStream>) state;
+				var d = (Tuple<string, X509CertificateCollection, SslProtocols, bool, LegacySslStream>) state;
 				return d.Item5.BeginAuthenticateAsClient (d.Item1, d.Item2, d.Item3, d.Item4, callback, null);
 			}, EndAuthenticateAsClient, t);
 		}
@@ -621,7 +628,7 @@ namespace Mono.Net.Security
 			var t = Tuple.Create (serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation, this);
 
 			return Task.Factory.FromAsync ((callback, state) => {
-				var d = (Tuple<X509Certificate, bool, SslProtocols, bool, SslStream>) state;
+				var d = (Tuple<X509Certificate, bool, SslProtocols, bool, LegacySslStream>) state;
 				return d.Item5.BeginAuthenticateAsServer (d.Item1, d.Item2, d.Item3, d.Item4, callback, null);
 			}, EndAuthenticateAsServer, t);
 		}
