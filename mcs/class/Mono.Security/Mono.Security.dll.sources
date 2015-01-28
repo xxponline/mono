@@ -254,6 +254,5 @@
 ./BouncyCastle/util/Arrays.cs
 
 ./Mono.Security.Interface/MonoSslStream.cs
-./Mono.Security.Interface/MonoSslStreamImpl.cs
 ./Mono.Security.Interface/MonoTlsProvider.cs
 ./Mono.Security.Interface/MonoTlsProviderFactory.cs

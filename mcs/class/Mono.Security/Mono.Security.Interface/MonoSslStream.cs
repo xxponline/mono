@@ -38,10 +38,6 @@ namespace Mono.Security.Interface
 {
 	public abstract class MonoSslStream : IMonoSslStream
 	{
-		internal MonoSslStream ()
-		{
-		}
-
 		public abstract void AuthenticateAsClient (string targetHost);
 
 		public abstract void AuthenticateAsClient (string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation);
