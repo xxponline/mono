@@ -23,6 +23,37 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+#if SECURITY_DEP
+#if MOBILE
+using Mono.Security.Interface;
+
+using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+
+using XTransportContext = System.Net.TransportContext;
+using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
+
+using XCipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
+using XHashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
+using XExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
+using XSslProtocols = System.Security.Authentication.SslProtocols;
+#else
+extern alias MonoSecurity;
+extern alias PrebuiltSystem;
+
+using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+
+using XTransportContext = PrebuiltSystem::System.Net.TransportContext;
+using XAuthenticatedStream = PrebuiltSystem::System.Net.Security.AuthenticatedStream;
+
+using XCipherAlgorithmType = PrebuiltSystem::System.Security.Authentication.CipherAlgorithmType;
+using XHashAlgorithmType = PrebuiltSystem::System.Security.Authentication.HashAlgorithmType;
+using XExchangeAlgorithmType = PrebuiltSystem::System.Security.Authentication.ExchangeAlgorithmType;
+using XSslProtocols = PrebuiltSystem::System.Security.Authentication.SslProtocols;
+
+using MonoSecurity::Mono.Security.Interface;
+#endif
+
 using System;
 using System.IO;
 using System.Net;
@@ -32,9 +63,8 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Security.Cryptography;
-using Mono.Net.Security;
 
-namespace Mono.Security.Interface
+namespace Mono.Net.Security
 {
 	class MonoSslStreamImpl : MonoSslStream
 	{
@@ -57,9 +87,9 @@ namespace Mono.Security.Interface
 			Impl.AuthenticateAsClient (targetHost);
 		}
 
-		public override void AuthenticateAsClient (string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+		public override void AuthenticateAsClient (string targetHost, XX509CertificateCollection clientCertificates, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
-		 	Impl.AuthenticateAsClient (targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation);
+			Impl.AuthenticateAsClient (targetHost, clientCertificates, (SslProtocols)enabledSslProtocols, checkCertificateRevocation);
 		}
 
 		public override IAsyncResult BeginAuthenticateAsClient (string targetHost, AsyncCallback asyncCallback, object asyncState)
@@ -67,9 +97,9 @@ namespace Mono.Security.Interface
 			return Impl.BeginAuthenticateAsClient (targetHost, asyncCallback, asyncState);
 		}
 
-		public override IAsyncResult BeginAuthenticateAsClient (string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation, AsyncCallback asyncCallback, object asyncState)
+		public override IAsyncResult BeginAuthenticateAsClient (string targetHost, XX509CertificateCollection clientCertificates, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation, AsyncCallback asyncCallback, object asyncState)
 		{
-			return Impl.BeginAuthenticateAsClient (targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation, asyncCallback, asyncState);
+			return Impl.BeginAuthenticateAsClient (targetHost, clientCertificates, (SslProtocols)enabledSslProtocols, checkCertificateRevocation, asyncCallback, asyncState);
 		}
 
 		public override void EndAuthenticateAsClient (IAsyncResult asyncResult)
@@ -82,9 +112,9 @@ namespace Mono.Security.Interface
 			Impl.AuthenticateAsServer (serverCertificate);
 		}
 
-		public override void AuthenticateAsServer (X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+		public override void AuthenticateAsServer (X509Certificate serverCertificate, bool clientCertificateRequired, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
-			Impl.AuthenticateAsServer (serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation);
+			Impl.AuthenticateAsServer (serverCertificate, clientCertificateRequired, (SslProtocols)enabledSslProtocols, checkCertificateRevocation);
 		}
 
 		public override IAsyncResult BeginAuthenticateAsServer (X509Certificate serverCertificate, AsyncCallback asyncCallback, object asyncState)
@@ -92,9 +122,9 @@ namespace Mono.Security.Interface
 			return Impl.BeginAuthenticateAsServer (serverCertificate, asyncCallback, asyncState);
 		}
 
-		public override IAsyncResult BeginAuthenticateAsServer (X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation, AsyncCallback asyncCallback, object asyncState)
+		public override IAsyncResult BeginAuthenticateAsServer (X509Certificate serverCertificate, bool clientCertificateRequired, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation, AsyncCallback asyncCallback, object asyncState)
 		{
-			return Impl.BeginAuthenticateAsServer (serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation, asyncCallback, asyncState);
+			return Impl.BeginAuthenticateAsServer (serverCertificate, clientCertificateRequired, (SslProtocols)enabledSslProtocols, checkCertificateRevocation, asyncCallback, asyncState);
 		}
 
 		public override void EndAuthenticateAsServer (IAsyncResult asyncResult)
@@ -107,9 +137,9 @@ namespace Mono.Security.Interface
 			return Impl.AuthenticateAsClientAsync (targetHost);
 		}
 
-		public override Task AuthenticateAsClientAsync (string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+		public override Task AuthenticateAsClientAsync (string targetHost, XX509CertificateCollection clientCertificates, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
-			return Impl.AuthenticateAsClientAsync (targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation);
+			return Impl.AuthenticateAsClientAsync (targetHost, clientCertificates, (SslProtocols)enabledSslProtocols, checkCertificateRevocation);
 		}
 
 		public override Task AuthenticateAsServerAsync (X509Certificate serverCertificate)
@@ -117,9 +147,9 @@ namespace Mono.Security.Interface
 			return Impl.AuthenticateAsServerAsync (serverCertificate);
 		}
 
-		public override Task AuthenticateAsServerAsync (X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+		public override Task AuthenticateAsServerAsync (X509Certificate serverCertificate, bool clientCertificateRequired, XSslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
-			return Impl.AuthenticateAsServerAsync (serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation);
+			return Impl.AuthenticateAsServerAsync (serverCertificate, clientCertificateRequired, (SslProtocols)enabledSslProtocols, checkCertificateRevocation);
 		}
 
 		public override void Flush ()
@@ -162,8 +192,8 @@ namespace Mono.Security.Interface
 			Impl.EndWrite (asyncResult);
 		}
 
-		public override TransportContext TransportContext {
-			get { return Impl.TransportContext; }
+		public override XTransportContext TransportContext {
+			get { return (XTransportContext)(object)Impl.TransportContext; }
 		}
 
 		public override bool IsAuthenticated {
@@ -186,24 +216,24 @@ namespace Mono.Security.Interface
 			get { return Impl.IsServer; }
 		}
 
-		public override CipherAlgorithmType CipherAlgorithm {
-			get { return Impl.CipherAlgorithm; }
+		public override XCipherAlgorithmType CipherAlgorithm {
+			get { return (XCipherAlgorithmType)Impl.CipherAlgorithm; }
 		}
 
 		public override int CipherStrength {
 			get { return Impl.CipherStrength; }
 		}
 
-		public override HashAlgorithmType HashAlgorithm {
-			get { return Impl.HashAlgorithm; }
+		public override XHashAlgorithmType HashAlgorithm {
+			get { return (XHashAlgorithmType)Impl.HashAlgorithm; }
 		}
 
 		public override int HashStrength {
 			get { return Impl.HashStrength; }
 		}
 
-		public override ExchangeAlgorithmType KeyExchangeAlgorithm {
-			get { return Impl.KeyExchangeAlgorithm; }
+		public override XExchangeAlgorithmType KeyExchangeAlgorithm {
+			get { return (XExchangeAlgorithmType)Impl.KeyExchangeAlgorithm; }
 		}
 
 		public override int KeyExchangeStrength {
@@ -235,8 +265,8 @@ namespace Mono.Security.Interface
 			Impl.SetLength (value);
 		}
 
-		public override AuthenticatedStream AuthenticatedStream {
-			get { return Impl.AuthenticatedStream; }
+		public override XAuthenticatedStream AuthenticatedStream {
+			get { return (XAuthenticatedStream)(Stream)Impl.AuthenticatedStream; }
 		}
 
 		public override int ReadTimeout {
@@ -261,8 +291,8 @@ namespace Mono.Security.Interface
 			get { return Impl.RemoteCertificate; }
 		}
 
-		public override SslProtocols SslProtocol {
-			get { return Impl.SslProtocol; }
+		public override XSslProtocols SslProtocol {
+			get { return (XSslProtocols)Impl.SslProtocol; }
 		}
 
 		void CheckDisposed ()
@@ -280,4 +310,5 @@ namespace Mono.Security.Interface
 		}
 	}
 }
+#endif
 

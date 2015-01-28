@@ -71,13 +71,16 @@ namespace Mono.Security.Interface
 			IMonoSslStream sslStream;
 			#if MOBILE
 			sslStream = provider.CreateSslStream (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
+			return new MonoSslStreamImpl (sslStream);
 			#else
 			sslStream = (IMonoSslStream)createSslStreamMethod.Invoke (provider, new object[] {
 				innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback
 			});
+			var obj = Activator.CreateInstance (
+				Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl", false, BindingFlags.Instance | BindingFlags.NonPublic,
+				null, new object[] { sslStream }, null, null);
+			return (MonoSslStream)obj.Unwrap();
 			#endif
-
-			return new MonoSslStreamImpl (sslStream);
 		}
 	}
 }
