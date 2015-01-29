@@ -362,10 +362,10 @@ System.Windows.Input/ICommand.cs
 
 Mono.Net.Security/IMonoTlsProvider.cs
 Mono.Net.Security/IMonoSslStream.cs
-Mono.Net.Security/IMonoHttpsStream.cs
 Mono.Net.Security/LegacySslStream.cs
-Mono.Net.Security/MonoDefaultTlsProvider.cs
+Mono.Net.Security/MonoSslStreamImpl.cs
 Mono.Net.Security/MonoTlsProviderFactory.cs
+Mono.Net.Security/MonoTlsProviderImpl.cs
 
 ReferenceSources/BootstrapHelper.cs
 ReferenceSources/BinaryCompatibility.cs

@@ -73,7 +73,7 @@ namespace Mono.Security.Interface
 		{
 			MonoSslStream sslStream;
 			#if MOBILE
-			sslStream = new MonoSslStreamImpl ();
+			sslStream = (MonoSslStream)(object)new MonoSslStreamImpl ();
 			#else
 			var obj = Activator.CreateInstance (Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl");
 			sslStream = (MonoSslStream)obj.Unwrap ();

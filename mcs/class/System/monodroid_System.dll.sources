@@ -76,5 +76,9 @@ System/AndroidPlatform.cs
 ../Mono.Security/Mono.Security.X509.Extensions/GeneralNames.cs
 ../Mono.Security/Mono.Security.X509.Extensions/NetscapeCertTypeExtension.cs
 ../Mono.Security/Mono.Security.X509.Extensions/SubjectAltNameExtension.cs
-
+../Mono.Security/Mono.Security.Interface/IMonoHttpsStream.cs
+../Mono.Security/Mono.Security.Interface/MonoDefaultTlsProvider.cs
+../Mono.Security/Mono.Security.Interface/MonoSslStream.cs
+../Mono.Security/Mono.Security.Interface/MonoTlsProvider.cs
+../Mono.Security/Mono.Security.Interface/MonoTlsProviderFactory.cs
 

@@ -26,6 +26,9 @@
 
 #if SECURITY_DEP
 #if MOBILE
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
 using Mono.Security.Protocol.Tls;
 using Mono.Security.Interface;
 #else
