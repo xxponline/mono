@@ -26,9 +26,11 @@
 #if SECURITY_DEP
 
 #if MONOTOUCH || MONODROID
+using Mono.Security.Interface;
 using Mono.Security.Protocol.Tls;
 #else
 extern alias MonoSecurity;
+using MonoSecurity::Mono.Security.Interface;
 using MonoSecurity::Mono.Security.Protocol.Tls;
 using System.Reflection;
 #endif
