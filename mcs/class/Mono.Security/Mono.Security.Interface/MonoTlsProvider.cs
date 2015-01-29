@@ -33,7 +33,12 @@ using Mono.Security.Protocol.Tls;
 
 namespace Mono.Security.Interface
 {
-	public abstract class MonoTlsProvider
+#if INSIDE_SYSTEM
+	internal
+#else
+	public
+#endif
+	abstract class MonoTlsProvider
 	{
 		public abstract bool SupportsHttps {
 			get;

@@ -28,6 +28,10 @@
 #if MOBILE
 using MSI = Mono.Security.Interface;
 using TLS = Mono.Security.Protocol.Tls;
+
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
 using XHttpWebRequest = System.Net.HttpWebRequest;
 using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #else
