@@ -43,7 +43,7 @@
 extern alias MonoSecurity;
 using MX = MonoSecurity::Mono.Security.X509;
 
-#if MONO_SECURITY_ALIAS
+#if MONO_SECURITY_ALIAS && MONO_INSIDE_SYSTEM
 using MSCX = MonoSecurity::System.Security.Cryptography.X509Certificates;
 
 #else

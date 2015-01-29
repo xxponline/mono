@@ -35,7 +35,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Assembly\" />
     <Folder Include="common\" />
     <Folder Include="Mono.Security.Providers.DotNet\" />
   </ItemGroup>
