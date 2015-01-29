@@ -23,6 +23,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+#if SECURITY_DEP
+#if MOBILE
+using MSI = Mono.Security.Interface;
+#else
+extern alias MonoSecurity;
+using MSI = MonoSecurity::Mono.Security.Interface;
+#endif
+#endif
+
 using System;
 
 namespace Mono.Net.Security
@@ -51,7 +61,8 @@ namespace Mono.Net.Security
 		static IMonoTlsProvider CreateDefaultProvider ()
 		{
 #if SECURITY_DEP
-			return new MonoDefaultTlsProvider ();
+			var monoSecurityProvider = MSI.MonoTlsProviderFactory.GetProvider ();
+			return new MonoTlsProviderImpl (monoSecurityProvider);
 #else
 			return null;
 #endif

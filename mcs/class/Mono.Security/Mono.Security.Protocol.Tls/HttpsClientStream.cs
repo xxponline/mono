@@ -34,7 +34,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using SNS = System.Net.Security;
 using SNCX = System.Security.Cryptography.X509Certificates;
-using Mono.Net.Security;
+using Mono.Security.Interface;
 
 namespace Mono.Security.Protocol.Tls {
 

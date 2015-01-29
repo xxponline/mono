@@ -23,78 +23,57 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-#if SECURITY_DEP
-
-#if MONOTOUCH || MONODROID
-using Mono.Security.Interface;
-using Mono.Security.Protocol.Tls;
-#else
-extern alias MonoSecurity;
-using MonoSecurity::Mono.Security.Interface;
-using MonoSecurity::Mono.Security.Protocol.Tls;
-using System.Reflection;
-#endif
-
 using System;
 using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Mono.Security.Protocol.Tls;
+using Mono.Net.Security;
 
-namespace Mono.Net.Security
+namespace Mono.Security.Interface
 {
-	class MonoDefaultTlsProvider : IMonoTlsProvider
+	class MonoDefaultTlsProvider : MonoTlsProvider
 	{
-		readonly Type implType;
-
-		public MonoDefaultTlsProvider ()
-		{
-#if NET_2_1 && SECURITY_DEP
-			implType = typeof (HttpsClientStream);
-#else
-			// HttpsClientStream is an internal glue class in Mono.Security.dll
-			implType = Type.GetType ("Mono.Security.Protocol.Tls.HttpsClientStream, " + Consts.AssemblyMono_Security, false);
-
-			if (implType == null) {
-				string msg = "Missing Mono.Security.dll assembly. Support for SSL/TLS is unavailable.";
-				throw new NotSupportedException (msg);
-			}
-#endif
-		}
-
-		public bool IsHttpsStream (Stream stream)
+		public override bool IsHttpsStream (Stream stream)
 		{
 			return stream is IMonoHttpsStream;
 		}
 
-		public IMonoHttpsStream GetHttpsStream (Stream stream)
+		public override IMonoHttpsStream GetHttpsStream (Stream stream)
 		{
 			return (IMonoHttpsStream)stream;
 		}
 
-		public IMonoHttpsStream CreateHttpsClientStream (
+		public override IMonoHttpsStream CreateHttpsClientStream (
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback)
 		{
 			SslClientStream sslStream;
-#if SECURITY_DEP
-#if MONOTOUCH || MONODROID
 			sslStream = new HttpsClientStream (innerStream, request.ClientCertificates, request, buffer);
-#else
-			object[] args = new object [4] {
-				innerStream,
-				request.ClientCertificates,
-				request, buffer};
-			sslStream = (SslClientStream) Activator.CreateInstance (implType, args);
-#endif
-#endif
 
 			if (validationCallback != null)
 				sslStream.ServerCertValidation2 += validationCallback;
 
 			return (IMonoHttpsStream)sslStream;
 		}
+
+		public override MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		{
+			MonoSslStream sslStream;
+			#if MOBILE
+			sslStream = new MonoSslStreamImpl ();
+			#else
+			var obj = Activator.CreateInstance (Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl");
+			sslStream = (MonoSslStream)obj.Unwrap ();
+			#endif
+
+			sslStream.Initialize (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
+			return sslStream;
+		}
 	}
 }
-#endif
 

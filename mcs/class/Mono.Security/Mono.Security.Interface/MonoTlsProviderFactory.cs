@@ -37,26 +37,24 @@ namespace Mono.Security.Interface
 					return defaultProvider;
 
 				try {
-					systemProvider = GetSystemProvider ();
+					defaultProvider = GetDefaultProvider ();
 				} catch (Exception ex) {
 					throw new NotSupportedException ("TLS Support not available.", ex);
 				}
 
-				if (systemProvider == null)
+				if (defaultProvider == null)
 					throw new NotSupportedException ("TLS Support not available.");
 
-				defaultProvider = new MonoTlsProvider (systemProvider);
 				return defaultProvider;
 			}
 		}
 
-		static MNS.IMonoTlsProvider GetSystemProvider ()
+		static MonoTlsProvider GetDefaultProvider ()
 		{
-			return MNS.MonoTlsProviderFactory.GetProvider ();
+			return new MonoDefaultTlsProvider ();
 		}
 
 		static object locker = new object ();
-		static MNS.IMonoTlsProvider systemProvider;
 		static MonoTlsProvider defaultProvider;
 	}
 }
