@@ -1,5 +1,5 @@
 ﻿//
-// IMonoTlsProvider.cs
+// IMonoHttpsStream.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -23,37 +23,29 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#if SECURITY_DEP
-#if MOBILE
-using Mono.Security.Protocol.Tls;
-using Mono.Security.Interface;
-#else
-extern alias MonoSecurity;
-using MonoSecurity::Mono.Security.Protocol.Tls;
-using MonoSecurity::Mono.Security.Interface;
-#endif
-#endif
-
 using System;
 using System.IO;
-using System.Net;
-using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Mono.Net.Security
+namespace Mono.Security.Interface
 {
-	interface IMonoTlsProvider
+	[Obsolete ("This is based on an old API which will be removed once the transition is complete.")]
+	public interface IMonoHttpsStream
 	{
-		bool IsHttpsStream (Stream stream);
+		Stream Stream {
+			get;
+		}
 
-		IMonoHttpsStream GetHttpsStream (Stream stream);
+		X509Certificate SelectedClientCertificate {
+			get;
+		}
 
-#if SECURITY_DEP
-		IMonoHttpsStream CreateHttpsClientStream (
-			Stream innerStream, X509CertificateCollection clientCertificates,
-			HttpWebRequest request, byte[] buffer,
-			CertificateValidationCallback2 certValidationCallback);
-#endif
+		X509Certificate ServerCertificate {
+			get;
+		}
+
+		bool TrustFailure {
+			get;
+		}
 	}
 }
