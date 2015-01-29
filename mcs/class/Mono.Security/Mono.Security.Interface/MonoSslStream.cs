@@ -36,7 +36,7 @@ using Mono.Net.Security;
 
 namespace Mono.Security.Interface
 {
-	public abstract class MonoSslStream : IMonoSslStream
+	public abstract class MonoSslStream
 	{
 		public abstract void Initialize (
 			Stream innerStream, bool leaveInnerStreamOpen,

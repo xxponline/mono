@@ -41,7 +41,7 @@ using System.Security.Cryptography;
 
 namespace Mono.Net.Security
 {
-	public interface IMonoSslStream : IDisposable
+	interface IMonoSslStream : IDisposable
 	{
 		AuthenticatedStream AuthenticatedStream {
 			get;
