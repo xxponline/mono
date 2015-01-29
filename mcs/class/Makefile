@@ -24,6 +24,7 @@ net_2_0_dirs := \
 	Mono.Posix			\
 	System.Core			\
 	Mono.Security			\
+	Mono.Security.Providers		\
 	System.Security			\
 	System.Configuration		\
 	I18N				\

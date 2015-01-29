@@ -1,5 +1,5 @@
 //
-// MonoTlsProvider.cs
+// MonoDefaultTlsProvider.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -23,37 +23,59 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Mono.Security.Protocol.Tls;
+using Mono.Security.Interface;
 
-namespace Mono.Security.Interface
+namespace Mono.Security.Providers
 {
-	public abstract class MonoTlsProvider
+	/*
+	 * This provider only uses the public .NET APIs from System.dll.
+	 * 
+	 * It is primarily intended for testing.
+	 */
+	public class DotNotTlsProvider : MonoTlsProvider
 	{
-		public abstract bool SupportsHttps {
-			get;
+		public override bool SupportsHttps {
+			get { return false; }
 		}
 
-		public abstract bool SupportsSslStream {
-			get;
+		public override bool SupportsSslStream {
+			get { return true; }
 		}
 
-		public abstract bool IsHttpsStream (Stream stream);
+		public override bool IsHttpsStream (Stream stream)
+		{
+			return false;
+		}
 
-		public abstract IMonoHttpsStream GetHttpsStream (Stream stream);
+		public override IMonoHttpsStream GetHttpsStream (Stream stream)
+		{
+			throw new InvalidOperationException ();
+		}
 
-		public abstract IMonoHttpsStream CreateHttpsClientStream (
+		public override IMonoHttpsStream CreateHttpsClientStream (
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
-			CertificateValidationCallback2	validationCallback);
+			CertificateValidationCallback2	validationCallback)
+		{
+			throw new NotSupportedException ();
+		}
 
-		public abstract MonoSslStream CreateSslStream (
+		public override MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
-			LocalCertificateSelectionCallback userCertificateSelectionCallback);
+			LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		{
+			var sslStream = new DotNetSslStreamImpl ();
+			sslStream.Initialize (
+				innerStream, leaveInnerStreamOpen,
+				userCertificateValidationCallback, userCertificateSelectionCallback);
+			return sslStream;
+		}
 	}
 }
+

@@ -1,5 +1,5 @@
 //
-// MonoTlsProvider.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -23,37 +23,27 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using System.IO;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using Mono.Security.Protocol.Tls;
+using System.Reflection;
+using System.Resources;
+using System.Security;
+using System.Security.Permissions;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-namespace Mono.Security.Interface
-{
-	public abstract class MonoTlsProvider
-	{
-		public abstract bool SupportsHttps {
-			get;
-		}
+// General Information about the system assembly
 
-		public abstract bool SupportsSslStream {
-			get;
-		}
+[assembly: AssemblyVersion (Consts.FxVersion)]
 
-		public abstract bool IsHttpsStream (Stream stream);
+[assembly: AssemblyCompany ("MONO development team")]
+[assembly: AssemblyCopyright ("(c) 2005 Xamarin")]
+[assembly: AssemblyDescription ("Mono.Security.Providers.dll")]
+[assembly: AssemblyProduct ("MONO CLI")]
+[assembly: AssemblyTitle ("Mono.Security.Providers.dll")]
+[assembly: CLSCompliant (true)]
+[assembly: ComVisible (false)]
+[assembly: NeutralResourcesLanguage ("en-US")]
 
-		public abstract IMonoHttpsStream GetHttpsStream (Stream stream);
+[assembly: AssemblyDelaySign (true)]
+[assembly: AssemblyKeyFile ("../mono.pub")]
 
-		public abstract IMonoHttpsStream CreateHttpsClientStream (
-			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
-			CertificateValidationCallback2	validationCallback);
-
-		public abstract MonoSslStream CreateSslStream (
-			Stream innerStream, bool leaveInnerStreamOpen,
-			RemoteCertificateValidationCallback userCertificateValidationCallback,
-			LocalCertificateSelectionCallback userCertificateSelectionCallback);
-	}
-}

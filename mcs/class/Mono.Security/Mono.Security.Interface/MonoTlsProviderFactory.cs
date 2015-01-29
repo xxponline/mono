@@ -49,13 +49,22 @@ namespace Mono.Security.Interface
 			}
 		}
 
+		public static bool HasProvider {
+			get { return defaultProvider != null; }
+		}
+
+		public static void InstallProvider (MonoTlsProvider provider)
+		{
+			defaultProvider = provider;
+		}
+
 		static MonoTlsProvider GetDefaultProvider ()
 		{
 			return new MonoDefaultTlsProvider ();
 		}
 
 		static object locker = new object ();
-		static MonoTlsProvider defaultProvider;
+		static volatile MonoTlsProvider defaultProvider;
 	}
 }
 

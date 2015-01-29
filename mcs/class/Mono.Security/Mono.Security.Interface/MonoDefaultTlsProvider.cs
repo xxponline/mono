@@ -35,6 +35,14 @@ namespace Mono.Security.Interface
 {
 	class MonoDefaultTlsProvider : MonoTlsProvider
 	{
+		public override bool SupportsHttps {
+			get { return true; }
+		}
+
+		public override bool SupportsSslStream {
+			get { return true; }
+		}
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return stream is IMonoHttpsStream;
