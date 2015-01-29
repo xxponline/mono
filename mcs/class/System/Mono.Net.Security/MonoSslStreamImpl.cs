@@ -91,7 +91,7 @@ namespace Mono.Net.Security
 			impl = new LegacySslStream (
 				innerStream, leaveInnerStreamOpen,
 				(RemoteCertificateValidationCallback)(Delegate)userCertificateValidationCallback,
-				(LocalCertificateSelectionCallback)(Delegate)userCertificateSelectionCallback);
+				(LegacyLocalCertificateSelectionCallback)(Delegate)userCertificateSelectionCallback);
 		}
 
 		public override void AuthenticateAsClient (string targetHost)
