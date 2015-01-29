@@ -29,37 +29,23 @@ using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using Mono.Net.Security;
-#if !MOBILE
-using System.Reflection;
-#endif
+using Mono.Security.Protocol.Tls;
 
 namespace Mono.Security.Interface
 {
-	public class MonoTlsProvider
+	public abstract class MonoTlsProvider
 	{
-		IMonoTlsProvider provider;
+		public abstract bool IsHttpsStream (Stream stream);
 
-		internal MonoTlsProvider (IMonoTlsProvider provider)
-		{
-			this.provider = provider;
-		}
+		public abstract IMonoHttpsStream GetHttpsStream (Stream stream);
 
-		public MonoSslStream CreateSslStream (
+		public abstract IMonoHttpsStream CreateHttpsClientStream (
+			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
+			CertificateValidationCallback2	validationCallback);
+
+		public abstract MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
-			LocalCertificateSelectionCallback userCertificateSelectionCallback)
-		{
-			MonoSslStream sslStream;
-			#if MOBILE
-			sslStream = new MonoSslStreamImpl ();
-			#else
-			var obj = Activator.CreateInstance (Consts.AssemblySystem, "Mono.Net.Security.MonoSslStreamImpl");
-			sslStream = (MonoSslStream)obj.Unwrap ();
-			#endif
-
-			sslStream.Initialize (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
-			return sslStream;
-		}
+			LocalCertificateSelectionCallback userCertificateSelectionCallback);
 	}
 }

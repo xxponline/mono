@@ -76,7 +76,7 @@ namespace Mono.Net.Security
 	{
 		IMonoSslStream impl;
 
-		IMonoSslStream Impl {
+		internal IMonoSslStream Impl {
 			get {
 				CheckDisposed ();
 				return impl;
