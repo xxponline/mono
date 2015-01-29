@@ -38,7 +38,7 @@ namespace Mono.Security.Providers
 	 * 
 	 * It is primarily intended for testing.
 	 */
-	public class DotNotTlsProvider : MonoTlsProvider
+	public class DotNetTlsProvider : MonoTlsProvider
 	{
 		public override bool SupportsHttps {
 			get { return false; }
