@@ -67,6 +67,15 @@ namespace Mono.Net.Security
 			Stream innerStream, bool leaveInnerStreamOpen,
 			XRemoteCertificateValidationCallback userCertificateValidationCallback,
 			XLocalCertificateSelectionCallback userCertificateSelectionCallback);
+
+		IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, SchProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			LocalCertSelectionCallback certSelectionDelegate,
+			RemoteCertValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings);
 #endif
 	}
 }

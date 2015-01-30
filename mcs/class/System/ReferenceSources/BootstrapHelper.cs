@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #if !MONO_FEATURE_NEW_TLS
+using System.Security.Cryptography.X509Certificates;
+
 namespace System.Net.Security
 {
 	//
@@ -43,5 +45,8 @@ namespace System.Net.Security
 		// Request null ciphers only
 		NoEncryption
 	}
+
+	internal delegate bool RemoteCertValidationCallback(string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
+	internal delegate X509Certificate LocalCertSelectionCallback(string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers);
 }
 #endif

@@ -65,6 +65,7 @@ using Mono.Security.Interface;
 using System.Runtime.InteropServices;
 using System.Security.Authentication.ExtendedProtection;
 using SSCX = System.Security.Cryptography.X509Certificates;
+using MNS = Mono.Net.Security;
 
 namespace System.Net.Security
 {
@@ -90,6 +91,12 @@ namespace System.Net.Security
                                         bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus, EncryptionPolicy encryptionPolicy,
                                         LocalCertSelectionCallback certSelectionDelegate, RemoteCertValidationCallback remoteValidationCallback, SSPIConfiguration userConfig)
         {
+            var provider = MNS.MonoTlsProviderFactory.GetProvider();
+            var settings = userConfig != null ? userConfig.Settings : null;
+            var context = provider.CreateTlsContext(
+                hostname, serverMode, protocolFlags, serverCertificate, clientCertificates,
+                remoteCertRequired, checkCertName, checkCertRevocationStatus, encryptionPolicy,
+                certSelectionDelegate, remoteValidationCallback, settings);
             #if MONO_FEATURE_NEW_TLS
             TlsConfiguration config;
             if (serverMode)
