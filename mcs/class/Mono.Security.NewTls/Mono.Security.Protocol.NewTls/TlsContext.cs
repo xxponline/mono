@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Security;
 using System.Security.Cryptography;
+using Mono.Security.Interface;
 
 namespace Mono.Security.Protocol.NewTls
 {

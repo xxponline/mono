@@ -351,9 +351,6 @@
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\HashAlgorithmType.cs">
       <Link>Mono.Security.Protocol.NewTls\HashAlgorithmType.cs</Link>
     </Compile>
-    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs">
-      <Link>Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs</Link>
-    </Compile>
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\RenegotiationFlags.cs">
       <Link>Mono.Security.Protocol.NewTls\RenegotiationFlags.cs</Link>
     </Compile>
@@ -624,6 +621,7 @@
     <Compile Include="Mono.Security.Protocol.Tls.Handshake.Server\TlsServerKeyExchange.cs" />
     <Compile Include="Mono.Security.Cryptography\TlsHMAC.cs" />
     <Compile Include="Mono.Security.Interface\MonoTlsSettings.cs" />
+    <Compile Include="Mono.Security.Interface\IBufferOffsetSize.cs" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

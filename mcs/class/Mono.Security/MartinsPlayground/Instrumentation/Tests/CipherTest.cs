@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Mono.Security.Interface;
 using Mono.Security.Protocol.NewTls;
 using Mono.Security.Protocol.NewTls.Cipher;
 using NUnit.Framework;

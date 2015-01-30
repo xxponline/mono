@@ -147,7 +147,6 @@
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/HandshakeHashType.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/HandshakeParameters.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/HashAlgorithmType.cs
-../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/IBufferOffsetSize.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/RenegotiationFlags.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/SecretParameters.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/SecureBuffer.cs
@@ -251,6 +250,7 @@
 ./BouncyCastle/math/BigInteger.cs
 ./BouncyCastle/util/Arrays.cs
 
+./Mono.Security.Interface/IBufferOffsetSize.cs
 ./Mono.Security.Interface/IMonoHttpsStream.cs
 ./Mono.Security.Interface/MonoDefaultTlsProvider.cs
 ./Mono.Security.Interface/MonoSslStream.cs

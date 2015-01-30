@@ -1,10 +1,10 @@
 ﻿//
-// SecureBuffer.cs
+// IBufferOffsetSize.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
 //
-// Copyright (c) 2014 Xamarin Inc. (http://www.xamarin.com)
+// Copyright (c) 2015 Xamarin, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,64 +23,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using Mono.Security.Interface;
-
-namespace Mono.Security.Protocol.NewTls
+namespace Mono.Security.Interface
 {
-	public class SecureBuffer : SecretParameters, IBufferOffsetSize
+	public interface IBufferOffsetSize
 	{
-		byte[] buffer;
-
-		public byte[] Buffer {
-			get {
-				CheckDisposed ();
-				return buffer;
-			}
+		byte[] Buffer {
+			get;
 		}
 
-		public int Size {
-			get {
-				CheckDisposed ();
-				return buffer != null ? buffer.Length : 0;
-			}
+		int Offset {
+			get;
 		}
 
-		int IBufferOffsetSize.Offset {
-			get { return 0; }
-		}
-
-		public SecureBuffer (int size)
-		{
-			buffer = new byte [size];
-		}
-
-		public SecureBuffer (byte[] buffer)
-		{
-			this.buffer = buffer;
-		}
-
-		public byte[] StealBuffer ()
-		{
-			CheckDisposed ();
-			var retval = this.buffer;
-			this.buffer = null;
-			return retval;
-		}
-
-		public static SecureBuffer CreateCopy (byte[] buffer)
-		{
-			var copy = new byte [buffer.Length];
-			Array.Copy (buffer, copy, buffer.Length);
-			return new SecureBuffer (copy);
-		}
-
-		protected override void Clear ()
-		{
-			if (buffer != null) {
-				Array.Clear (buffer, 0, buffer.Length);
-				buffer = null;
-			}
+		int Size {
+			get;
 		}
 	}
 }

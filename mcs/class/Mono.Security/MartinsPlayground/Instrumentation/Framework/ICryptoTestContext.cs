@@ -1,5 +1,6 @@
 ﻿extern alias MonoSecurity;
 using System;
+using MonoSecurity::Mono.Security.Interface;
 using MonoSecurity::Mono.Security.Protocol.NewTls;
 using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
 using MonoSecurity::Mono.Security.Protocol.NewTls.Handshake;

@@ -48,7 +48,6 @@
     <Compile Include="Mono.Security.Protocol.NewTls\HandshakeHashType.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\HandshakeParameters.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\HashAlgorithmType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\RenegotiationFlags.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\SecretParameters.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\SecureBuffer.cs" />

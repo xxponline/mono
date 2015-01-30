@@ -9,6 +9,7 @@ using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using MonoSecurity::Mono.Security.Interface;
 using MonoSecurity::Mono.Security.Protocol.NewTls;
 using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
 using MonoSecurity::Mono.Security.Protocol.NewTls.Handshake;
