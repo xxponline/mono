@@ -38,8 +38,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 
 using MonoSecurity::Mono.Security.Protocol.NewTls;
-using MonoSslStreamFactory = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStreamFactory;
-using MonoSslStream = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStream;
+using Mono.Security.Providers.NewTls;
 
 namespace Mono.Security.Instrumentation.Console
 {
@@ -53,14 +52,14 @@ namespace Mono.Security.Instrumentation.Console
 		}
 
 		TlsSettings settings;
-		MonoSslStream monoSslStream;
+		MonoNewTlsStream monoSslStream;
 
 		public override TlsConnectionInfo GetConnectionInfo ()
 		{
 			return settings.ConnectionInfo;
 		}
 
-		protected abstract MonoSslStream Start (Socket socket, TlsSettings settings);
+		protected abstract MonoNewTlsStream Start (Socket socket, TlsSettings settings);
 
 		protected abstract TlsSettings GetSettings ();
 

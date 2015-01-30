@@ -84,9 +84,9 @@ namespace Mono.Security.Instrumentation.Console
 		{
 			// Connection ("-server=openssl", "-client=openssl", "-verbose");
 			// RunTests ("-include=One", "-server=mono", "-client=mono", "-verbose");
-			// Client ("--client=mono", "-verbose");
+			Client ("--client=mono", "-verbose");
 			// RunTests ("-server=mono", "-client=mono", "-include=Martin");
-			RunTests ("-include=Martin");
+			// RunTests ("-include=Martin");
 		}
 
 		void GenerateCbc (string filename)

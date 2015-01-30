@@ -11,11 +11,11 @@ using System.Net.Security;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-using MonoSecurity::Mono.Security.Protocol.NewTls;
 using SslProtocols = System.Security.Authentication.SslProtocols;
 using EncryptionPolicy = NewMonoSource::System.Net.Security.EncryptionPolicy;
-using MonoSslStreamFactory = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStreamFactory;
-using MonoSslStream = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStream;
+
+using MonoSecurity::Mono.Security.Protocol.NewTls;
+using Mono.Security.Providers.NewTls;
 
 using SSCX = MonoSecurity::System.Security.Cryptography.X509Certificates;
 using MX = MonoSecurity::Mono.Security.X509;
@@ -52,7 +52,7 @@ namespace Mono.Security.Instrumentation.Console
 			return settings;
 		}
 
-		protected override MonoSslStream Start (Socket socket, TlsSettings settings)
+		protected override MonoNewTlsStream Start (Socket socket, TlsSettings settings)
 		{
 			var monoParams = Parameters as IMonoServerParameters;
 			if (monoParams != null)
@@ -61,7 +61,7 @@ namespace Mono.Security.Instrumentation.Console
 			settings.ClientCertValidationCallback = ClientCertValidationCallback;
 
 			var stream = new NetworkStream (socket);
-			return MonoSslStreamFactory.CreateServer (
+			return MonoNewTlsStreamFactory.CreateServer (
 				stream, false, null, null, EncryptionPolicy.RequireEncryption, settings,
 				Certificate.Certificate, false, SslProtocols.Tls12, false);
 		}

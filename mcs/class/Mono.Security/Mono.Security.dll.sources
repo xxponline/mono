@@ -148,8 +148,6 @@
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/HandshakeParameters.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/HashAlgorithmType.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/IBufferOffsetSize.cs
-../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/MonoSslStream.cs
-../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/MonoSslStreamFactory.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/RenegotiationFlags.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/SecretParameters.cs
 ../Mono.Security.NewTls/Mono.Security.Protocol.NewTls/SecureBuffer.cs

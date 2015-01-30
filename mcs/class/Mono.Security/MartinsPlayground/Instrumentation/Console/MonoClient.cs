@@ -13,12 +13,12 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Authentication;
 
-using MonoSecurity::Mono.Security.Protocol.NewTls;
 using NewSslPolicyErrors = NewMonoSource::System.Net.Security.SslPolicyErrors;
 using SslProtocols = System.Security.Authentication.SslProtocols;
 using EncryptionPolicy = NewMonoSource::System.Net.Security.EncryptionPolicy;
-using MonoSslStreamFactory = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStreamFactory;
-using MonoSslStream = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStream;
+
+using MonoSecurity::Mono.Security.Protocol.NewTls;
+using Mono.Security.Providers.NewTls;
 
 using SSCX = System.Security.Cryptography.X509Certificates;
 using MX = MonoSecurity::Mono.Security.X509;
@@ -50,7 +50,7 @@ namespace Mono.Security.Instrumentation.Console
 			return settings;
 		}
 
-		protected override MonoSslStream Start (Socket socket, TlsSettings settings)
+		protected override MonoNewTlsStream Start (Socket socket, TlsSettings settings)
 		{
 			Debug ("Connected.");
 
@@ -61,7 +61,8 @@ namespace Mono.Security.Instrumentation.Console
 			var targetHost = "Hamiller-Tube.local";
 
 			var stream = new NetworkStream (socket);
-			return MonoSslStreamFactory.CreateClient (
+
+			return MonoNewTlsStreamFactory.CreateClient (
 				stream, false, RemoteValidationCallback, null, EncryptionPolicy.RequireEncryption, settings,
 				targetHost, clientCerts, SslProtocols.Tls12, false);
 		}
