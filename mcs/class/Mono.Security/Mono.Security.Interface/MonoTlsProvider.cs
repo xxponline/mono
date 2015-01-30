@@ -38,6 +38,23 @@ namespace Mono.Security.Interface
 #else
 	public
 #endif
+	delegate bool MonoRemoteCertificateValidationCallback (
+		string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
+
+#if INSIDE_SYSTEM
+	internal
+#else
+	public
+#endif
+	delegate X509Certificate MonoLocalCertificateSelectionCallback (
+		string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate,
+		string[] acceptableIssuers);
+
+#if INSIDE_SYSTEM
+	internal
+#else
+	public
+#endif
 	abstract class MonoTlsProvider
 	{
 		public abstract bool SupportsHttps {
@@ -49,6 +66,10 @@ namespace Mono.Security.Interface
 		}
 
 		public abstract bool SupportsMonoExtensions {
+			get;
+		}
+
+		public abstract bool SupportsTlsContext {
 			get;
 		}
 
@@ -76,5 +97,13 @@ namespace Mono.Security.Interface
 			LocalCertificateSelectionCallback userCertificateSelectionCallback,
 			MonoTlsSettings settings);
 
+		public abstract IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings);
 	}
 }

@@ -47,6 +47,10 @@ namespace Mono.Security.Interface
 			get { return false; }
 		}
 
+		public override bool SupportsTlsContext {
+			get { return false; }
+		}
+
 #pragma warning disable 618
 
 		public override bool IsHttpsStream (Stream stream)
@@ -98,6 +102,18 @@ namespace Mono.Security.Interface
 			MonoTlsSettings settings)
 		{
 			throw new NotSupportedException ("Mono-specific API Extensions not available.");
+		}
+
+		public override IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ();
 		}
 	}
 }

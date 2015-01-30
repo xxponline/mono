@@ -52,6 +52,10 @@ namespace Mono.Security.Providers.NewTls
 			get { return true; }
 		}
 
+		public override bool SupportsTlsContext {
+			get { return true; }
+		}
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return false;
@@ -88,6 +92,18 @@ namespace Mono.Security.Providers.NewTls
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
 			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
 			MonoTlsSettings settings)
 		{
 			throw new NotImplementedException ();

@@ -52,6 +52,10 @@ namespace Mono.Security.Providers.DotNet
 			get { return false; }
 		}
 
+		public override bool SupportsTlsContext {
+			get { return false; }
+		}
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return false;
@@ -92,6 +96,18 @@ namespace Mono.Security.Providers.DotNet
 			MonoTlsSettings settings)
 		{
 			throw new NotSupportedException ("Mono-specific API Extensions not available.");
+		}
+
+		public override IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ();
 		}
 	}
 }
