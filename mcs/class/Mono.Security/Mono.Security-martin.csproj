@@ -619,7 +619,6 @@
     <Compile Include="Mono.Security.Cryptography\TlsHMAC.cs" />
     <Compile Include="Mono.Security.Interface\MonoTlsSettings.cs" />
     <Compile Include="Mono.Security.Interface\IBufferOffsetSize.cs" />
-    <Compile Include="Mono.Security.Interface\IMultiBufferOffsetSize.cs" />
     <Compile Include="Mono.Security.Interface\IMonoTlsContext.cs" />
     <Compile Include="Mono.Security.Interface\TlsProtocols.cs" />
   </ItemGroup>
