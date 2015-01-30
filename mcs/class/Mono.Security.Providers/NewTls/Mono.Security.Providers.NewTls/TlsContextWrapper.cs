@@ -26,6 +26,9 @@
 using System;
 using Mono.Security.Interface;
 using Mono.Security.Protocol.NewTls;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using MX = Mono.Security.X509;
 
 namespace Mono.Security.Providers.NewTls
 {
@@ -58,9 +61,29 @@ namespace Mono.Security.Providers.NewTls
 			}
 		}
 
-		public void SetCertificate (Mono.Security.X509.X509Certificate certificate, System.Security.Cryptography.AsymmetricAlgorithm privateKey)
+		public TlsConfiguration Configuration {
+			get {
+				if (config == null)
+					throw new ObjectDisposedException ("TlsConfiguration");
+				return config;
+			}
+		}
+
+		public TlsContext Context {
+			get {
+				if (!IsValid)
+					throw new ObjectDisposedException ("TlsContext");
+				return context;
+			}
+		}
+
+		public bool HasCredentials {
+			get { return Configuration.HasCredentials; }
+		}
+
+		public void SetCertificate (MX.X509Certificate certificate, AsymmetricAlgorithm privateKey)
 		{
-			throw new NotImplementedException ();
+			Configuration.SetCertificate (certificate, privateKey);
 		}
 
 		public int GenerateNextToken (IBufferOffsetSize incoming, out IMultiBufferOffsetSize outgoing)
@@ -83,7 +106,7 @@ namespace Mono.Security.Providers.NewTls
 			throw new NotImplementedException ();
 		}
 
-		public System.Security.Cryptography.X509Certificates.X509Certificate2 GetRemoteCertificate (out Mono.Security.X509.X509CertificateCollection remoteCertificateStore)
+		public X509Certificate2 GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore)
 		{
 			throw new NotImplementedException ();
 		}
@@ -91,12 +114,6 @@ namespace Mono.Security.Providers.NewTls
 		public bool VerifyRemoteCertificate ()
 		{
 			throw new NotImplementedException ();
-		}
-
-		public bool HasCredentials {
-			get {
-				throw new NotImplementedException ();
-			}
 		}
 
 		public Exception LastError {
@@ -109,11 +126,6 @@ namespace Mono.Security.Providers.NewTls
 			get {
 				throw new NotImplementedException ();
 			}
-		}
-
-		public void Dispose ()
-		{
-			throw new NotImplementedException ();
 		}
 	}
 }
