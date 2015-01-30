@@ -48,7 +48,7 @@ namespace Mono.Security.Interface
 			get;
 		}
 
-		int GenerateNextToken (IBufferOffsetSize incoming, out IMultiBufferOffsetSize outgoing);
+		int GenerateNextToken (IBufferOffsetSize incoming, out IBufferOffsetSize outgoing);
 
 		int EncryptMessage (ref IBufferOffsetSize incoming);
 

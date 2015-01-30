@@ -86,9 +86,15 @@ namespace Mono.Security.Providers.NewTls
 			Configuration.SetCertificate (certificate, privateKey);
 		}
 
-		public int GenerateNextToken (IBufferOffsetSize incoming, out IMultiBufferOffsetSize outgoing)
+		public int GenerateNextToken (IBufferOffsetSize incoming, out IBufferOffsetSize outgoing)
 		{
-			throw new NotImplementedException ();
+			var input = incoming != null ? new TlsBuffer (incoming) : null;
+			TlsMultiBuffer output = new TlsMultiBuffer ();
+			var retval = Context.GenerateNextToken (input, output);
+			if (output.IsEmpty)
+				outgoing = null;
+			outgoing = output.StealBuffer ();
+			return (int)retval;
 		}
 
 		public int EncryptMessage (ref IBufferOffsetSize incoming)

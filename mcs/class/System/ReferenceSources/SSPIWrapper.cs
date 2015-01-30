@@ -155,7 +155,7 @@ namespace System.Net.Security
             SetCredentials(secModule, credentials);
 
             var incoming = GetInputBuffer(inputBuffer);
-            IMultiBufferOffsetSize outgoing;
+            IBufferOffsetSize outgoing;
 
             var retval = (int)safeContext.Context.GenerateNextToken(incoming, out outgoing);
             UpdateOutput(outgoing, outputBuffer);
@@ -192,7 +192,7 @@ namespace System.Net.Security
             }
 
             var incoming = GetInputBuffer(inputBuffer);
-            IMultiBufferOffsetSize outgoing = null;
+            IBufferOffsetSize outgoing = null;
 
             var retval = (int)safeContext.Context.GenerateNextToken(incoming, out outgoing);
             UpdateOutput(outgoing, outputBuffer);
@@ -290,17 +290,6 @@ namespace System.Net.Security
         static IBufferOffsetSize GetInputBuffer(SecurityBuffer incoming)
         {
             return incoming != null ? new InputBuffer(incoming.token, incoming.offset, incoming.size) : null;
-        }
-
-        static void UpdateOutput(IMultiBufferOffsetSize outgoing, SecurityBuffer outputBuffer)
-        {
-            if (outgoing.IsEmpty)
-                return;
-            var buffer = outgoing.StealBuffer();
-            outputBuffer.token = buffer.Buffer;
-            outputBuffer.offset = buffer.Offset;
-            outputBuffer.size = buffer.Size;
-            outputBuffer.type = BufferType.Token;
         }
 
         static void UpdateOutput(IBufferOffsetSize buffer, SecurityBuffer outputBuffer)
