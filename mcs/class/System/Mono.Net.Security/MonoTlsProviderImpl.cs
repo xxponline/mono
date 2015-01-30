@@ -132,7 +132,7 @@ namespace Mono.Net.Security
 			RemoteCertValidationCallback remoteValidationCallback,
 			MSI.MonoTlsSettings settings)
 		{
-			provider.CreateTlsContext (
+			return provider.CreateTlsContext (
 				hostname, serverMode, (MSI.TlsProtocols)protocolFlags,
 				serverCertificate, (XX509CertificateCollection)(object)clientCertificates,
 				remoteCertRequired, checkCertName, checkCertRevocationStatus,
@@ -140,7 +140,6 @@ namespace Mono.Net.Security
 				ConvertCallback (certSelectionDelegate),
 				ConvertCallback (remoteValidationCallback),
 				settings);
-			throw new NotImplementedException ();
 		}
 
 	}

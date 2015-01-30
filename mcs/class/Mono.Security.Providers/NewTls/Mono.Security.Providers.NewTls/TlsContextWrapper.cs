@@ -25,13 +25,17 @@
 // THE SOFTWARE.
 using System;
 using Mono.Security.Interface;
+using Mono.Security.Protocol.NewTls;
 
 namespace Mono.Security.Providers.NewTls
 {
 	class TlsContextWrapper : IMonoTlsContext
 	{
-		public TlsContextWrapper ()
+		TlsConfiguration config;
+
+		public TlsContextWrapper (TlsConfiguration config)
 		{
+			this.config = config;
 		}
 	}
 }

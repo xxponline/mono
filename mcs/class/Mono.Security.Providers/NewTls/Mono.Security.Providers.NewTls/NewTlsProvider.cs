@@ -132,7 +132,7 @@ namespace Mono.Security.Providers.NewTls
 				}
 			}
 
-			throw new NotImplementedException ();
+			return new TlsContextWrapper (config);
 		}
 	}
 }

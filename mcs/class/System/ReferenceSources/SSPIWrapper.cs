@@ -71,6 +71,11 @@ namespace System.Net.Security
 {
     internal class SSPIInterface
     {
+        public IMonoTlsContext Context {
+            get;
+            private set;
+        }
+
         #if MONO_FEATURE_NEW_TLS
         public TlsConfiguration Configuration
         {
@@ -78,8 +83,9 @@ namespace System.Net.Security
             private set;
         }
 
-        public SSPIInterface(TlsConfiguration config)
+        public SSPIInterface(IMonoTlsContext context, TlsConfiguration config)
         {
+            Context = context;
             Configuration = config;
         }
         #endif
@@ -120,7 +126,7 @@ namespace System.Net.Security
                         return remoteValidationCallback(h, ssc, null, (SslPolicyErrors)p);
                     };
             }
-            return new SSPIInterface(config);
+            return new SSPIInterface(context, config);
             #else
 			throw new NotImplementedException ();
             #endif
