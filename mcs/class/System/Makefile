@@ -37,7 +37,7 @@ ifeq (monodroid, $(PROFILE))
 LIB_MCS_FLAGS += -d:SECURITY_DEP
 endif
 ifndef PROFILE_ANY_MOBILE
-FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP -d:MONO_FEATURE_NEW_TLS
+FINAL_MCS_FLAGS = -r:System.Configuration.dll -d:CONFIGURATION_DEP
 endif
 
 #
