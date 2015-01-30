@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+extern alias PrebuiltSystem;
 extern alias NewMonoSource;
 using XEncryptionPolicy = NewMonoSource::System.Net.Security.EncryptionPolicy;
 using XSslPolicyErrors = NewMonoSource::System.Net.Security.SslPolicyErrors;
@@ -32,10 +33,12 @@ using XRemoteCertificateValidationCallback = NewMonoSource::System.Net.Security.
 
 using System;
 using System.IO;
-using System.Net.Security;
-using System.Security.Authentication;
-using System.Security.Cryptography.X509Certificates;
+using PrebuiltSystem::System.Net.Security;
+using PrebuiltSystem::System.Security.Authentication;
 using TlsSettings = Mono.Security.Protocol.NewTls.TlsSettings;
+
+using PSSCX = PrebuiltSystem::System.Security.Cryptography.X509Certificates;
+using SSCX = System.Security.Cryptography.X509Certificates;
 
 namespace Mono.Security.Providers.NewTls
 {
@@ -44,7 +47,7 @@ namespace Mono.Security.Providers.NewTls
 		public static MonoNewTlsStream CreateServer (
 			Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, 
 			LocalCertificateSelectionCallback certSelectionCallback, XEncryptionPolicy encryptionPolicy, TlsSettings settings,
-			X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+			SSCX.X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
 			var stream = new MonoNewTlsStream (
 				innerStream, leaveOpen,
@@ -68,7 +71,7 @@ namespace Mono.Security.Providers.NewTls
 		public static MonoNewTlsStream CreateClient (
 			Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, 
 			LocalCertificateSelectionCallback certSelectionCallback, XEncryptionPolicy encryptionPolicy, TlsSettings settings,
-			string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+			string targetHost, PSSCX.X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
 		{
 			var stream = new MonoNewTlsStream (
 				innerStream, leaveOpen,

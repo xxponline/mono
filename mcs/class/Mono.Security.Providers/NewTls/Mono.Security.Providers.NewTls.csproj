@@ -52,9 +52,12 @@
       <Link>Mono.Security.Providers.NewTls\MonoNewTlsStream.cs</Link>
     </Compile>
     <Compile Include="Mono.Security.Providers.NewTls\MonoNewTlsStreamFactory.cs" />
+    <Compile Include="Mono.Security.Providers.NewTls\TlsContextWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+	   <Aliases>PrebuiltSystem</Aliases>
+	</Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
