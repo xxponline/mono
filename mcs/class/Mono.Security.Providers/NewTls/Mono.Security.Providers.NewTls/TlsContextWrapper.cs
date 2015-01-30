@@ -99,38 +99,44 @@ namespace Mono.Security.Providers.NewTls
 
 		public int EncryptMessage (ref IBufferOffsetSize incoming)
 		{
-			throw new NotImplementedException ();
+			var buffer = new TlsBuffer (incoming);
+			var retval = Context.EncryptMessage (ref buffer);
+			incoming = buffer.GetRemaining ();
+			return (int)retval;
 		}
 
 		public int DecryptMessage (ref IBufferOffsetSize incoming)
 		{
-			throw new NotImplementedException ();
+			var buffer = new TlsBuffer (incoming);
+			var retval = Context.DecryptMessage (ref buffer);
+			incoming = buffer.GetRemaining ();
+			return (int)retval;
 		}
 
 		public byte[] CreateCloseNotify ()
 		{
-			throw new NotImplementedException ();
+			return Context.CreateAlert (new Alert (AlertLevel.Warning, AlertDescription.CloseNotify));
 		}
 
-		public X509Certificate2 GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore)
+		public MX.X509Certificate GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore)
 		{
-			throw new NotImplementedException ();
+			return Context.GetRemoteCertificate (out remoteCertificateStore);
 		}
 
 		public bool VerifyRemoteCertificate ()
 		{
-			throw new NotImplementedException ();
+			return Context.VerifyRemoteCertificate ();
 		}
 
 		public Exception LastError {
 			get {
-				throw new NotImplementedException ();
+				return Context.LastError;
 			}
 		}
 
 		public bool ReceivedCloseNotify {
 			get {
-				throw new NotImplementedException ();
+				return Context.ReceivedCloseNotify;
 			}
 		}
 	}

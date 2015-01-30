@@ -60,7 +60,7 @@ namespace Mono.Security.Interface
 
 		byte[] CreateCloseNotify ();
 
-		X509Certificate2 GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore);
+		MX.X509Certificate GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore);
 
 		bool VerifyRemoteCertificate ();
 	}
