@@ -129,44 +129,8 @@
     <Compile Include="Mono.Xml\MiniParser.cs" />
     <Compile Include="Mono.Xml\SecurityParser.cs" />
     <Compile Include="MartinsPlayground\NewStuff\Internal.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsContext.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\HandshakeMessage.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsClientHello.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsBuffer.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\HandshakeType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsServerHello.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsCertificate.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsServerHelloDone.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsClientKeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsFinished.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsMultiBuffer.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\HandshakeParameters.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\TlsExtension.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\ServerNameExtension.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\SecurityStatus.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\NegotiationHandler.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerHello.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\Message.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsChangeCipherSpec.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerFinished.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ClientKeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\CertificateManager.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\Session.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\SecretParameters.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsConfiguration.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsProtocols.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsProtocolCode.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\Alert.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsException.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\ContentType.cs" />
     <Compile Include="Mono.Security.Cryptography\RSASslSignatureDeformatter.cs" />
     <Compile Include="Mono.Security.Cryptography\RSASslSignatureFormatter.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\DebugHelper.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\RenegotiationExtension.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\RenegotiationFlags.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\TlsExtensionCollection.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsHelloRequest.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsCertificateRequest.cs" />
     <Compile Include="..\corlib\System.Security.Cryptography\MD5CryptoServiceProvider.cs">
       <Link>System.Security.Cryptography\MD5CryptoServiceProvider.cs</Link>
     </Compile>
@@ -182,27 +146,12 @@
     <Compile Include="..\corlib\System.Security.Cryptography\IRunningHash.cs">
       <Link>System.Security.Cryptography\IRunningHash.cs</Link>
     </Compile>
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ClientConnection.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerConnection.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsCertificateVerify.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\ClientCertificateType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\ClientCertificateParameters.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\MonoSslStream.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsSettings.cs" />
     <Compile Include="..\corlib\System.Security.Cryptography\SHA384Managed.cs">
       <Link>System.Security.Cryptography\SHA384Managed.cs</Link>
     </Compile>
     <Compile Include="..\corlib\System.Security.Cryptography\SHA512Managed.cs">
       <Link>System.Security.Cryptography\SHA512Managed.cs</Link>
     </Compile>
-    <Compile Include="Mono.Security.Protocol.NewTls.Handshake\TlsServerKeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\NegotiationState.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Instrumentation\Instrument.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Instrumentation\ContextInstrument.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Instrumentation\InstrumentCollection.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Instrumentation\NegotiationInstrument.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\ExtensionType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Extensions\SignatureAlgorithmsExtension.cs" />
     <Compile Include="..\corlib\System.Security.Cryptography\RSACryptoServiceProvider.cs">
       <Link>System.Security.Cryptography\RSACryptoServiceProvider.cs</Link>
     </Compile>
@@ -341,28 +290,6 @@
     <Compile Include="..\corlib\System.Security.Cryptography\RSAPKCS1SignatureFormatter.cs">
       <Link>System.Security.Cryptography\RSAPKCS1SignatureFormatter.cs</Link>
     </Compile>
-    <Compile Include="Mono.Security.Protocol.NewTls\SecureBuffer.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsStream.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CipherAlgorithmType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CipherSuite.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CryptoParameters.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\DiffieHellmanKeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\HandshakeHash.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\KeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\RSAKeyExchange.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\SignatureHelper.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\TlsCipherSuite12.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\SignatureAlgorithmType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\SignatureAndHashAlgorithm.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\ExchangeAlgorithmType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\HashAlgorithmType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunction.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunctionTls10.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunctionTls12.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\DisposeContext.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\HandshakeHashType.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\BlockCipher.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CbcBlockCipher.cs" />
     <Compile Include="BouncyCastle\crypto\engines\AesEngine.cs" />
     <Compile Include="BouncyCastle\crypto\engines\AesFastEngine.cs" />
     <Compile Include="BouncyCastle\crypto\engines\AesLightEngine.cs" />
@@ -388,16 +315,89 @@
     <Compile Include="BouncyCastle\crypto\CryptoException.cs" />
     <Compile Include="BouncyCastle\crypto\DataLengthException.cs" />
     <Compile Include="BouncyCastle\crypto\InvalidCipherTextException.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CipherSuiteCode.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\TlsCipherSuite10.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\BlockCipherWithHMac.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsConnectionInfo.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\GaloisCounterCipher.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CipherSuiteFactory.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\CipherSuiteCollection.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls.Cipher\HMac.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\BufferOffsetSize.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsContext.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\HandshakeMessage.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsClientHello.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsBuffer.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\HandshakeType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsServerHello.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsCertificate.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsServerHelloDone.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsClientKeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsFinished.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsMultiBuffer.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\HandshakeParameters.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\TlsExtension.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\ServerNameExtension.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\SecurityStatus.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\NegotiationHandler.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\ServerHello.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\Message.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsChangeCipherSpec.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\ServerFinished.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\ClientKeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\CertificateManager.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\Session.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\SecretParameters.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsConfiguration.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsProtocols.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsProtocolCode.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\Alert.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsException.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\ContentType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\DebugHelper.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\RenegotiationExtension.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\RenegotiationFlags.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\TlsExtensionCollection.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsHelloRequest.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsCertificateRequest.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\ClientConnection.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\ServerConnection.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsCertificateVerify.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\ClientCertificateType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\ClientCertificateParameters.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStream.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsSettings.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Handshake\TlsServerKeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Negotiation\NegotiationState.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Instrumentation\Instrument.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Instrumentation\ContextInstrument.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Instrumentation\InstrumentCollection.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Instrumentation\NegotiationInstrument.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\ExtensionType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Extensions\SignatureAlgorithmsExtension.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\SecureBuffer.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsStream.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CipherAlgorithmType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CipherSuite.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CryptoParameters.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\DiffieHellmanKeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\HandshakeHash.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\KeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\RSAKeyExchange.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\SignatureHelper.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\TlsCipherSuite12.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\SignatureAlgorithmType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\SignatureAndHashAlgorithm.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\ExchangeAlgorithmType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\HashAlgorithmType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunction.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunctionTls10.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\PseudoRandomFunctionTls12.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\DisposeContext.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\HandshakeHashType.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\BlockCipher.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CbcBlockCipher.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CipherSuiteCode.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\TlsCipherSuite10.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\BlockCipherWithHMac.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsConnectionInfo.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\GaloisCounterCipher.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CipherSuiteFactory.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\CipherSuiteCollection.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\HMac.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs" />
+    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\BufferOffsetSize.cs" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -418,8 +418,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Mono.Security.Protocol.NewTls.Cipher\" />
     <Folder Include="BouncyCastle\" />
+    <Folder Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls.Cipher\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
