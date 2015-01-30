@@ -1,16 +1,26 @@
 //
 // Mono-specific additions to Microsoft's SslStream.cs
 //
+#if SECURITY_DEP
+#if MONO_SECURITY_ALIAS || MONO_INSIDE_SYSTEM
+extern alias MonoSecurity;
+using MonoSecurity::Mono.Security.Interface;
+#else
+using Mono.Security.Interface;
+#endif
+#endif
+
 namespace System.Net.Security {
     using System.Net.Sockets;
     using System.IO;
 
     partial class SslStream
     {
+#if SECURITY_DEP
         SSPIConfiguration _Configuration;
 
         internal SslStream(Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, 
-            LocalCertificateSelectionCallback userCertificateSelectionCallback, EncryptionPolicy encryptionPolicy, SSPIConfiguration config)
+            LocalCertificateSelectionCallback userCertificateSelectionCallback, EncryptionPolicy encryptionPolicy, MonoTlsSettings settings)
             : base(innerStream, leaveInnerStreamOpen)
         {
             if (encryptionPolicy != EncryptionPolicy.RequireEncryption && encryptionPolicy != EncryptionPolicy.AllowNoEncryption && encryptionPolicy != EncryptionPolicy.NoEncryption) 
@@ -20,8 +30,29 @@ namespace System.Net.Security {
             _userCertificateSelectionCallback  = userCertificateSelectionCallback;
             RemoteCertValidationCallback _userCertValidationCallbackWrapper = new RemoteCertValidationCallback(userCertValidationCallbackWrapper);
             LocalCertSelectionCallback   _userCertSelectionCallbackWrapper  = userCertificateSelectionCallback==null  ? null : new LocalCertSelectionCallback(userCertSelectionCallbackWrapper);
-            _SslState = new SslState(innerStream, _userCertValidationCallbackWrapper, _userCertSelectionCallbackWrapper, encryptionPolicy, config);
+            _Configuration = WrapSettings(settings);
+            _SslState = new SslState(innerStream, _userCertValidationCallbackWrapper, _userCertSelectionCallbackWrapper, encryptionPolicy, _Configuration);
         }
+
+        static SSPIConfiguration WrapSettings(MonoTlsSettings settings)
+        {
+            return settings != null ? new MyConfiguration(settings) : null;
+        }
+
+        class MyConfiguration : SSPIConfiguration
+        {
+            MonoTlsSettings settings;
+
+            public MyConfiguration(MonoTlsSettings settings)
+            {
+                this.settings = settings;
+            }
+
+            public MonoTlsSettings Settings {
+                get { return settings; }
+            }
+        }
+#endif
 
         internal bool IsClosed
         {

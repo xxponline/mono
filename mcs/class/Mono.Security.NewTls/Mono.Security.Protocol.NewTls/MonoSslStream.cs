@@ -34,7 +34,7 @@ namespace Mono.Security.NewMonoSource
 
         internal MonoSslStream(Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, 
                         LocalCertificateSelectionCallback certSelectionCallback, EncryptionPolicy encryptionPolicy, MonoTlsSettings settings)
-            : base(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, encryptionPolicy, ConvertSettings(settings))
+            : base(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, encryptionPolicy, settings)
         {
         }
 
@@ -51,25 +51,6 @@ namespace Mono.Security.NewMonoSource
         public Task Shutdown(bool waitForReply)
         {
             return Task.Factory.FromAsync((state,result) => BeginShutdown (waitForReply, state, result), EndShutdown, null);
-        }
-
-        static SSPIConfiguration ConvertSettings(MonoTlsSettings settings)
-        {
-            return settings != null ? new MyConfiguration(settings) : null;
-        }
-
-        class MyConfiguration : SSPIConfiguration
-        {
-            MonoTlsSettings settings;
-
-            public MyConfiguration(MonoTlsSettings settings)
-            {
-                this.settings = settings;
-            }
-
-            public MonoTlsSettings Settings {
-                get { return settings; }
-            }
         }
     }
 }
