@@ -93,10 +93,11 @@ namespace System.Net.Security
         {
             var provider = MNS.MonoTlsProviderFactory.GetProvider();
             var settings = userConfig != null ? userConfig.Settings : null;
+
             var context = provider.CreateTlsContext(
                 hostname, serverMode, protocolFlags, serverCertificate, clientCertificates,
-                remoteCertRequired, checkCertName, checkCertRevocationStatus, encryptionPolicy,
-                certSelectionDelegate, remoteValidationCallback, settings);
+                remoteCertRequired, checkCertName, checkCertRevocationStatus,
+                encryptionPolicy, certSelectionDelegate, remoteValidationCallback, settings);
             #if MONO_FEATURE_NEW_TLS
             TlsConfiguration config;
             if (serverMode)

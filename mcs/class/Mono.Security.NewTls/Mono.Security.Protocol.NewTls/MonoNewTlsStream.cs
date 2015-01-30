@@ -32,7 +32,6 @@ using SslStream = NewMonoSource::System.Net.Security.SslStream;
 
 using System;
 using System.IO;
-using System.Net.Security;
 using System.Threading.Tasks;
 using Mono.Security.Interface;
 using Mono.Security.Protocol.NewTls;

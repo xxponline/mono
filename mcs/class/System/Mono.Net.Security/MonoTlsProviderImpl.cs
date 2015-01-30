@@ -25,26 +25,33 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
+
+#if USE_PREBUILT_ALIAS
+extern alias PrebuiltSystem;
+#endif
+#if !MOBILE
+extern alias MonoSecurity;
+#endif
+
 #if MOBILE
 using MSI = Mono.Security.Interface;
 using TLS = Mono.Security.Protocol.Tls;
-
-using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
-
-using XHttpWebRequest = System.Net.HttpWebRequest;
-using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #else
-extern alias PrebuiltSystem;
-extern alias MonoSecurity;
 using MSI = MonoSecurity::Mono.Security.Interface;
 using TLS = MonoSecurity::Mono.Security.Protocol.Tls;
-
+#endif
+#if USE_PREBUILT_ALIAS
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
 using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
 
 using XHttpWebRequest = PrebuiltSystem::System.Net.HttpWebRequest;
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+#else
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
+using XHttpWebRequest = System.Net.HttpWebRequest;
+using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
 
 using System;
@@ -90,10 +97,14 @@ namespace Mono.Net.Security
 			XRemoteCertificateValidationCallback userCertificateValidationCallback,
 			XLocalCertificateSelectionCallback userCertificateSelectionCallback)
 		{
+#if NEW_MONO_SOURCE
+			throw new NotImplementedException ();
+#else
 			var sslStream = (MonoSslStreamImpl)provider.CreateSslStream (
 				innerStream, leaveInnerStreamOpen,
 				userCertificateValidationCallback, userCertificateSelectionCallback);
 			return sslStream.Impl;
+#endif
 		}
 
 		public MSI.IMonoTlsContext CreateTlsContext (

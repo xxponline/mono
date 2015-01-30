@@ -16,15 +16,16 @@
     <OutputPath>bin\Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;SECURITY_DEP;DISABLE_CAS_USE;NET_4_5</DefineConstants>
+    <DefineConstants>DEBUG;MONO;FEATURE_PAL;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_SOURCE;SECURITY_DEP;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <NoWarn>436,649,169</NoWarn>
     <OutputPath>bin\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <DefineConstants>MONO;FEATURE_PAL;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_API;SECURITY_DEP;DISABLE_CAS_USE;NET_4_5</DefineConstants>
+    <DefineConstants>MONO;FEATURE_PAL;MONO_SECURITY_ALIAS;MONO_FEATURE_NEW_TLS;NEW_MONO_SOURCE;SECURITY_DEP;DISABLE_CAS_USE;NET_4_5</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -98,6 +99,18 @@
       <Link>ReferenceSources\SSPIConfiguration.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\System\Mono.Net.Security\IMonoSslStream.cs">
+      <Link>Mono.Net.Security\IMonoSslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\Mono.Net.Security\IMonoTlsProvider.cs">
+      <Link>Mono.Net.Security\IMonoTlsProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\Mono.Net.Security\MonoTlsProviderFactory.cs">
+      <Link>Mono.Net.Security\MonoTlsProviderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\System\Mono.Net.Security\MonoTlsProviderImpl.cs">
+      <Link>Mono.Net.Security\MonoTlsProviderImpl.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Security">
@@ -117,7 +130,7 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Folder Include="Mono.Security.Protocol.NewTls\" />
     <Folder Include="Properties\" />
+    <Folder Include="Mono.Net.Security\" />
   </ItemGroup>
 </Project>

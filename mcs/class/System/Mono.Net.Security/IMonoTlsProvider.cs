@@ -25,19 +25,25 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MOBILE
+#if USE_PREBUILT_ALIAS
+extern alias PrebuiltSystem;
+#endif
+#if !MOBILE
+extern alias MonoSecurity;
+#endif
+
+#if USE_PREBUILT_ALIAS
+using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
+#else
 using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
 using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+#endif
 
+#if MOBILE
 using Mono.Security.Protocol.Tls;
 using Mono.Security.Interface;
 #else
-extern alias PrebuiltSystem;
-extern alias MonoSecurity;
-
-using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
-
 using MonoSecurity::Mono.Security.Protocol.Tls;
 using MonoSecurity::Mono.Security.Interface;
 #endif

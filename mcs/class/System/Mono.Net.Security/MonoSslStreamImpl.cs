@@ -25,25 +25,20 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
+
+#if USE_PREBUILT_ALIAS
+extern alias PrebuiltSystem;
+#endif
+#if !MOBILE
+extern alias MonoSecurity;
+#endif
+
 #if MOBILE
 using Mono.Security.Interface;
-
-using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
-
-using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
-
-using XTransportContext = System.Net.TransportContext;
-using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
-
-using XCipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using XHashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using XExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-using XSslProtocols = System.Security.Authentication.SslProtocols;
 #else
-extern alias MonoSecurity;
-extern alias PrebuiltSystem;
-
+using MonoSecurity::Mono.Security.Interface;
+#endif
+#if USE_PREBUILT_ALIAS
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
@@ -56,8 +51,19 @@ using XCipherAlgorithmType = PrebuiltSystem::System.Security.Authentication.Ciph
 using XHashAlgorithmType = PrebuiltSystem::System.Security.Authentication.HashAlgorithmType;
 using XExchangeAlgorithmType = PrebuiltSystem::System.Security.Authentication.ExchangeAlgorithmType;
 using XSslProtocols = PrebuiltSystem::System.Security.Authentication.SslProtocols;
+#else
+using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
-using MonoSecurity::Mono.Security.Interface;
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
+using XTransportContext = System.Net.TransportContext;
+using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
+
+using XCipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
+using XHashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
+using XExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
+using XSslProtocols = System.Security.Authentication.SslProtocols;
 #endif
 
 using System;

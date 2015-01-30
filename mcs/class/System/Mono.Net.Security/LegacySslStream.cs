@@ -34,34 +34,33 @@
 
 #if SECURITY_DEP
 
-#if MONOTOUCH || MONODROID
-using Mono.Security.Protocol.Tls;
+#if USE_PREBUILT_ALIAS
+extern alias PrebuiltSystem;
+#endif
+#if !MOBILE
+extern alias MonoSecurity;
+#endif
 
-using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-
+#if MOBILE
 using MonoCipherAlgorithmType = Mono.Security.Protocol.Tls.CipherAlgorithmType;
 using MonoHashAlgorithmType = Mono.Security.Protocol.Tls.HashAlgorithmType;
 using MonoExchangeAlgorithmType = Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
 using MonoSecurityProtocolType = Mono.Security.Protocol.Tls.SecurityProtocolType;
+using Mono.Security.Protocol.Tls;
 #else
-extern alias PrebuiltSystem;
-extern alias MonoSecurity;
-
-using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
-
-using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-
 using MonoCipherAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.CipherAlgorithmType;
 using MonoHashAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.HashAlgorithmType;
 using MonoExchangeAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
 using MonoSecurityProtocolType = MonoSecurity::Mono.Security.Protocol.Tls.SecurityProtocolType;
-
 using MonoSecurity::Mono.Security.Protocol.Tls;
 #endif
+#if USE_PREBUILT_ALIAS
+using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+#endif
+
+using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
+using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
+using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
 
 using System;
 using System.IO;
