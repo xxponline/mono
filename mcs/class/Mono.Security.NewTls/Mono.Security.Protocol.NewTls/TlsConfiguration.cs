@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Security;
 using System.Security.Cryptography;
+using Mono.Security.Interface;
 using MX = Mono.Security.X509;
 using SSCX = System.Security.Cryptography.X509Certificates;
 

@@ -393,9 +393,6 @@
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsProtocolCode.cs">
       <Link>Mono.Security.Protocol.NewTls\TlsProtocolCode.cs</Link>
     </Compile>
-    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsProtocols.cs">
-      <Link>Mono.Security.Protocol.NewTls\TlsProtocols.cs</Link>
-    </Compile>
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\TlsSettings.cs">
       <Link>Mono.Security.Protocol.NewTls\TlsSettings.cs</Link>
     </Compile>
@@ -624,6 +621,7 @@
     <Compile Include="Mono.Security.Interface\IBufferOffsetSize.cs" />
     <Compile Include="Mono.Security.Interface\IMultiBufferOffsetSize.cs" />
     <Compile Include="Mono.Security.Interface\IMonoTlsContext.cs" />
+    <Compile Include="Mono.Security.Interface\TlsProtocols.cs" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Mono.Security.Protocol.NewTls
+namespace Mono.Security.Interface
 {
 	[Flags]
 	// Keep in sync with SchProtocols / native SChannel.h
+	// Unfortunately, the definition in System.dll is not public, so we need to duplicate it here.
 	public enum TlsProtocols {
 		Zero                = 0,
 		Tls10Client         = 0x00000080,

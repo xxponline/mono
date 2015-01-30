@@ -62,7 +62,6 @@
     <Compile Include="Mono.Security.Protocol.NewTls\TlsException.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\TlsMultiBuffer.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\TlsProtocolCode.cs" />
-    <Compile Include="Mono.Security.Protocol.NewTls\TlsProtocols.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\TlsSettings.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls\TlsStream.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls.Cipher\BlockCipher.cs" />

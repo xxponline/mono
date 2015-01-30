@@ -51,12 +51,14 @@ using MSCX = System.Security.Cryptography.X509Certificates;
 #endif
 #if MONO_FEATURE_NEW_TLS
 using MonoSecurity::Mono.Security.Protocol.NewTls;
+using MonoSecurity::Mono.Security.Interface;
 #endif
 #else
 using MX = Mono.Security.X509;
 
 #if MONO_FEATURE_NEW_TLS
 using Mono.Security.Protocol.NewTls;
+using Mono.Security.Interface;
 #endif
 #endif
 
