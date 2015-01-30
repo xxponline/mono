@@ -92,11 +92,6 @@
       <Name>Mono.Security-martin</Name>
       <Aliases>MonoSecurity</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mono.Security.NewMonoSource.csproj">
-      <Project>{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}</Project>
-      <Name>Mono.Security.NewMonoSource</Name>
-      <Aliases>NewMonoSource</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\Tests\Mono.Security.Instrumentation.Tests.csproj">
       <Project>{93CE4A8C-9111-4211-9BE1-314134802473}</Project>
       <Name>Mono.Security.Instrumentation.Tests</Name>
@@ -120,6 +115,11 @@
     <ProjectReference Include="..\..\..\..\..\nunit26\src\ConsoleRunner\nunit-console\nunit-console.csproj">
       <Project>{9367EC89-6A38-42BA-9607-0DC288E4BC3A}</Project>
       <Name>nunit-console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Mono.Security.Providers\NewMonoSource\Mono.Security.Providers.NewMonoSource.csproj">
+      <Project>{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}</Project>
+      <Name>Mono.Security.Providers.NewMonoSource</Name>
+      <Aliases>NewMonoSource</Aliases>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

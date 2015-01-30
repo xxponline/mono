@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using MonoSecurity::Mono.Security.Protocol.NewTls;
-using SslProtocols = NewMonoSource::System.Security.Authentication.SslProtocols;
+using SslProtocols = System.Security.Authentication.SslProtocols;
 using EncryptionPolicy = NewMonoSource::System.Net.Security.EncryptionPolicy;
 using MonoSslStreamFactory = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStreamFactory;
 using MonoSslStream = NewMonoSource::Mono.Security.NewMonoSource.MonoSslStream;

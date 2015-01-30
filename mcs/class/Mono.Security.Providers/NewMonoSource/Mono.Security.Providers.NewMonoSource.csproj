@@ -100,6 +100,12 @@
     <Compile Include="..\..\System\ReferenceSources\SSPIConfiguration.cs">
       <Link>ReferenceSources\SSPIConfiguration.cs</Link>
     </Compile>
+    <Compile Include="..\..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStream.cs">
+      <Link>Mono.Security.Protocol.NewTls\MonoSslStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
+      <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Security">
