@@ -20,11 +20,10 @@ namespace MartinsPlayground
         const string Address2 = "https://www.xamarin.com/";
         public static void Main(string[] args)
         {
-            TestException();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            CreateStores();
-            TestSSL(Address);
+            // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // CreateStores();
+            // TestSSL(Address2);
+            Run();
         }
 
         static void TestException()
@@ -70,8 +69,8 @@ namespace MartinsPlayground
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             // socket.Connect("www.xamarin.com", 443);
-            // socket.Connect(IPAddress.Loopback, 4433);
-            socket.Connect(IPAddress.Parse("172.16.221.1"), 4433);
+            socket.Connect(IPAddress.Loopback, 4433);
+            // socket.Connect(IPAddress.Parse("172.16.221.1"), 4433);
 
             var stream = new NetworkStream(socket, true);
             Console.WriteLine(stream);
