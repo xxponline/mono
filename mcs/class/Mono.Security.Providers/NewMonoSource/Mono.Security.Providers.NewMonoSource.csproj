@@ -86,8 +86,8 @@
     <Compile Include="..\..\System\ReferenceSources\SSPIWrapper.cs">
       <Link>ReferenceSources\SSPIWrapper.cs</Link>
     </Compile>
-    <Compile Include="..\..\System\ReferenceSources\SafeHandles.cs">
-      <Link>ReferenceSources\SafeHandles.cs</Link>
+    <Compile Include="..\..\System\ReferenceSources\SSPISafeHandles.cs">
+      <Link>ReferenceSources\SSPISafeHandles.cs</Link>
     </Compile>
     <Compile Include="..\..\System\ReferenceSources\SslStream.cs">
       <Link>ReferenceSources\SslStream.cs</Link>

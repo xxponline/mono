@@ -1120,7 +1120,7 @@ ReferenceSources/Win32Exception.cs
 ../../../external/referencesource/mscorlib/InternalApis/NDP_Common/inc/PinnableBufferCache.cs
 
 ReferenceSources/Internal.cs
-ReferenceSources/SafeHandles.cs
+ReferenceSources/SSPISafeHandles.cs
 ReferenceSources/SSPIWrapper.cs
 ReferenceSources/SSPIConfiguration.cs
 ReferenceSources/Socket.cs

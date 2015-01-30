@@ -24,23 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SECURITY_DEP
+#if MONO_FEATURE_NEW_TLS && SECURITY_DEP
 #if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MonoSecurity::Mono.Security.Interface;
 #else
 using Mono.Security.Interface;
 #endif
-#endif
 
 namespace System.Net.Security
 {
 	internal interface SSPIConfiguration
 	{
-#if SECURITY_DEP
 		MonoTlsSettings Settings {
 			get;
 		}
-#endif
 	}
 }
+#endif
