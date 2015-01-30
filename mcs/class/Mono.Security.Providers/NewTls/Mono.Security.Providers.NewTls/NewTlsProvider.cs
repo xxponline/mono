@@ -108,7 +108,7 @@ namespace Mono.Security.Providers.NewTls
 			string hostname, bool serverMode, TlsProtocols protocolFlags,
 			SSCX.X509Certificate serverCertificate, PSSCX.X509CertificateCollection clientCertificates,
 			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
-			EncryptionPolicy encryptionPolicy,
+			MonoEncryptionPolicy encryptionPolicy,
 			MonoLocalCertificateSelectionCallback certSelectionDelegate,
 			MonoRemoteCertificateValidationCallback remoteValidationCallback,
 			MonoTlsSettings settings)

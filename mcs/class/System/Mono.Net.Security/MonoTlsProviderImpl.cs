@@ -107,6 +107,22 @@ namespace Mono.Net.Security
 #endif
 		}
 
+		static MSI.MonoRemoteCertificateValidationCallback ConvertCallback (RemoteCertValidationCallback callback)
+		{
+			if (callback == null)
+				return null;
+
+			return (h, c, ch, e) => callback (h, c, (X509Chain)(object)ch, (SslPolicyErrors)e);
+		}
+
+		static MSI.MonoLocalCertificateSelectionCallback ConvertCallback (LocalCertSelectionCallback callback)
+		{
+			if (callback == null)
+				return null;
+
+			return (t, lc, rc, ai) => callback (t, (X509CertificateCollection)(object)lc, rc, ai);
+		}
+
 		public MSI.IMonoTlsContext CreateTlsContext (
 			string hostname, bool serverMode, SchProtocols protocolFlags,
 			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
@@ -116,6 +132,14 @@ namespace Mono.Net.Security
 			RemoteCertValidationCallback remoteValidationCallback,
 			MSI.MonoTlsSettings settings)
 		{
+			provider.CreateTlsContext (
+				hostname, serverMode, (MSI.TlsProtocols)protocolFlags,
+				serverCertificate, (XX509CertificateCollection)(object)clientCertificates,
+				remoteCertRequired, checkCertName, checkCertRevocationStatus,
+				(MSI.MonoEncryptionPolicy)encryptionPolicy,
+				ConvertCallback (certSelectionDelegate),
+				ConvertCallback (remoteValidationCallback),
+				settings);
 			throw new NotImplementedException ();
 		}
 

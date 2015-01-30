@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using TLS = MonoSecurity::Mono.Security.Protocol.NewTls;
+using MSI = MonoSecurity::Mono.Security.Interface;
+using Mono.Security.Providers.NewTls;
 using NUnit.Core;
 using NUnit.ConsoleRunner;
 using NDesk.Options;
@@ -31,6 +33,7 @@ namespace Mono.Security.Instrumentation.Console
 		static void Main (string[] args)
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
 			var main = new MainClass ();
 			main.Run (args);
 		}
@@ -38,6 +41,9 @@ namespace Mono.Security.Instrumentation.Console
 		MainClass ()
 		{
 			Configuration = TestConfiguration.DangerousGetInstance ();
+
+			var provider = new NewTlsProvider ();
+			MSI.MonoTlsProviderFactory.InstallProvider (provider);
 		}
 
 		protected virtual void Run (string[] args)

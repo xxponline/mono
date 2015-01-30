@@ -33,6 +33,23 @@ using Mono.Security.Protocol.Tls;
 
 namespace Mono.Security.Interface
 {
+	#if INSIDE_SYSTEM
+	internal
+	#else
+	public
+	#endif
+	enum MonoEncryptionPolicy
+	{
+		// Prohibit null ciphers (current system defaults)
+		RequireEncryption = 0,
+
+		// Add null ciphers to current system defaults
+		AllowNoEncryption,
+
+		// Request null ciphers only
+		NoEncryption
+	}
+
 #if INSIDE_SYSTEM
 	internal
 #else
@@ -101,7 +118,7 @@ namespace Mono.Security.Interface
 			string hostname, bool serverMode, TlsProtocols protocolFlags,
 			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
 			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
-			EncryptionPolicy encryptionPolicy,
+			MonoEncryptionPolicy encryptionPolicy,
 			MonoLocalCertificateSelectionCallback certSelectionDelegate,
 			MonoRemoteCertificateValidationCallback remoteValidationCallback,
 			MonoTlsSettings settings);
