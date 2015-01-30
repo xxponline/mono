@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.util.dll", "..\..\nun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Security.Instrumentation.Console", "..\Mono.Security\MartinsPlayground\Instrumentation\Console\Mono.Security.Instrumentation.Console.csproj", "{C3E744E1-2FE5-4D62-9BB0-FE0BC58B3A73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Security.Providers.NewTls", "..\Mono.Security.Providers\NewTls\Mono.Security.Providers.NewTls.csproj", "{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,16 @@ Global
 		{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}.Release|x86.Build.0 = Release|Any CPU
 		{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A392AE3-7D5C-463E-AECF-AEEC3AD439CB}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Debug|x86.Build.0 = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Release|x86.Build.0 = Release|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{61CE9CE5-943E-44D4-A381-814DC1406767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61CE9CE5-943E-44D4-A381-814DC1406767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61CE9CE5-943E-44D4-A381-814DC1406767}.Debug|x86.ActiveCfg = Debug|Any CPU
