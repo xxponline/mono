@@ -29,16 +29,16 @@
 #if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
-#if !MOBILE
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 #endif
 
-#if MOBILE
-using MSI = Mono.Security.Interface;
-using TLS = Mono.Security.Protocol.Tls;
-#else
+#if MONO_SECURITY_ALIAS
 using MSI = MonoSecurity::Mono.Security.Interface;
 using TLS = MonoSecurity::Mono.Security.Protocol.Tls;
+#else
+using MSI = Mono.Security.Interface;
+using TLS = Mono.Security.Protocol.Tls;
 #endif
 #if PREBUILT_SYSTEM_ALIAS
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;

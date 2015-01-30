@@ -31,8 +31,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Mono.Security">
-	  <Aliases>MonoSecurity</Aliases>
-	</Reference>
+      <Aliases>MonoSecurity</Aliases>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">

@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MOBILE
-using MSI = Mono.Security.Interface;
-#else
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MSI = MonoSecurity::Mono.Security.Interface;
+#else
+using MSI = Mono.Security.Interface;
 #endif
 #endif
 

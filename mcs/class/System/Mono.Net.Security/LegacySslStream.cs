@@ -37,22 +37,22 @@
 #if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
-#if !MOBILE
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 #endif
 
-#if MOBILE
-using MonoCipherAlgorithmType = Mono.Security.Protocol.Tls.CipherAlgorithmType;
-using MonoHashAlgorithmType = Mono.Security.Protocol.Tls.HashAlgorithmType;
-using MonoExchangeAlgorithmType = Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
-using MonoSecurityProtocolType = Mono.Security.Protocol.Tls.SecurityProtocolType;
-using Mono.Security.Protocol.Tls;
-#else
+#if MONO_SECURITY_ALIAS
 using MonoCipherAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.CipherAlgorithmType;
 using MonoHashAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.HashAlgorithmType;
 using MonoExchangeAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
 using MonoSecurityProtocolType = MonoSecurity::Mono.Security.Protocol.Tls.SecurityProtocolType;
 using MonoSecurity::Mono.Security.Protocol.Tls;
+#else
+using MonoCipherAlgorithmType = Mono.Security.Protocol.Tls.CipherAlgorithmType;
+using MonoHashAlgorithmType = Mono.Security.Protocol.Tls.HashAlgorithmType;
+using MonoExchangeAlgorithmType = Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
+using MonoSecurityProtocolType = Mono.Security.Protocol.Tls.SecurityProtocolType;
+using Mono.Security.Protocol.Tls;
 #endif
 #if PREBUILT_SYSTEM_ALIAS
 using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;

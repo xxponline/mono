@@ -29,14 +29,14 @@
 #if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
-#if !MOBILE
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 #endif
 
-#if MOBILE
-using Mono.Security.Interface;
-#else
+#if MONO_SECURITY_ALIAS
 using MonoSecurity::Mono.Security.Interface;
+#else
+using Mono.Security.Interface;
 #endif
 #if PREBUILT_SYSTEM_ALIAS
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
