@@ -48,31 +48,47 @@ namespace Mono.Security.Providers
 			get { return true; }
 		}
 
+		public override bool SupportsMonoExtensions {
+			get { return true; }
+		}
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return false;
 		}
 
 #pragma warning disable 618
+
 		public override IMonoHttpsStream GetHttpsStream (Stream stream)
-#pragma warning restore 618
 		{
 			throw new InvalidOperationException ();
 		}
 
-#pragma warning disable 618
 		public override IMonoHttpsStream CreateHttpsClientStream (
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback)
-#pragma warning restore 618
 		{
 			throw new NotSupportedException ();
 		}
+
+#pragma warning restore 618
 
 		public override MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
 			LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		{
+			return CreateSslStream (
+				innerStream, leaveInnerStreamOpen,
+				userCertificateValidationCallback, userCertificateSelectionCallback,
+				null);
+		}
+
+		public override MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings)
 		{
 			throw new NotImplementedException ();
 		}

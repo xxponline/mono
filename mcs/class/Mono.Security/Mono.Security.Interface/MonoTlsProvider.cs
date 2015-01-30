@@ -48,7 +48,13 @@ namespace Mono.Security.Interface
 			get;
 		}
 
+		public abstract bool SupportsMonoExtensions {
+			get;
+		}
+
 		public abstract bool IsHttpsStream (Stream stream);
+
+#pragma warning disable 618
 
 		public abstract IMonoHttpsStream GetHttpsStream (Stream stream);
 
@@ -56,9 +62,19 @@ namespace Mono.Security.Interface
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback);
 
+#pragma warning restore
+
 		public abstract MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
 			LocalCertificateSelectionCallback userCertificateSelectionCallback);
+
+		// Only available if @SupportsMonoExtensions is set.
+		public abstract MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings);
+
 	}
 }
