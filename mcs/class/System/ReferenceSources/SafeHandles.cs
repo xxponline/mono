@@ -23,24 +23,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-#if MONO_FEATURE_NEW_TLS
-#if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
+#if SECURITY_DEP
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
-#if MONO_SECURITY_ALIAS && MONO_INSIDE_SYSTEM
-using X509Certificate2 = MonoSecurity::System.Security.Cryptography.X509Certificates.X509Certificate2;
-#else
-using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
-#endif
-#if MONO_FEATURE_NEW_TLS
 using IMonoTlsContext = MonoSecurity::Mono.Security.Interface.IMonoTlsContext;
-#endif
 #else
-#if MONO_FEATURE_NEW_TLS
 using IMonoTlsContext = Mono.Security.Interface.IMonoTlsContext;
-#endif
 #endif
 
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace System.Net.Security
 {

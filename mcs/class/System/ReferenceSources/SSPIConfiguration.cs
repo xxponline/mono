@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MONO_SECURITY_ALIAS || MONO_INSIDE_SYSTEM
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MonoSecurity::Mono.Security.Interface;
 #else

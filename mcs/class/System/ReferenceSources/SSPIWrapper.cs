@@ -38,31 +38,19 @@
 // SSCX = System.Security.Cryptography.X509Certificates from System.dll
 //
 
-#if MONO_FEATURE_NEW_TLS
-#if MONO_INSIDE_SYSTEM || MONO_SECURITY_ALIAS
+#if SECURITY_DEP
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
 using MX = MonoSecurity::Mono.Security.X509;
-
-#if MONO_SECURITY_ALIAS && MONO_INSIDE_SYSTEM
-using MSCX = MonoSecurity::System.Security.Cryptography.X509Certificates;
-
-#else
-using MSCX = System.Security.Cryptography.X509Certificates;
-#endif
-#if MONO_FEATURE_NEW_TLS
 using MonoSecurity::Mono.Security.Interface;
-#endif
 #else
 using MX = Mono.Security.X509;
-
-#if MONO_FEATURE_NEW_TLS
 using Mono.Security.Interface;
-#endif
 #endif
 
 using System.Runtime.InteropServices;
 using System.Security.Authentication.ExtendedProtection;
-using SSCX = System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.X509Certificates;
 using MNS = Mono.Net.Security;
 
 namespace System.Net.Security
@@ -82,7 +70,7 @@ namespace System.Net.Security
 
     internal static class GlobalSSPI
     {
-        internal static SSPIInterface Create(string hostname, bool serverMode, SchProtocols protocolFlags, SSCX.X509Certificate serverCertificate, SSCX.X509CertificateCollection clientCertificates,
+        internal static SSPIInterface Create(string hostname, bool serverMode, SchProtocols protocolFlags, X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
                                         bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus, EncryptionPolicy encryptionPolicy,
                                         LocalCertSelectionCallback certSelectionDelegate, RemoteCertValidationCallback remoteValidationCallback, SSPIConfiguration userConfig)
         {
@@ -238,7 +226,7 @@ namespace System.Net.Security
             return null;
         }
 
-        internal static MSCX.X509Certificate2 GetRemoteCertificate(SafeDeleteContext safeContext, out MSCX.X509Certificate2Collection remoteCertificateStore)
+        internal static X509Certificate2 GetRemoteCertificate(SafeDeleteContext safeContext, out X509Certificate2Collection remoteCertificateStore)
         {
             MX.X509CertificateCollection monoCollection;
             if (safeContext == null || safeContext.IsInvalid)
@@ -253,12 +241,12 @@ namespace System.Net.Security
                 return null;
             }
 
-            remoteCertificateStore = new MSCX.X509Certificate2Collection();
+            remoteCertificateStore = new X509Certificate2Collection();
             foreach (var cert in monoCollection)
             {
-                remoteCertificateStore.Add(new SSCX.X509Certificate2(cert.RawData));
+                remoteCertificateStore.Add(new X509Certificate2(cert.RawData));
             }
-            return new MSCX.X509Certificate2(monoCert.RawData);
+            return new X509Certificate2(monoCert.RawData);
         }
 
         internal static bool CheckRemoteCertificate(SafeDeleteContext safeContext)
