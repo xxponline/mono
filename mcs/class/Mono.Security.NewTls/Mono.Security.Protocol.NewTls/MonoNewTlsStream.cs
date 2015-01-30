@@ -67,11 +67,11 @@ namespace Mono.Security.Providers.NewTls
 		{
 		}
 
-		public bool IsClosed {
+		new public bool IsClosed {
 			get { return base.IsClosed; }
 		}
 
-		public TlsException LastError {
+		new public TlsException LastError {
 			get { return (TlsException)base.LastError; }
 		}
 

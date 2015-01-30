@@ -24,11 +24,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using MX = Mono.Security.X509;
 
 namespace Mono.Security.Interface
 {
-	public interface IMonoTlsContext
+	public interface IMonoTlsContext : IDisposable
 	{
+		bool IsValid {
+			get;
+		}
+
+		void Initialize (bool serverMode);
+
+		bool HasCredentials {
+			get;
+		}
+
+		void SetCertificate (MX.X509Certificate certificate, AsymmetricAlgorithm privateKey);
+
+		Exception LastError {
+			get;
+		}
+
+		int GenerateNextToken (IBufferOffsetSize incoming, out IMultiBufferOffsetSize outgoing);
+
+		int EncryptMessage (ref IBufferOffsetSize incoming);
+
+		int DecryptMessage (ref IBufferOffsetSize incoming);
+
+		bool ReceivedCloseNotify {
+			get;
+		}
+
+		byte[] CreateCloseNotify ();
+
+		X509Certificate2 GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore);
+
+		bool VerifyRemoteCertificate ();
 	}
 }
 

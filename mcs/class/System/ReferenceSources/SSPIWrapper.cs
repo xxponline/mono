@@ -76,19 +76,10 @@ namespace System.Net.Security
             private set;
         }
 
-        #if MONO_FEATURE_NEW_TLS
-        public TlsConfiguration Configuration
-        {
-            get;
-            private set;
-        }
-
-        public SSPIInterface(IMonoTlsContext context, TlsConfiguration config)
+        public SSPIInterface(IMonoTlsContext context)
         {
             Context = context;
-            Configuration = config;
         }
-        #endif
     }
 
     internal static class GlobalSSPI
@@ -99,37 +90,11 @@ namespace System.Net.Security
         {
             var provider = MNS.MonoTlsProviderFactory.GetProvider();
             var settings = userConfig != null ? userConfig.Settings : null;
-
             var context = provider.CreateTlsContext(
                 hostname, serverMode, protocolFlags, serverCertificate, clientCertificates,
                 remoteCertRequired, checkCertName, checkCertRevocationStatus,
                 encryptionPolicy, certSelectionDelegate, remoteValidationCallback, settings);
-            #if MONO_FEATURE_NEW_TLS
-            TlsConfiguration config;
-            if (serverMode)
-            {
-                var cert = (MSCX.X509Certificate2)serverCertificate;
-                var monoCert = new MX.X509Certificate(cert.RawData);
-                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? (TlsSettings)userConfig.Settings : null, monoCert, cert.PrivateKey);
-            }
-            else
-            {
-                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? (TlsSettings)userConfig.Settings : null, hostname);
-                #if FIXME
-				if (certSelectionDelegate != null)
-					config.Client.LocalCertSelectionCallback = (t, l, r, a) => certSelectionDelegate(t, l, r, a);
-                #endif
-                if (remoteValidationCallback != null)
-                    config.RemoteCertValidationCallback = (h, c, ch, p) =>
-                    {
-                        var ssc = new SSCX.X509Certificate(c.RawData);
-                        return remoteValidationCallback(h, ssc, null, (SslPolicyErrors)p);
-                    };
-            }
-            return new SSPIInterface(context, config);
-            #else
-			throw new NotImplementedException ();
-            #endif
+            return new SSPIInterface(context);
         }
     }
 
@@ -156,20 +121,16 @@ namespace System.Net.Security
     {
         static void SetCredentials(SSPIInterface secModule, SafeFreeCredentials credentials)
         {
-            #if MONO_FEATURE_NEW_TLS
             if (credentials != null && !credentials.IsInvalid)
             {
-                if (!secModule.Configuration.HasCredentials && credentials.Certificate != null)
+                if (!secModule.Context.HasCredentials && credentials.Certificate != null)
                 {
                     var cert = new MX.X509Certificate(credentials.Certificate.RawData);
-                    secModule.Configuration.SetCertificate(cert, credentials.Certificate.PrivateKey);
+                    secModule.Context.SetCertificate(cert, credentials.Certificate.PrivateKey);
                 }
                 bool success = true;
                 credentials.DangerousAddRef(ref success);
             }
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         /*
@@ -179,7 +140,6 @@ namespace System.Net.Security
          */
         internal static int AcceptSecurityContext(SSPIInterface secModule, ref SafeFreeCredentials credentials, ref SafeDeleteContext safeContext, ContextFlags inFlags, Endianness endianness, SecurityBuffer inputBuffer, SecurityBuffer outputBuffer, ref ContextFlags outFlags)
         {
-            #if MONO_FEATURE_NEW_TLS
             if (endianness != Endianness.Native)
                 throw new NotSupportedException();
 
@@ -188,40 +148,36 @@ namespace System.Net.Security
                 if (credentials == null || credentials.IsInvalid)
                     return (int)SecurityStatus.CredentialsNeeded;
 
-                safeContext = new SafeDeleteContext(new TlsContext(secModule.Configuration, true));
+                secModule.Context.Initialize(true);
+                safeContext = new SafeDeleteContext(secModule.Context);
             }
 
             SetCredentials(secModule, credentials);
 
             var incoming = GetInputBuffer(inputBuffer);
-            var outgoing = new TlsMultiBuffer();
+            IMultiBufferOffsetSize outgoing;
 
-            var retval = (int)safeContext.Context.GenerateNextToken(incoming, outgoing);
+            var retval = (int)safeContext.Context.GenerateNextToken(incoming, out outgoing);
             UpdateOutput(outgoing, outputBuffer);
             return retval;
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static int InitializeSecurityContext(SSPIInterface secModule, ref SafeFreeCredentials credentials, ref SafeDeleteContext safeContext, string targetName, ContextFlags inFlags, Endianness endianness, SecurityBuffer inputBuffer, SecurityBuffer outputBuffer, ref ContextFlags outFlags)
         {
-            #if MONO_FEATURE_NEW_TLS
             if (inputBuffer != null)
                 throw new InvalidOperationException();
 
             if (safeContext == null)
-                safeContext = new SafeDeleteContext(new TlsContext(secModule.Configuration, false));
+            {
+                secModule.Context.Initialize(false);
+                safeContext = new SafeDeleteContext(secModule.Context);
+            }
 
             return InitializeSecurityContext(secModule, credentials, ref safeContext, targetName, inFlags, endianness, null, outputBuffer, ref outFlags);
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static int InitializeSecurityContext(SSPIInterface secModule, SafeFreeCredentials credentials, ref SafeDeleteContext safeContext, string targetName, ContextFlags inFlags, Endianness endianness, SecurityBuffer[] inputBuffers, SecurityBuffer outputBuffer, ref ContextFlags outFlags)
         {
-            #if MONO_FEATURE_NEW_TLS
             if (endianness != Endianness.Native)
                 throw new NotSupportedException();
 
@@ -236,65 +192,42 @@ namespace System.Net.Security
             }
 
             var incoming = GetInputBuffer(inputBuffer);
-            var outgoing = new TlsMultiBuffer();
+            IMultiBufferOffsetSize outgoing = null;
 
-            var retval = (int)safeContext.Context.GenerateNextToken(incoming, outgoing);
+            var retval = (int)safeContext.Context.GenerateNextToken(incoming, out outgoing);
             UpdateOutput(outgoing, outputBuffer);
             return retval;
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static int EncryptMessage(SSPIInterface secModule, SafeDeleteContext safeContext, SecurityBuffer securityBuffer, uint sequenceNumber)
         {
-            #if MONO_FEATURE_NEW_TLS
             var incoming = GetInputBuffer(securityBuffer);
             var retval = (int)safeContext.Context.EncryptMessage(ref incoming);
             UpdateOutput(incoming, securityBuffer);
             return retval;
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static int DecryptMessage(SSPIInterface secModule, SafeDeleteContext safeContext, SecurityBuffer securityBuffer, uint sequenceNumber)
         {
-            #if MONO_FEATURE_NEW_TLS
             var incoming = GetInputBuffer(securityBuffer);
             var retval = (int)safeContext.Context.DecryptMessage(ref incoming);
             UpdateOutput(incoming, securityBuffer);
             return retval;
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static byte[] CreateShutdownMessage(SSPIInterface secModule, SafeDeleteContext safeContext)
         {
-            #if MONO_FEATURE_NEW_TLS
-            return safeContext.Context.CreateAlert(new Alert(AlertLevel.Warning, AlertDescription.CloseNotify));
-            #else
-			throw new NotImplementedException ();
-            #endif
+            return safeContext.Context.CreateCloseNotify();
         }
 
         internal static bool IsClosed(SSPIInterface secModule, SafeDeleteContext safeContext)
         {
-            #if MONO_FEATURE_NEW_TLS
             return safeContext.Context.ReceivedCloseNotify;
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static Exception GetLastError(SSPIInterface secModule, SafeDeleteContext safeContext)
         {
-            #if MONO_FEATURE_NEW_TLS
             return safeContext.LastError;
-            #else
-			return null;
-            #endif
         }
 
         internal static SafeFreeCredentials AcquireCredentialsHandle(SSPIInterface SecModule, string package, CredentialUse intent, SecureCredential scc)
@@ -309,7 +242,6 @@ namespace System.Net.Security
 
         internal static MSCX.X509Certificate2 GetRemoteCertificate(SafeDeleteContext safeContext, out MSCX.X509Certificate2Collection remoteCertificateStore)
         {
-            #if MONO_FEATURE_NEW_TLS
             MX.X509CertificateCollection monoCollection;
             if (safeContext == null || safeContext.IsInvalid)
             {
@@ -329,27 +261,38 @@ namespace System.Net.Security
                 remoteCertificateStore.Add(new SSCX.X509Certificate2(cert.RawData));
             }
             return new MSCX.X509Certificate2(monoCert.RawData);
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
         internal static bool CheckRemoteCertificate(SafeDeleteContext safeContext)
         {
-            #if MONO_FEATURE_NEW_TLS
             return safeContext.Context.VerifyRemoteCertificate();
-            #else
-			throw new NotImplementedException ();
-            #endif
         }
 
-        #if MONO_FEATURE_NEW_TLS
-        static TlsBuffer GetInputBuffer(SecurityBuffer incoming)
+        class InputBuffer : IBufferOffsetSize
         {
-            return incoming != null ? new TlsBuffer(incoming.token, incoming.offset, incoming.size) : null;
+            public byte[] Buffer {
+                get; private set;
+            }
+            public int Offset {
+                get; private set;
+            }
+            public int Size {
+                get; private set;
+            }
+            public InputBuffer(byte[] buffer, int offset, int size)
+            {
+                Buffer = buffer;
+                Offset = offset;
+                Size = size;
+            }
         }
 
-        static void UpdateOutput(TlsMultiBuffer outgoing, SecurityBuffer outputBuffer)
+        static IBufferOffsetSize GetInputBuffer(SecurityBuffer incoming)
+        {
+            return incoming != null ? new InputBuffer(incoming.token, incoming.offset, incoming.size) : null;
+        }
+
+        static void UpdateOutput(IMultiBufferOffsetSize outgoing, SecurityBuffer outputBuffer)
         {
             if (outgoing.IsEmpty)
                 return;
@@ -360,7 +303,7 @@ namespace System.Net.Security
             outputBuffer.type = BufferType.Token;
         }
 
-        static void UpdateOutput(TlsBuffer buffer, SecurityBuffer outputBuffer)
+        static void UpdateOutput(IBufferOffsetSize buffer, SecurityBuffer outputBuffer)
         {
             if (buffer != null)
             {
@@ -376,7 +319,6 @@ namespace System.Net.Security
                 outputBuffer.type = BufferType.Empty;
             }
         }
-        #endif
     }
 }
 #endif

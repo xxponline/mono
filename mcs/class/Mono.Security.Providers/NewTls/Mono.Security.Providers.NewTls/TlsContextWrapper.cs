@@ -29,13 +29,91 @@ using Mono.Security.Protocol.NewTls;
 
 namespace Mono.Security.Providers.NewTls
 {
-	class TlsContextWrapper : IMonoTlsContext
+	class TlsContextWrapper : SecretParameters, IMonoTlsContext
 	{
 		TlsConfiguration config;
+		TlsContext context;
 
 		public TlsContextWrapper (TlsConfiguration config)
 		{
 			this.config = config;
+		}
+
+		public bool IsValid {
+			get { return context != null && context.IsValid; }
+		}
+
+		public void Initialize (bool serverMode)
+		{
+			if (context != null)
+				throw new InvalidOperationException ();
+			context = new TlsContext (config, serverMode);
+		}
+
+		protected override void Clear ()
+		{
+			if (context != null) {
+				context.Clear ();
+				context = null;
+			}
+		}
+
+		public void SetCertificate (Mono.Security.X509.X509Certificate certificate, System.Security.Cryptography.AsymmetricAlgorithm privateKey)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int GenerateNextToken (IBufferOffsetSize incoming, out IMultiBufferOffsetSize outgoing)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int EncryptMessage (ref IBufferOffsetSize incoming)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int DecryptMessage (ref IBufferOffsetSize incoming)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public byte[] CreateCloseNotify ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public System.Security.Cryptography.X509Certificates.X509Certificate2 GetRemoteCertificate (out Mono.Security.X509.X509CertificateCollection remoteCertificateStore)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool VerifyRemoteCertificate ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool HasCredentials {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public Exception LastError {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public bool ReceivedCloseNotify {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public void Dispose ()
+		{
+			throw new NotImplementedException ();
 		}
 	}
 }

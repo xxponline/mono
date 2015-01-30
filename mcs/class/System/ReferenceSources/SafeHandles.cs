@@ -32,11 +32,13 @@ using X509Certificate2 = MonoSecurity::System.Security.Cryptography.X509Certific
 using X509Certificate2 = System.Security.Cryptography.X509Certificates.X509Certificate2;
 #endif
 #if MONO_FEATURE_NEW_TLS
+using IMonoTlsContext = MonoSecurity::Mono.Security.Interface.IMonoTlsContext;
 using TlsContext = MonoSecurity::Mono.Security.Protocol.NewTls.TlsContext;
 using TlsException = MonoSecurity::Mono.Security.Protocol.NewTls.TlsException;
 #endif
 #else
 #if MONO_FEATURE_NEW_TLS
+using IMonoTlsContext = Mono.Security.Interface.IMonoTlsContext;
 using TlsContext = Mono.Security.Protocol.NewTls.TlsContext;
 using TlsException = Mono.Security.Protocol.NewTls.TlsException;
 #endif
@@ -46,187 +48,198 @@ using System.Runtime.InteropServices;
 
 namespace System.Net.Security
 {
-	class DummySafeHandle : SafeHandle
-	{
-		protected DummySafeHandle () : base ((IntPtr)(-1), true)
-		{
-		}
+    class DummySafeHandle : SafeHandle
+    {
+        protected DummySafeHandle()
+            : base((IntPtr)(-1), true)
+        {
+        }
 
-		protected override bool ReleaseHandle ()
-		{
-			return true;
-		}
+        protected override bool ReleaseHandle()
+        {
+            return true;
+        }
 
-		public override bool IsInvalid {
-			get { return handle == (IntPtr)(-1); }
-		}
-	}
+        public override bool IsInvalid
+        {
+            get { return handle == (IntPtr)(-1); }
+        }
+    }
 
-	class SafeFreeCertContext : DummySafeHandle
-	{
-	}
+    class SafeFreeCertContext : DummySafeHandle
+    {
+    }
 
-	class SafeFreeCredentials : DummySafeHandle
-	{
-		SecureCredential credential;
+    class SafeFreeCredentials : DummySafeHandle
+    {
+        SecureCredential credential;
 
-		public X509Certificate2 Certificate {
-			get {
-				if (IsInvalid)
-					throw new ObjectDisposedException ("Certificate");
-				return credential.certificate;
-			}
-		}
+        public X509Certificate2 Certificate
+        {
+            get
+            {
+                if (IsInvalid)
+                    throw new ObjectDisposedException("Certificate");
+                return credential.certificate;
+            }
+        }
 
-		public SafeFreeCredentials (SecureCredential credential)
-		{
-			this.credential = credential;
-			bool success = true;
-			DangerousAddRef (ref success);
-		}
+        public SafeFreeCredentials(SecureCredential credential)
+        {
+            this.credential = credential;
+            bool success = true;
+            DangerousAddRef(ref success);
+        }
 
-		public override bool IsInvalid {
-			get {
-				return credential.certificate == null;
-			}
-		}
+        public override bool IsInvalid
+        {
+            get
+            {
+                return credential.certificate == null;
+            }
+        }
 
-		protected override bool ReleaseHandle ()
-		{
-			credential.Clear ();
-			return base.ReleaseHandle ();
-		}
-	}
+        protected override bool ReleaseHandle()
+        {
+            credential.Clear();
+            return base.ReleaseHandle();
+        }
+    }
 
-	class SafeDeleteContext : DummySafeHandle
-	{
-		#if MONO_FEATURE_NEW_TLS
-		TlsContext context;
+    class SafeDeleteContext : DummySafeHandle
+    {
+        IMonoTlsContext context;
 
-		public TlsContext Context {
-			get {
-				if (IsInvalid)
-					throw new ObjectDisposedException ("Context");
-				return context;
-			}
-		}
+        public IMonoTlsContext Context
+        {
+            get {
+                if (IsInvalid)
+                    throw new ObjectDisposedException("TlsContext");
+                return context;
+            }
+        }
 
-		public TlsException LastError {
-			get {
-				if (context != null)
-					return context.LastError;
-				return null;
-			}
-		}
+        public TlsException LastError
+        {
+            get
+            {
+                if (context != null)
+                    return (TlsException)context.LastError;
+                return null;
+            }
+        }
 
-		public SafeDeleteContext (TlsContext context)
-		{
-			this.context = context;
-		}
-		#endif
+        public SafeDeleteContext(IMonoTlsContext context)
+        {
+            this.context = context;
+        }
 
-		public override bool IsInvalid {
-			get {
-				#if MONO_FEATURE_NEW_TLS
-				return context == null || !context.IsValid;
-				#else
-				return true;
-				#endif
-			}
-		}
+        public override bool IsInvalid
+        {
+            get
+            {
+                return context == null || !context.IsValid;
+            }
+        }
 
-		protected override bool ReleaseHandle ()
-		{
-			#if MONO_FEATURE_NEW_TLS
-			context.Clear ();
-			context = null;
-			#endif
-			return base.ReleaseHandle ();
-		}
-	}
+        protected override bool ReleaseHandle()
+        {
+            context.Dispose();
+            context = null;
+            return base.ReleaseHandle();
+        }
+    }
 
-	struct SecureCredential
-	{
-		public const int CurrentVersion = 0x4;
+    struct SecureCredential
+    {
+        public const int CurrentVersion = 0x4;
 
-		[Flags]
-		public enum Flags
-		{
-			Zero = 0,
-			NoSystemMapper = 0x02,
-			NoNameCheck = 0x04,
-			ValidateManual = 0x08,
-			NoDefaultCred = 0x10,
-			ValidateAuto = 0x20,
-			UseStrongCrypto = 0x00400000
-		}
+        [Flags]
+        public enum Flags
+        {
+            Zero = 0,
+            NoSystemMapper = 0x02,
+            NoNameCheck = 0x04,
+            ValidateManual = 0x08,
+            NoDefaultCred = 0x10,
+            ValidateAuto = 0x20,
+            UseStrongCrypto = 0x00400000
+        }
 
-		int version;
-		internal X509Certificate2 certificate;
-		SchProtocols protocols;
-		EncryptionPolicy policy;
+        int version;
+        internal X509Certificate2 certificate;
+        SchProtocols protocols;
+        EncryptionPolicy policy;
 
-		public SecureCredential (int version, X509Certificate2 certificate, SecureCredential.Flags flags, SchProtocols protocols, EncryptionPolicy policy)
-		{
-			this.version = version;
-			this.certificate = certificate;
-			this.protocols = protocols;
-			this.policy = policy;
-		}
+        public SecureCredential(int version, X509Certificate2 certificate, SecureCredential.Flags flags, SchProtocols protocols, EncryptionPolicy policy)
+        {
+            this.version = version;
+            this.certificate = certificate;
+            this.protocols = protocols;
+            this.policy = policy;
+        }
 
-		public void Clear ()
-		{
-			certificate = null;
-		}
-	}
+        public void Clear()
+        {
+            certificate = null;
+        }
+    }
 
-	internal class SafeCredentialReference : DummySafeHandle
-	{
-		//
-		// Static cache will return the target handle if found the reference in the table.
-		//
-		internal SafeFreeCredentials _Target;
+    internal class SafeCredentialReference : DummySafeHandle
+    {
+        //
+        // Static cache will return the target handle if found the reference in the table.
+        //
+        internal SafeFreeCredentials _Target;
 
-		//
-		//
-		internal static SafeCredentialReference CreateReference (SafeFreeCredentials target)
-		{
-			SafeCredentialReference result = new SafeCredentialReference (target);
-			if (result.IsInvalid)
-				return null;
+        //
+        //
+        internal static SafeCredentialReference CreateReference(SafeFreeCredentials target)
+        {
+            SafeCredentialReference result = new SafeCredentialReference(target);
+            if (result.IsInvalid)
+                return null;
 
-			return result;
-		}
+            return result;
+        }
 
-		private SafeCredentialReference (SafeFreeCredentials target) : base ()
-		{
-			// Bumps up the refcount on Target to signify that target handle is statically cached so
-			// its dispose should be postponed
-			bool b = false;
-			try {
-				target.DangerousAddRef (ref b);
-			} catch {
-				if (b) {
-					target.DangerousRelease ();
-					b = false;
-				}
-			} finally {
-				if (b) {
-					_Target = target;
-					SetHandle (new IntPtr (0));   // make this handle valid
-				}
-			}
-		}
+        private SafeCredentialReference(SafeFreeCredentials target)
+            : base()
+        {
+            // Bumps up the refcount on Target to signify that target handle is statically cached so
+            // its dispose should be postponed
+            bool b = false;
+            try
+            {
+                target.DangerousAddRef(ref b);
+            }
+            catch
+            {
+                if (b)
+                {
+                    target.DangerousRelease();
+                    b = false;
+                }
+            }
+            finally
+            {
+                if (b)
+                {
+                    _Target = target;
+                    SetHandle(new IntPtr(0));   // make this handle valid
+                }
+            }
+        }
 
-		override protected bool ReleaseHandle ()
-		{
-			SafeFreeCredentials target = _Target;
-			if (target != null)
-				target.DangerousRelease ();
-			_Target = null;
-			return true;
-		}
-	}
+        override protected bool ReleaseHandle()
+        {
+            SafeFreeCredentials target = _Target;
+            if (target != null)
+                target.DangerousRelease();
+            _Target = null;
+            return true;
+        }
+    }
 
 }
 #endif

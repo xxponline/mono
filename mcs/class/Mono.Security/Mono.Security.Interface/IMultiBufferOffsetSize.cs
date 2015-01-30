@@ -29,6 +29,11 @@ namespace Mono.Security.Interface
 {
 	public interface IMultiBufferOffsetSize
 	{
+		bool IsEmpty {
+			get;
+		}
+
+		IBufferOffsetSize StealBuffer ();
 	}
 }
 
