@@ -48,6 +48,9 @@
       <Link>common\SR.cs</Link>
     </Compile>
     <Compile Include="Mono.Security.Providers.NewTls\NewTlsProvider.cs" />
+    <Compile Include="..\..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoNewTlsStream.cs">
+      <Link>Mono.Security.Providers.NewTls\MonoNewTlsStream.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

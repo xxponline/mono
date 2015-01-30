@@ -354,12 +354,6 @@
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs">
       <Link>Mono.Security.Protocol.NewTls\IBufferOffsetSize.cs</Link>
     </Compile>
-    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStream.cs">
-      <Link>Mono.Security.Protocol.NewTls\MonoSslStream.cs</Link>
-    </Compile>
-    <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
-      <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
-    </Compile>
     <Compile Include="..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\RenegotiationFlags.cs">
       <Link>Mono.Security.Protocol.NewTls\RenegotiationFlags.cs</Link>
     </Compile>

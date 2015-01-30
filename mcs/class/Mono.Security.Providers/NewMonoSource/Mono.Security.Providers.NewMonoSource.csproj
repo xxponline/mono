@@ -31,9 +31,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Assembly\AssemblyInfo.cs">
-      <Link>Assembly\AssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">
       <Link>referencesource\Net\Logging.cs</Link>
     </Compile>
@@ -100,12 +97,7 @@
     <Compile Include="..\..\System\ReferenceSources\SSPIConfiguration.cs">
       <Link>ReferenceSources\SSPIConfiguration.cs</Link>
     </Compile>
-    <Compile Include="..\..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStream.cs">
-      <Link>Mono.Security.Protocol.NewTls\MonoSslStream.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Mono.Security.NewTls\Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs">
-      <Link>Mono.Security.Protocol.NewTls\MonoSslStreamFactory.cs</Link>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Security">
@@ -124,4 +116,8 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Mono.Security.Protocol.NewTls\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

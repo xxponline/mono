@@ -1,4 +1,4 @@
-﻿#if NEW_MONO_API
+#if NEW_MONO_API
 extern alias MonoSecurity;
 using System;
 using System.IO;
