@@ -34,7 +34,7 @@
 
 #if SECURITY_DEP
 
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
 #if !MOBILE
@@ -54,7 +54,7 @@ using MonoExchangeAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.Excha
 using MonoSecurityProtocolType = MonoSecurity::Mono.Security.Protocol.Tls.SecurityProtocolType;
 using MonoSecurity::Mono.Security.Protocol.Tls;
 #endif
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
 

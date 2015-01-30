@@ -26,7 +26,7 @@
 
 #if SECURITY_DEP
 
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
 #if !MOBILE
@@ -38,7 +38,7 @@ using Mono.Security.Interface;
 #else
 using MonoSecurity::Mono.Security.Interface;
 #endif
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;

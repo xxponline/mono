@@ -25,14 +25,14 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 #endif
 #if !MOBILE
 extern alias MonoSecurity;
 #endif
 
-#if USE_PREBUILT_ALIAS
+#if PREBUILT_SYSTEM_ALIAS
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
 using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
 #else
