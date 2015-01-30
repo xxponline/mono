@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Security" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -87,11 +88,6 @@
       <Project>{43272ABC-8798-4B6F-A8CA-D7F082DBB440}</Project>
       <Name>Mono.Security.Instrumentation.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mono.Security-martin.csproj">
-      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
-      <Name>Mono.Security-martin</Name>
-      <Aliases>MonoSecurity</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\Tests\Mono.Security.Instrumentation.Tests.csproj">
       <Project>{93CE4A8C-9111-4211-9BE1-314134802473}</Project>
       <Name>Mono.Security.Instrumentation.Tests</Name>
@@ -124,6 +120,10 @@
     <ProjectReference Include="..\..\..\..\Mono.Security.Providers\NewTls\Mono.Security.Providers.NewTls.csproj">
       <Project>{4B5EDBC8-F8EA-48E4-AA87-A3FC52202F01}</Project>
       <Name>Mono.Security.Providers.NewTls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Mono.Security.NewTls\Mono.Security.NewTls.csproj">
+      <Project>{C577448D-707B-4DDD-83DC-9CB758FC6DE5}</Project>
+      <Name>Mono.Security.NewTls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

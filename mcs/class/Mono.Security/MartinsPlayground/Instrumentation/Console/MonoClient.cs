@@ -1,5 +1,4 @@
 ﻿extern alias NewMonoSource;
-extern alias MonoSecurity;
 
 using System;
 using System.IO;
@@ -17,11 +16,11 @@ using NewSslPolicyErrors = NewMonoSource::System.Net.Security.SslPolicyErrors;
 using SslProtocols = System.Security.Authentication.SslProtocols;
 using EncryptionPolicy = NewMonoSource::System.Net.Security.EncryptionPolicy;
 
-using MonoSecurity::Mono.Security.Protocol.NewTls;
+using Mono.Security.Protocol.NewTls;
 using Mono.Security.Providers.NewTls;
 
 using SSCX = System.Security.Cryptography.X509Certificates;
-using MX = MonoSecurity::Mono.Security.X509;
+using MX = Mono.Security.X509;
 
 namespace Mono.Security.Instrumentation.Console
 {

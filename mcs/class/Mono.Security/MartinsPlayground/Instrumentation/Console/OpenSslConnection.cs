@@ -23,14 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-extern alias MonoSecurity;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using MonoSecurity::Mono.Security.Protocol.NewTls;
-using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
+using Mono.Security.Protocol.NewTls;
+using Mono.Security.Protocol.NewTls.Cipher;
 
 namespace Mono.Security.Instrumentation.Console
 {

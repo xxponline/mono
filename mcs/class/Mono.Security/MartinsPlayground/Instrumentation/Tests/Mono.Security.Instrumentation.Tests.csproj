@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Security" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,10 +80,6 @@
       <Project>{43272ABC-8798-4B6F-A8CA-D7F082DBB440}</Project>
       <Name>Mono.Security.Instrumentation.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mono.Security-martin.csproj">
-      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
-      <Name>Mono.Security-martin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\nunit26\src\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
       <Name>nunit.framework.dll</Name>
@@ -94,6 +91,10 @@
     <ProjectReference Include="..\..\..\..\..\nunit26\src\NUnitCore\core\nunit.core.dll.csproj">
       <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
       <Name>nunit.core.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Mono.Security.NewTls\Mono.Security.NewTls.csproj">
+      <Project>{C577448D-707B-4DDD-83DC-9CB758FC6DE5}</Project>
+      <Name>Mono.Security.NewTls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

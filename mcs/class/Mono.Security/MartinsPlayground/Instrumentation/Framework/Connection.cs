@@ -1,12 +1,11 @@
-﻿extern alias MonoSecurity;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
-using MonoSecurity::Mono.Security.Protocol.NewTls;
+using Mono.Security.Protocol.NewTls;
 
 namespace Mono.Security.Instrumentation.Framework
 {

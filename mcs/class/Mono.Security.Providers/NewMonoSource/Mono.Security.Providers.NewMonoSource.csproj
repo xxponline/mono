@@ -30,6 +30,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Security">
+	  <Aliases>MonoSecurity</Aliases>
+	</Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\external\referencesource\System\net\System\Net\Logging.cs">
@@ -127,12 +130,5 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Mono.Net.Security\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mono.Security\Mono.Security-martin.csproj">
-      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
-      <Name>Mono.Security-martin</Name>
-      <Aliases>MonoSecurity</Aliases>
-    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
-﻿extern alias MonoSecurity;
-using System;
-using MonoSecurity::System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mono.Security.Instrumentation.Framework
 {

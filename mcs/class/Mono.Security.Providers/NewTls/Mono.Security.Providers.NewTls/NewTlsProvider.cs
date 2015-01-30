@@ -115,7 +115,7 @@ namespace Mono.Security.Providers.NewTls
 		{
 			TlsConfiguration config;
 			if (serverMode) {
-				var cert = (SSCX.X509Certificate2)serverCertificate;
+				var cert = (PSSCX.X509Certificate2)serverCertificate;
 				var monoCert = new MX.X509Certificate (cert.RawData);
 				config = new TlsConfiguration ((TlsProtocols)protocolFlags, (TlsSettings)settings, monoCert, cert.PrivateKey);
 			} else {

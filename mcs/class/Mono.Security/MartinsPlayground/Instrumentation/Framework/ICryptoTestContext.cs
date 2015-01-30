@@ -1,9 +1,8 @@
-﻿extern alias MonoSecurity;
-using System;
-using MonoSecurity::Mono.Security.Interface;
-using MonoSecurity::Mono.Security.Protocol.NewTls;
-using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
-using MonoSecurity::Mono.Security.Protocol.NewTls.Handshake;
+﻿using System;
+using Mono.Security.Interface;
+using Mono.Security.Protocol.NewTls;
+using Mono.Security.Protocol.NewTls.Cipher;
+using Mono.Security.Protocol.NewTls.Handshake;
 
 namespace Mono.Security.Instrumentation.Framework
 {

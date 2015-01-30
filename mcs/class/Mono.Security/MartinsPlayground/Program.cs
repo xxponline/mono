@@ -1,5 +1,4 @@
-﻿extern alias MonoSecurity;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -10,7 +9,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using MX = MonoSecurity::Mono.Security.X509;
+using MX = Mono.Security.X509;
 
 namespace MartinsPlayground
 {

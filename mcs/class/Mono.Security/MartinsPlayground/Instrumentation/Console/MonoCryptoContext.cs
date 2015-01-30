@@ -1,5 +1,4 @@
-﻿extern alias MonoSecurity;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Collections;
@@ -9,10 +8,10 @@ using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using MonoSecurity::Mono.Security.Interface;
-using MonoSecurity::Mono.Security.Protocol.NewTls;
-using MonoSecurity::Mono.Security.Protocol.NewTls.Cipher;
-using MonoSecurity::Mono.Security.Protocol.NewTls.Handshake;
+using Mono.Security.Interface;
+using Mono.Security.Protocol.NewTls;
+using Mono.Security.Protocol.NewTls.Cipher;
+using Mono.Security.Protocol.NewTls.Handshake;
 
 namespace Mono.Security.Instrumentation.Console
 {

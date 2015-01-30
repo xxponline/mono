@@ -56,8 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">
-	   <Aliases>PrebuiltSystem</Aliases>
-	</Reference>
+      <Aliases>PrebuiltSystem</Aliases>
+    </Reference>
+    <Reference Include="Mono.Security" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -69,9 +70,9 @@
       <Name>Mono.Security.Providers.NewMonoSource</Name>
       <Aliases>NewMonoSource</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mono.Security\Mono.Security-martin.csproj">
-      <Project>{D68D4FED-CA32-4800-A628-58BAE485562C}</Project>
-      <Name>Mono.Security-martin</Name>
+    <ProjectReference Include="..\..\Mono.Security.NewTls\Mono.Security.NewTls.csproj">
+      <Project>{C577448D-707B-4DDD-83DC-9CB758FC6DE5}</Project>
+      <Name>Mono.Security.NewTls</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

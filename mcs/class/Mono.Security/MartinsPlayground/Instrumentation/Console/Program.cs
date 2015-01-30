@@ -1,5 +1,4 @@
-﻿extern alias MonoSecurity;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.Reflection;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
-using TLS = MonoSecurity::Mono.Security.Protocol.NewTls;
-using MSI = MonoSecurity::Mono.Security.Interface;
+using TLS = Mono.Security.Protocol.NewTls;
+using MSI = Mono.Security.Interface;
 using Mono.Security.Providers.NewTls;
 using NUnit.Core;
 using NUnit.ConsoleRunner;

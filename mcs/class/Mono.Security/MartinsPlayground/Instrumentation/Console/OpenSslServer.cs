@@ -1,12 +1,11 @@
-﻿extern alias MonoSecurity;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
-using MonoSecurity::System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mono.Security.Instrumentation.Console
 {
