@@ -94,11 +94,11 @@ namespace System.Net.Security
             {
                 var cert = (MSCX.X509Certificate2)serverCertificate;
                 var monoCert = new MX.X509Certificate(cert.RawData);
-                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? userConfig.Settings : null, monoCert, cert.PrivateKey);
+                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? (TlsSettings)userConfig.Settings : null, monoCert, cert.PrivateKey);
             }
             else
             {
-                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? userConfig.Settings : null, hostname);
+                config = new TlsConfiguration((TlsProtocols)protocolFlags, userConfig != null ? (TlsSettings)userConfig.Settings : null, hostname);
                 #if FIXME
 				if (certSelectionDelegate != null)
 					config.Client.LocalCertSelectionCallback = (t, l, r, a) => certSelectionDelegate(t, l, r, a);

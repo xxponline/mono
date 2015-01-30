@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Net.Security;
 using System.Threading.Tasks;
+using MonoSecurity::Mono.Security.Interface;
 using MonoSecurity::Mono.Security.Protocol.NewTls;
 
 namespace Mono.Security.NewMonoSource
@@ -20,19 +21,19 @@ namespace Mono.Security.NewMonoSource
         {
         }
 
-        internal MonoSslStream(Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, TlsSettings settings)
+        internal MonoSslStream(Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, MonoTlsSettings settings)
             : this(innerStream, leaveOpen, certValidationCallback, null, EncryptionPolicy.RequireEncryption, settings)
         {
         }
 
         internal MonoSslStream(Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, 
-                        LocalCertificateSelectionCallback certSelectionCallback, TlsSettings settings)
+                        LocalCertificateSelectionCallback certSelectionCallback, MonoTlsSettings settings)
             : this(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, EncryptionPolicy.RequireEncryption, settings)
         {
         }
 
         internal MonoSslStream(Stream innerStream, bool leaveOpen, RemoteCertificateValidationCallback certValidationCallback, 
-                        LocalCertificateSelectionCallback certSelectionCallback, EncryptionPolicy encryptionPolicy, TlsSettings settings)
+                        LocalCertificateSelectionCallback certSelectionCallback, EncryptionPolicy encryptionPolicy, MonoTlsSettings settings)
             : base(innerStream, leaveOpen, certValidationCallback, certSelectionCallback, encryptionPolicy, ConvertSettings(settings))
         {
         }
@@ -52,21 +53,21 @@ namespace Mono.Security.NewMonoSource
             return Task.Factory.FromAsync((state,result) => BeginShutdown (waitForReply, state, result), EndShutdown, null);
         }
 
-        static SSPIConfiguration ConvertSettings(TlsSettings settings)
+        static SSPIConfiguration ConvertSettings(MonoTlsSettings settings)
         {
             return settings != null ? new MyConfiguration(settings) : null;
         }
 
         class MyConfiguration : SSPIConfiguration
         {
-            TlsSettings settings;
+            MonoTlsSettings settings;
 
-            public MyConfiguration(TlsSettings settings)
+            public MyConfiguration(MonoTlsSettings settings)
             {
                 this.settings = settings;
             }
 
-            public TlsSettings Settings {
+            public MonoTlsSettings Settings {
                 get { return settings; }
             }
         }

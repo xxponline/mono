@@ -1,10 +1,10 @@
-//
-// SSPIConfiguration.cs
+﻿//
+// MonoTlsSettings.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
 //
-// Copyright (c) 2015 Xamarin Inc. (http://www.xamarin.com)
+// Copyright (c) 2015 Xamarin, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 
-#if SECURITY_DEP
-#if MONO_SECURITY_ALIAS || MONO_INSIDE_SYSTEM
-extern alias MonoSecurity;
-using MonoSecurity::Mono.Security.Interface;
-#else
-using Mono.Security.Interface;
-#endif
-#endif
-
-namespace System.Net.Security
+namespace Mono.Security.Interface
 {
-	internal interface SSPIConfiguration
+	public abstract class MonoTlsSettings
 	{
-#if SECURITY_DEP
-		MonoTlsSettings Settings {
-			get;
-		}
-#endif
 	}
 }
+

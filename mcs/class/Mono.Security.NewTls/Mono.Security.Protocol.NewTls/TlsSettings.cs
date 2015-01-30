@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Security;
+using Mono.Security.Interface;
 
 namespace Mono.Security.Protocol.NewTls
 {
@@ -8,7 +9,7 @@ namespace Mono.Security.Protocol.NewTls
 	using Instrumentation;
 	#endif
 
-	public class TlsSettings
+	public class TlsSettings : MonoTlsSettings
 	{
 		#region Server Configuration
 

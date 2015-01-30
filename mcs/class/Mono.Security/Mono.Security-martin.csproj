@@ -629,6 +629,7 @@
     <Compile Include="Mono.Security.Protocol.Tls.Handshake.Server\TlsServerHelloDone.cs" />
     <Compile Include="Mono.Security.Protocol.Tls.Handshake.Server\TlsServerKeyExchange.cs" />
     <Compile Include="Mono.Security.Cryptography\TlsHMAC.cs" />
+    <Compile Include="Mono.Security.Interface\MonoTlsSettings.cs" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
