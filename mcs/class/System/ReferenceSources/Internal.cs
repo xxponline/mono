@@ -1,5 +1,5 @@
 //
-// SSPIWrapper.cs
+// Internal.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -61,15 +61,16 @@ namespace System.Net.Security
 	}
 
 	//From Schannel.h
-	[StructLayout(LayoutKind.Sequential)]
-	internal class SslConnectionInfo {
-		public readonly int           Protocol;
-		public readonly int           DataCipherAlg;
-		public readonly int           DataKeySize;
-		public readonly int           DataHashAlg;
-		public readonly int           DataHashKeySize;
-		public readonly int           KeyExchangeAlg;
-		public readonly int           KeyExchKeySize;
+	[StructLayout (LayoutKind.Sequential)]
+	internal class SslConnectionInfo
+	{
+		public readonly int Protocol;
+		public readonly int DataCipherAlg;
+		public readonly int DataKeySize;
+		public readonly int DataHashAlg;
+		public readonly int DataHashKeySize;
+		public readonly int KeyExchangeAlg;
+		public readonly int KeyExchKeySize;
 
 		private SslConnectionInfo ()
 		{
