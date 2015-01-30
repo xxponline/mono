@@ -251,6 +251,7 @@
 ./BouncyCastle/util/Arrays.cs
 
 ./Mono.Security.Interface/IBufferOffsetSize.cs
+./Mono.Security.Interface/IMultiBufferOffsetSize.cs
 ./Mono.Security.Interface/IMonoHttpsStream.cs
 ./Mono.Security.Interface/MonoDefaultTlsProvider.cs
 ./Mono.Security.Interface/MonoSslStream.cs
