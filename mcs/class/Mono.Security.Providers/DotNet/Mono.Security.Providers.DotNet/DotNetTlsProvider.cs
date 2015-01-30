@@ -31,7 +31,7 @@ using System.Security.Cryptography.X509Certificates;
 using Mono.Security.Protocol.Tls;
 using Mono.Security.Interface;
 
-namespace Mono.Security.Providers
+namespace Mono.Security.Providers.DotNet
 {
 	/*
 	 * This provider only uses the public .NET APIs from System.dll.

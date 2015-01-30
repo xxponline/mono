@@ -37,7 +37,7 @@ using System.Threading.Tasks;
 using Mono.Security.Interface;
 using Mono.Security.Protocol.NewTls;
 
-namespace Mono.Security.NewMonoSource
+namespace Mono.Security.Providers.NewTls
 {
 	public class MonoNewTlsStream : SslStream
 	{
