@@ -118,7 +118,11 @@ namespace Mono.Security.Protocol.Tls {
 				SNCX.X509Chain chain = new SNCX.X509Chain ();
 				if (!chain.Build (cert2))
 					ssl_errors |= SNS.SslPolicyErrors.RemoteCertificateChainErrors;
+#if MARTINS_PLAYGROUND
+				throw new NotSupportedException ("FIXME!");
+#else
 				return cb (_request, cert2, chain, ssl_errors);
+#endif
 			}
 			return failed;
 		}
