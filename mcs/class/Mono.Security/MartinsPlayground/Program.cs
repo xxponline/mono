@@ -36,8 +36,10 @@ namespace MartinsPlayground
 
         static void CreateStores ()
         {
+            #if MARTINS_PLAYGROUND
             MX.X509StoreManager.LocalMachine.CreateStores();
             MX.X509StoreManager.CurrentUser.CreateStores();
+            #endif
         }
 
         static X509Certificate2 GetServerCertificate ()
