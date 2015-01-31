@@ -747,6 +747,7 @@ ReferenceSources/NativeMethods.cs
 ReferenceSources/SettingsSectionInternal.cs
 ReferenceSources/Socket.cs
 ReferenceSources/SR.cs
+ReferenceSources/SR2.cs
 ReferenceSources/SRCategoryAttribute.cs
 ReferenceSources/SystemNetworkCredential.cs
 ReferenceSources/WebHeaderCollectionType.cs
