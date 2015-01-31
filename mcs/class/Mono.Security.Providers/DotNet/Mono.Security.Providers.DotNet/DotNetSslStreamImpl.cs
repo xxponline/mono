@@ -35,7 +35,7 @@ using System.Security.Principal;
 using System.Security.Cryptography;
 using Mono.Security.Interface;
 
-namespace Mono.Security.Providers
+namespace Mono.Security.Providers.DotNet
 {
 	class DotNetSslStreamImpl : MonoSslStream
 	{

@@ -31,7 +31,7 @@ using System.Security.Cryptography.X509Certificates;
 using Mono.Security.Protocol.Tls;
 using Mono.Security.Interface;
 
-namespace Mono.Security.Providers
+namespace Mono.Security.Providers.DotNet
 {
 	/*
 	 * This provider only uses the public .NET APIs from System.dll.
@@ -48,10 +48,20 @@ namespace Mono.Security.Providers
 			get { return true; }
 		}
 
+		public override bool SupportsMonoExtensions {
+			get { return false; }
+		}
+
+		public override bool SupportsTlsContext {
+			get { return false; }
+		}
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return false;
 		}
+
+#pragma warning disable 618
 
 		public override IMonoHttpsStream GetHttpsStream (Stream stream)
 		{
@@ -62,8 +72,10 @@ namespace Mono.Security.Providers
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback)
 		{
-			throw new NotSupportedException ();
+			throw new NotSupportedException ("Web API is not supported.");
 		}
+
+#pragma warning restore 618
 
 		public override MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
@@ -75,6 +87,27 @@ namespace Mono.Security.Providers
 				innerStream, leaveInnerStreamOpen,
 				userCertificateValidationCallback, userCertificateSelectionCallback);
 			return sslStream;
+		}
+
+		public override MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ("Mono-specific API Extensions not available.");
+		}
+
+		public override IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			MonoEncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ();
 		}
 	}
 }
