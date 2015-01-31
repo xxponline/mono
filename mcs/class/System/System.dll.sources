@@ -741,6 +741,7 @@ Mono.Net.Security/MonoTlsProviderImpl.cs
 
 ReferenceSources/BootstrapHelper.cs
 ReferenceSources/BinaryCompatibility.cs
+ReferenceSources/Internal.cs
 ReferenceSources/NativeMethods.cs
 ReferenceSources/SettingsSectionInternal.cs
 ReferenceSources/Socket.cs
