@@ -28,12 +28,7 @@ using MNS = Mono.Net.Security;
 
 namespace Mono.Security.Interface
 {
-#if INSIDE_SYSTEM
-	internal
-#else
-	public
-#endif
-	static class MonoTlsProviderFactory
+	public static class MonoTlsProviderFactory
 	{
 		public static MonoTlsProvider GetProvider ()
 		{

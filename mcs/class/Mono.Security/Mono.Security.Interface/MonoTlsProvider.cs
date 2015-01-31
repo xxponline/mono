@@ -33,12 +33,7 @@ using Mono.Security.Protocol.Tls;
 
 namespace Mono.Security.Interface
 {
-	#if INSIDE_SYSTEM
-	internal
-	#else
-	public
-	#endif
-	enum MonoEncryptionPolicy
+	public enum MonoEncryptionPolicy
 	{
 		// Prohibit null ciphers (current system defaults)
 		RequireEncryption = 0,
@@ -50,29 +45,14 @@ namespace Mono.Security.Interface
 		NoEncryption
 	}
 
-#if INSIDE_SYSTEM
-	internal
-#else
-	public
-#endif
-	delegate bool MonoRemoteCertificateValidationCallback (
+	public delegate bool MonoRemoteCertificateValidationCallback (
 		string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
 
-#if INSIDE_SYSTEM
-	internal
-#else
-	public
-#endif
-	delegate X509Certificate MonoLocalCertificateSelectionCallback (
+	public delegate X509Certificate MonoLocalCertificateSelectionCallback (
 		string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate,
 		string[] acceptableIssuers);
 
-#if INSIDE_SYSTEM
-	internal
-#else
-	public
-#endif
-	abstract class MonoTlsProvider
+	public abstract class MonoTlsProvider
 	{
 		public abstract bool SupportsHttps {
 			get;
