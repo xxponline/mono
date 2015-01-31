@@ -1,5 +1,5 @@
-//
-// MonoTlsProviderFactory.cs
+﻿//
+// IMonoTlsContext.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -24,47 +24,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using MNS = Mono.Net.Security;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using MX = Mono.Security.X509;
 
 namespace Mono.Security.Interface
 {
-	public static class MonoTlsProviderFactory
+	public interface IMonoTlsContext : IDisposable
 	{
-		public static MonoTlsProvider GetProvider ()
-		{
-			lock (locker) {
-				if (defaultProvider != null)
-					return defaultProvider;
-
-				try {
-					defaultProvider = GetDefaultProvider ();
-				} catch (Exception ex) {
-					throw new NotSupportedException ("TLS Support not available.", ex);
-				}
-
-				if (defaultProvider == null)
-					throw new NotSupportedException ("TLS Support not available.");
-
-				return defaultProvider;
-			}
+		bool IsValid {
+			get;
 		}
 
-		public static bool HasProvider {
-			get { return defaultProvider != null; }
+		void Initialize (bool serverMode);
+
+		bool HasCredentials {
+			get;
 		}
 
-		public static void InstallProvider (MonoTlsProvider provider)
-		{
-			defaultProvider = provider;
+		void SetCertificate (MX.X509Certificate certificate, AsymmetricAlgorithm privateKey);
+
+		Exception LastError {
+			get;
 		}
 
-		static MonoTlsProvider GetDefaultProvider ()
-		{
-			return new MonoDefaultTlsProvider ();
+		int GenerateNextToken (IBufferOffsetSize incoming, out IBufferOffsetSize outgoing);
+
+		int EncryptMessage (ref IBufferOffsetSize incoming);
+
+		int DecryptMessage (ref IBufferOffsetSize incoming);
+
+		bool ReceivedCloseNotify {
+			get;
 		}
 
-		static object locker = new object ();
-		static volatile MonoTlsProvider defaultProvider;
+		byte[] CreateCloseNotify ();
+
+		MX.X509Certificate GetRemoteCertificate (out MX.X509CertificateCollection remoteCertificateStore);
+
+		bool VerifyRemoteCertificate ();
 	}
 }
 

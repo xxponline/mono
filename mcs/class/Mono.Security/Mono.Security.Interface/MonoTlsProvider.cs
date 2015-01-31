@@ -33,12 +33,26 @@ using Mono.Security.Protocol.Tls;
 
 namespace Mono.Security.Interface
 {
-#if INSIDE_SYSTEM
-	internal
-#else
-	public
-#endif
-	abstract class MonoTlsProvider
+	public enum MonoEncryptionPolicy
+	{
+		// Prohibit null ciphers (current system defaults)
+		RequireEncryption = 0,
+
+		// Add null ciphers to current system defaults
+		AllowNoEncryption,
+
+		// Request null ciphers only
+		NoEncryption
+	}
+
+	public delegate bool MonoRemoteCertificateValidationCallback (
+		string host, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors);
+
+	public delegate X509Certificate MonoLocalCertificateSelectionCallback (
+		string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate,
+		string[] acceptableIssuers);
+
+	public abstract class MonoTlsProvider
 	{
 		public abstract bool SupportsHttps {
 			get;
@@ -48,7 +62,17 @@ namespace Mono.Security.Interface
 			get;
 		}
 
+		public abstract bool SupportsMonoExtensions {
+			get;
+		}
+
+		public abstract bool SupportsTlsContext {
+			get;
+		}
+
 		public abstract bool IsHttpsStream (Stream stream);
+
+#pragma warning disable 618
 
 		public abstract IMonoHttpsStream GetHttpsStream (Stream stream);
 
@@ -56,9 +80,27 @@ namespace Mono.Security.Interface
 			Stream innerStream, X509CertificateCollection clientCertificates, HttpWebRequest request, byte[] buffer,
 			CertificateValidationCallback2	validationCallback);
 
+#pragma warning restore
+
 		public abstract MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
 			LocalCertificateSelectionCallback userCertificateSelectionCallback);
+
+		// Only available if @SupportsMonoExtensions is set.
+		public abstract MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings);
+
+		public abstract IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			MonoEncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings);
 	}
 }

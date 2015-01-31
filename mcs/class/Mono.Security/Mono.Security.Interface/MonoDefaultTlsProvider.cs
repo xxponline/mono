@@ -43,6 +43,16 @@ namespace Mono.Security.Interface
 			get { return true; }
 		}
 
+		public override bool SupportsMonoExtensions {
+			get { return false; }
+		}
+
+		public override bool SupportsTlsContext {
+			get { return false; }
+		}
+
+#pragma warning disable 618
+
 		public override bool IsHttpsStream (Stream stream)
 		{
 			return stream is IMonoHttpsStream;
@@ -66,6 +76,8 @@ namespace Mono.Security.Interface
 			return (IMonoHttpsStream)sslStream;
 		}
 
+#pragma warning restore
+
 		public override MonoSslStream CreateSslStream (
 			Stream innerStream, bool leaveInnerStreamOpen,
 			RemoteCertificateValidationCallback userCertificateValidationCallback,
@@ -81,6 +93,27 @@ namespace Mono.Security.Interface
 
 			sslStream.Initialize (innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback);
 			return sslStream;
+		}
+
+		public override MonoSslStream CreateSslStream (
+			Stream innerStream, bool leaveInnerStreamOpen,
+			RemoteCertificateValidationCallback userCertificateValidationCallback,
+			LocalCertificateSelectionCallback userCertificateSelectionCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ("Mono-specific API Extensions not available.");
+		}
+
+		public override IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, TlsProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			MonoEncryptionPolicy encryptionPolicy,
+			MonoLocalCertificateSelectionCallback certSelectionDelegate,
+			MonoRemoteCertificateValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings)
+		{
+			throw new NotSupportedException ();
 		}
 	}
 }

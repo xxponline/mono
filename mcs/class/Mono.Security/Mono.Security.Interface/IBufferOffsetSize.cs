@@ -1,5 +1,5 @@
-//
-// MonoTlsProviderFactory.cs
+﻿//
+// IBufferOffsetSize.cs
 //
 // Author:
 //       Martin Baulig <martin.baulig@xamarin.com>
@@ -23,48 +23,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using MNS = Mono.Net.Security;
-
 namespace Mono.Security.Interface
 {
-	public static class MonoTlsProviderFactory
+	public interface IBufferOffsetSize
 	{
-		public static MonoTlsProvider GetProvider ()
-		{
-			lock (locker) {
-				if (defaultProvider != null)
-					return defaultProvider;
-
-				try {
-					defaultProvider = GetDefaultProvider ();
-				} catch (Exception ex) {
-					throw new NotSupportedException ("TLS Support not available.", ex);
-				}
-
-				if (defaultProvider == null)
-					throw new NotSupportedException ("TLS Support not available.");
-
-				return defaultProvider;
-			}
+		byte[] Buffer {
+			get;
 		}
 
-		public static bool HasProvider {
-			get { return defaultProvider != null; }
+		int Offset {
+			get;
 		}
 
-		public static void InstallProvider (MonoTlsProvider provider)
-		{
-			defaultProvider = provider;
+		int Size {
+			get;
 		}
-
-		static MonoTlsProvider GetDefaultProvider ()
-		{
-			return new MonoDefaultTlsProvider ();
-		}
-
-		static object locker = new object ();
-		static volatile MonoTlsProvider defaultProvider;
 	}
 }
 
