@@ -39,11 +39,7 @@ using System.Runtime.InteropServices;
 
 namespace System.Security.Cryptography {
 
-	internal class SHA1Internal
-	#if INSIDE_MONO_SECURITY
-		: IRunningHash
-	#endif
-	{
+	internal class SHA1Internal {
 	
 		private const int BLOCK_SIZE_BYTES =  64;
 		private uint[] _H;  // these are my chaining variables
@@ -60,36 +56,6 @@ namespace System.Security.Cryptography {
 			
 			Initialize();
 		}
-
-		#if INSIDE_MONO_SECURITY
-		SHA1Internal (SHA1Internal other)
-		{
-			count = other.count;
-			_H = new uint [other._H.Length];
-			Array.Copy (other._H, _H, _H.Length);
-			_ProcessingBufferCount = other._ProcessingBufferCount;
-			_ProcessingBuffer = new byte [other._ProcessingBuffer.Length];
-			Array.Copy (other._ProcessingBuffer, _ProcessingBuffer, _ProcessingBuffer.Length);
-			buff = new uint [other.buff.Length];
-			Array.Copy (other.buff, buff, buff.Length);
-		}
-
-		void IRunningHash.TransformBlock (byte[] inputBuffer, int inputOffset, int inputCount)
-		{
-			HashCore (inputBuffer, inputOffset, inputCount);
-		}
-
-		void IRunningHash.Clear ()
-		{
-			Initialize ();
-		}
-
-		public byte[] GetRunningHash ()
-		{
-			var copy = new SHA1Internal (this);
-			return copy.HashFinal ();
-		}
-		#endif
 
 		public void HashCore (byte[] rgb, int ibStart, int cbSize) 
 		{
@@ -351,16 +317,7 @@ namespace System.Security.Cryptography {
 	}
 
 	[ComVisible (true)]
-	#if INSIDE_MONO_SECURITY
-	internal
-	#else
-	public
-	#endif
-	sealed class SHA1CryptoServiceProvider : SHA1
-	#if INSIDE_MONO_SECURITY
-		, IRunningHash
-	#endif
-	{
+	public sealed class SHA1CryptoServiceProvider : SHA1 {
 
 		private SHA1Internal sha;
 
@@ -379,18 +336,6 @@ namespace System.Security.Cryptography {
 			// nothing new to do (managed implementation)
 			base.Dispose (disposing);
 		}
-
-		#if INSIDE_MONO_SECURITY
-		void IRunningHash.TransformBlock (byte[] inputBuffer, int inputOffset, int inputCount)
-		{
-			sha.HashCore (inputBuffer, inputOffset, inputCount);
-		}
-
-		byte[] IRunningHash.GetRunningHash ()
-		{
-			return sha.GetRunningHash ();
-		}
-		#endif
 
 		protected override void HashCore (byte[] rgb, int ibStart, int cbSize) 
 		{

@@ -42,7 +42,7 @@ namespace System.Security.Cryptography {
 
 		public static new RSA Create () 
 		{
-#if FULL_AOT_RUNTIME || INSIDE_MONO_SECURITY
+#if FULL_AOT_RUNTIME
 			return new System.Security.Cryptography.RSACryptoServiceProvider ();
 #else
 			return Create ("System.Security.Cryptography.RSA");
@@ -172,26 +172,5 @@ namespace System.Security.Cryptography {
 			
 			return sb.ToString ();
 		}
-
-		#if INSIDE_MONO_SECURITY
-		// parsing helper shared between DSA and RSA
-		internal static byte [] GetNamedParam (string xml, string param)
-		{
-			string start_element = "<" + param + ">";
-			int start = xml.IndexOf (start_element);
-			if (start == -1)
-				return null;
-
-			string end_element = "</" + param + ">";
-			int end = xml.IndexOf (end_element);
-			if ((end == -1) || (end <= start))
-				return null;
-
-			start += start_element.Length;
-
-			string base64 = xml.Substring (start, end - start);
-			return Convert.FromBase64String (base64);
-		}
-		#endif
 	}
 }
