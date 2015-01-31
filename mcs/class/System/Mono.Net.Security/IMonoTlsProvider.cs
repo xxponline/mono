@@ -25,21 +25,27 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MOBILE
-using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
-
-using Mono.Security.Protocol.Tls;
-using Mono.Security.Interface;
-#else
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
+#endif
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
+#endif
 
+#if PREBUILT_SYSTEM_ALIAS
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
 using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
+#else
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+#endif
 
+#if MONO_SECURITY_ALIAS
 using MonoSecurity::Mono.Security.Protocol.Tls;
 using MonoSecurity::Mono.Security.Interface;
+#else
+using Mono.Security.Protocol.Tls;
+using Mono.Security.Interface;
 #endif
 #endif
 
@@ -67,6 +73,15 @@ namespace Mono.Net.Security
 			Stream innerStream, bool leaveInnerStreamOpen,
 			XRemoteCertificateValidationCallback userCertificateValidationCallback,
 			XLocalCertificateSelectionCallback userCertificateSelectionCallback);
+
+		IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, SchProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			LocalCertSelectionCallback certSelectionDelegate,
+			RemoteCertValidationCallback remoteValidationCallback,
+			MonoTlsSettings settings);
 #endif
 	}
 }

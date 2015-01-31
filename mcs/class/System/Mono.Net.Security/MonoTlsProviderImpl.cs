@@ -25,26 +25,33 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MOBILE
-using MSI = Mono.Security.Interface;
-using TLS = Mono.Security.Protocol.Tls;
 
-using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
-
-using XHttpWebRequest = System.Net.HttpWebRequest;
-using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
-#else
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
+#endif
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
+#endif
+
+#if MONO_SECURITY_ALIAS
 using MSI = MonoSecurity::Mono.Security.Interface;
 using TLS = MonoSecurity::Mono.Security.Protocol.Tls;
-
+#else
+using MSI = Mono.Security.Interface;
+using TLS = Mono.Security.Protocol.Tls;
+#endif
+#if PREBUILT_SYSTEM_ALIAS
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
 using XLocalCertificateSelectionCallback = PrebuiltSystem::System.Net.Security.LocalCertificateSelectionCallback;
 
 using XHttpWebRequest = PrebuiltSystem::System.Net.HttpWebRequest;
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+#else
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
+using XHttpWebRequest = System.Net.HttpWebRequest;
+using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
 
 using System;
@@ -90,11 +97,51 @@ namespace Mono.Net.Security
 			XRemoteCertificateValidationCallback userCertificateValidationCallback,
 			XLocalCertificateSelectionCallback userCertificateSelectionCallback)
 		{
+#if NEW_MONO_SOURCE
+			throw new NotImplementedException ();
+#else
 			var sslStream = (MonoSslStreamImpl)provider.CreateSslStream (
 				innerStream, leaveInnerStreamOpen,
 				userCertificateValidationCallback, userCertificateSelectionCallback);
 			return sslStream.Impl;
+#endif
 		}
+
+		static MSI.MonoRemoteCertificateValidationCallback ConvertCallback (RemoteCertValidationCallback callback)
+		{
+			if (callback == null)
+				return null;
+
+			return (h, c, ch, e) => callback (h, c, (X509Chain)(object)ch, (SslPolicyErrors)e);
+		}
+
+		static MSI.MonoLocalCertificateSelectionCallback ConvertCallback (LocalCertSelectionCallback callback)
+		{
+			if (callback == null)
+				return null;
+
+			return (t, lc, rc, ai) => callback (t, (X509CertificateCollection)(object)lc, rc, ai);
+		}
+
+		public MSI.IMonoTlsContext CreateTlsContext (
+			string hostname, bool serverMode, SchProtocols protocolFlags,
+			X509Certificate serverCertificate, X509CertificateCollection clientCertificates,
+			bool remoteCertRequired, bool checkCertName, bool checkCertRevocationStatus,
+			EncryptionPolicy encryptionPolicy,
+			LocalCertSelectionCallback certSelectionDelegate,
+			RemoteCertValidationCallback remoteValidationCallback,
+			MSI.MonoTlsSettings settings)
+		{
+			return provider.CreateTlsContext (
+				hostname, serverMode, (MSI.TlsProtocols)protocolFlags,
+				serverCertificate, (XX509CertificateCollection)(object)clientCertificates,
+				remoteCertRequired, checkCertName, checkCertRevocationStatus,
+				(MSI.MonoEncryptionPolicy)encryptionPolicy,
+				ConvertCallback (certSelectionDelegate),
+				ConvertCallback (remoteValidationCallback),
+				settings);
+		}
+
 	}
 }
 

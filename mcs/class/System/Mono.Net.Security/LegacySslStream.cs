@@ -34,34 +34,33 @@
 
 #if SECURITY_DEP
 
-#if MONOTOUCH || MONODROID
-using Mono.Security.Protocol.Tls;
-
-using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-
-using MonoCipherAlgorithmType = Mono.Security.Protocol.Tls.CipherAlgorithmType;
-using MonoHashAlgorithmType = Mono.Security.Protocol.Tls.HashAlgorithmType;
-using MonoExchangeAlgorithmType = Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
-using MonoSecurityProtocolType = Mono.Security.Protocol.Tls.SecurityProtocolType;
-#else
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
+#endif
+#if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
+#endif
 
-using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
-
-using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-
+#if MONO_SECURITY_ALIAS
 using MonoCipherAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.CipherAlgorithmType;
 using MonoHashAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.HashAlgorithmType;
 using MonoExchangeAlgorithmType = MonoSecurity::Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
 using MonoSecurityProtocolType = MonoSecurity::Mono.Security.Protocol.Tls.SecurityProtocolType;
-
 using MonoSecurity::Mono.Security.Protocol.Tls;
+#else
+using MonoCipherAlgorithmType = Mono.Security.Protocol.Tls.CipherAlgorithmType;
+using MonoHashAlgorithmType = Mono.Security.Protocol.Tls.HashAlgorithmType;
+using MonoExchangeAlgorithmType = Mono.Security.Protocol.Tls.ExchangeAlgorithmType;
+using MonoSecurityProtocolType = Mono.Security.Protocol.Tls.SecurityProtocolType;
+using Mono.Security.Protocol.Tls;
 #endif
+#if PREBUILT_SYSTEM_ALIAS
+using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
+#endif
+
+using CipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
+using HashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
+using ExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
 
 using System;
 using System.IO;
@@ -76,6 +75,13 @@ using System.Threading.Tasks;
 
 namespace Mono.Net.Security 
 {
+	internal delegate X509Certificate LegacyLocalCertificateSelectionCallback (
+		object sender,
+		string targetHost,
+		X509CertificateCollection localCertificates,
+		X509Certificate remoteCertificate,
+		string [] acceptableIssuers);
+
 	[MonoTODO ("Non-X509Certificate2 certificate is not supported")]
 	internal class LegacySslStream : AuthenticatedStream, IMonoSslStream
 	{
@@ -83,7 +89,7 @@ namespace Mono.Net.Security
 
 		SslStreamBase ssl_stream;
 		RemoteCertificateValidationCallback validation_callback;
-		LocalCertificateSelectionCallback selection_callback;
+		LegacyLocalCertificateSelectionCallback selection_callback;
 
 		#endregion // Fields
 
@@ -106,7 +112,7 @@ namespace Mono.Net.Security
 		}
 
 		[MonoTODO ("userCertificateValidationCallback is not passed X509Chain and SslPolicyErrors correctly")]
-		public LegacySslStream (Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, LocalCertificateSelectionCallback userCertificateSelectionCallback)
+		public LegacySslStream (Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, LegacyLocalCertificateSelectionCallback userCertificateSelectionCallback)
 			: base (innerStream, leaveInnerStreamOpen)
 		{
 			// they are nullable.

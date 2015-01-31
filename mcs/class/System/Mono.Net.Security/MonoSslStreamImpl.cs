@@ -25,25 +25,20 @@
 // THE SOFTWARE.
 
 #if SECURITY_DEP
-#if MOBILE
-using Mono.Security.Interface;
 
-using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
-
-using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
-using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
-
-using XTransportContext = System.Net.TransportContext;
-using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
-
-using XCipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
-using XHashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
-using XExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
-using XSslProtocols = System.Security.Authentication.SslProtocols;
-#else
-extern alias MonoSecurity;
+#if PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
+#endif
+#if MONO_SECURITY_ALIAS
+extern alias MonoSecurity;
+#endif
 
+#if MONO_SECURITY_ALIAS
+using MonoSecurity::Mono.Security.Interface;
+#else
+using Mono.Security.Interface;
+#endif
+#if PREBUILT_SYSTEM_ALIAS
 using XX509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
 using XRemoteCertificateValidationCallback = PrebuiltSystem::System.Net.Security.RemoteCertificateValidationCallback;
@@ -56,8 +51,19 @@ using XCipherAlgorithmType = PrebuiltSystem::System.Security.Authentication.Ciph
 using XHashAlgorithmType = PrebuiltSystem::System.Security.Authentication.HashAlgorithmType;
 using XExchangeAlgorithmType = PrebuiltSystem::System.Security.Authentication.ExchangeAlgorithmType;
 using XSslProtocols = PrebuiltSystem::System.Security.Authentication.SslProtocols;
+#else
+using XX509CertificateCollection = System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 
-using MonoSecurity::Mono.Security.Interface;
+using XRemoteCertificateValidationCallback = System.Net.Security.RemoteCertificateValidationCallback;
+using XLocalCertificateSelectionCallback = System.Net.Security.LocalCertificateSelectionCallback;
+
+using XTransportContext = System.Net.TransportContext;
+using XAuthenticatedStream = System.Net.Security.AuthenticatedStream;
+
+using XCipherAlgorithmType = System.Security.Authentication.CipherAlgorithmType;
+using XHashAlgorithmType = System.Security.Authentication.HashAlgorithmType;
+using XExchangeAlgorithmType = System.Security.Authentication.ExchangeAlgorithmType;
+using XSslProtocols = System.Security.Authentication.SslProtocols;
 #endif
 
 using System;
@@ -91,7 +97,7 @@ namespace Mono.Net.Security
 			impl = new LegacySslStream (
 				innerStream, leaveInnerStreamOpen,
 				(RemoteCertificateValidationCallback)(Delegate)userCertificateValidationCallback,
-				(LocalCertificateSelectionCallback)(Delegate)userCertificateSelectionCallback);
+				(LegacyLocalCertificateSelectionCallback)(Delegate)userCertificateSelectionCallback);
 		}
 
 		public override void AuthenticateAsClient (string targetHost)

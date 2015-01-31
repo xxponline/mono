@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SECURITY_DEP && !MOBILE
+#if SECURITY_DEP && PREBUILT_SYSTEM_ALIAS
 extern alias PrebuiltSystem;
 using X509CertificateCollection = PrebuiltSystem::System.Security.Cryptography.X509Certificates.X509CertificateCollection;
 #endif
