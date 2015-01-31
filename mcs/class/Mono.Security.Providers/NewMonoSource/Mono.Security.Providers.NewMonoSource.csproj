@@ -74,6 +74,9 @@
     <Compile Include="..\..\System\ReferenceSources\SR.cs">
       <Link>System\SR.cs</Link>
     </Compile>
+    <Compile Include="..\..\System\ReferenceSources\SR2.cs">
+      <Link>System\SR2.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\build\common\SR.cs">
       <Link>common\SR.cs</Link>
     </Compile>
