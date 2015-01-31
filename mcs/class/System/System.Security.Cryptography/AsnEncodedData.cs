@@ -29,7 +29,7 @@
 
 #if SECURITY_DEP
 
-#if MONOTOUCH || MONODROID || INSIDE_MONO_SECURITY
+#if MONOTOUCH || MONODROID
 using Mono.Security;
 using Mono.Security.Cryptography;
 #else
