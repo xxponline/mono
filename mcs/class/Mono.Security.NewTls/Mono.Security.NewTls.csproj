@@ -116,9 +116,7 @@
     <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerConnection.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerFinished.cs" />
     <Compile Include="Mono.Security.Protocol.NewTls.Negotiation\ServerHello.cs" />
-    <Compile Include="..\Mono.Security\Mono.Security.Cryptography\MD5SHA1.cs">
-      <Link>Mono.Security.Cryptography\MD5SHA1.cs</Link>
-    </Compile>
+    <Compile Include="Mono.Security.Cryptography\MD5SHA1.cs" />
     <Compile Include="..\Mono.Security\Mono.Security.Cryptography\RSASslSignatureFormatter.cs">
       <Link>Mono.Security.Cryptography\RSASslSignatureFormatter.cs</Link>
     </Compile>
