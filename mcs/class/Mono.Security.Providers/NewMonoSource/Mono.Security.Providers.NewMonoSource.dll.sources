@@ -17,6 +17,7 @@
 ../../../../external/referencesource/mscorlib/InternalApis/NDP_Common/inc/PinnableBufferCache.cs
 
 ../../System/ReferenceSources/SR.cs
+../../System/ReferenceSources/SR2.cs
 ../../System/ReferenceSources/Internal.cs
 ../../System/ReferenceSources/SSPIWrapper.cs
 ../../System/ReferenceSources/SSPISafeHandles.cs
