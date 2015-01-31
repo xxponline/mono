@@ -2,7 +2,7 @@ MCS_BUILD_DIR = ../../build
 
 thisdir = class/Mono.Security.Providers
 
-PROVIDERS = DotNet
+PROVIDERS = DotNet NewMonoSource
 
 mobile_static_SUBDIRS = $(PROVIDERS)
 
