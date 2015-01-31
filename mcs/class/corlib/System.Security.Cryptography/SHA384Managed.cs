@@ -35,16 +35,8 @@ using System.Runtime.InteropServices;
 namespace System.Security.Cryptography {
 	
 [ComVisible (true)]
-#if INSIDE_MONO_SECURITY
-internal
-#else
-public
-#endif
-class SHA384Managed : SHA384
-#if INSIDE_MONO_SECURITY
-	, IRunningHash
-#endif
-{
+public class SHA384Managed : SHA384 {
+
 	private byte[] xBuf;
 	private int xBufOff;
 
@@ -61,42 +53,6 @@ class SHA384Managed : SHA384
 		W = new ulong [80];
 		Initialize (false); // limited initialization
 	}
-
-#if INSIDE_MONO_SECURITY
-	static readonly byte[] empty = new byte [0];
-
-	SHA384Managed (SHA384Managed other)
-	{
-		xBuf = new byte [other.xBuf.Length];
-		Array.Copy (other.xBuf, xBuf, xBuf.Length);
-		xBufOff = other.xBufOff;
-		byteCount1 = other.byteCount1;
-		byteCount2 = other.byteCount2;
-		H1 = other.H1;
-		H2 = other.H2;
-		H3 = other.H3;
-		H4 = other.H4;
-		H5 = other.H5;
-		H6 = other.H6;
-		H7 = other.H7;
-		H8 = other.H8;
-		W = new ulong [other.W.Length];
-		Array.Copy (other.W, W, W.Length);
-		wOff = other.wOff;
-	}
-
-	void IRunningHash.TransformBlock (byte[] inputBuffer, int inputOffset, int inputCount)
-	{
-		TransformBlock (inputBuffer, inputOffset, inputCount, null, 0);
-	}
-
-	byte[] IRunningHash.GetRunningHash ()
-	{
-		var copy = new SHA384Managed (this);
-		copy.TransformFinalBlock (empty, 0, 0);
-		return copy.Hash;
-	}
-#endif
 
 	private void Initialize (bool reuse) 
 	{

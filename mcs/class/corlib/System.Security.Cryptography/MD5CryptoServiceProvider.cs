@@ -30,20 +30,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace System.Security.Cryptography
-{
+namespace System.Security.Cryptography {
 
 	[ComVisible (true)]
-	#if INSIDE_MONO_SECURITY
-	internal
-	#else
-	public
-	#endif
-	sealed class MD5CryptoServiceProvider : MD5
-	#if INSIDE_MONO_SECURITY
-		, IRunningHash
-	#endif
-	{
+	public sealed class MD5CryptoServiceProvider : MD5 {
 		private const int BLOCK_SIZE_BYTES =  64;
 		private uint[] _H;
 		private uint[] buff;
@@ -80,34 +70,6 @@ namespace System.Security.Cryptography
 				buff = null;
 			}
 		}
-
-		#if INSIDE_MONO_SECURITY
-		static readonly byte[] empty = new byte [0];
-
-		MD5CryptoServiceProvider (MD5CryptoServiceProvider other)
-		{
-			count = other.count;
-			_H = new uint [other._H.Length];
-			Array.Copy (other._H, _H, _H.Length);
-			_ProcessingBufferCount = other._ProcessingBufferCount;
-			_ProcessingBuffer = new byte [other._ProcessingBuffer.Length];
-			Array.Copy (other._ProcessingBuffer, _ProcessingBuffer, _ProcessingBuffer.Length);
-			buff = new uint [other.buff.Length];
-			Array.Copy (other.buff, buff, buff.Length);
-		}
-
-		void IRunningHash.TransformBlock (byte[] inputBuffer, int inputOffset, int inputCount)
-		{
-			TransformBlock (inputBuffer, inputOffset, inputCount, null, 0);
-		}
-
-		byte[] IRunningHash.GetRunningHash ()
-		{
-			var copy = new MD5CryptoServiceProvider (this);
-			copy.TransformFinalBlock (empty, 0, 0);
-			return copy.Hash;
-		}
-		#endif
 
 		protected override void HashCore (byte[] rgb, int ibStart, int cbSize) 
 		{
