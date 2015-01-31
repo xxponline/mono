@@ -24,20 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-//
-// When building System.dll, `MONO_INSIDE_SYSTEM' is defined.  We directly
-// include the X509 sources, but pull TLS from the `MonoSecurity' extern alias.
-//
-// When building the tests, `MONO_SECURITY_ALIAS' is defined.  In this case,
-// Mono.Security.dll contains the X509 sources, so we pull everything from the
-// extern alias.
-//
-// MX = Mono.Security.X509.
-// MSCX = System.Security.Cryptography.X509Certificates from Mono.Security.dll
-// (if appropriate, otherwise from System.dll).
-// SSCX = System.Security.Cryptography.X509Certificates from System.dll
-//
-
 #if MONO_FEATURE_NEW_TLS && SECURITY_DEP
 #if MONO_SECURITY_ALIAS
 extern alias MonoSecurity;
