@@ -507,7 +507,7 @@ sgen_unified_suspend_stop_world (void)
 			g_assert (info->suspend_done);
 			update_sgen_info (info);
 		} else {
-			g_assert (!info->suspend_done);
+			g_assert (!info->suspend_done || info == mono_thread_info_current ());
 		}
 	} END_FOREACH_THREAD_SAFE
 
