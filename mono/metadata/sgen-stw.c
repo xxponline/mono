@@ -233,7 +233,7 @@ sgen_stop_world (int generation)
 	if (mono_thread_info_unified_management_enabled ()) {
 		count = sgen_unified_suspend_stop_world ();
 	} else {
-		count = sgen_thread_handshake (FALSE);
+		count = sgen_thread_handshake (TRUE);
 		dead = restart_threads_until_none_in_managed_allocator ();
 		if (count < dead)
 			g_error ("More threads have died (%d) that been initialy suspended %d", dead, count);
