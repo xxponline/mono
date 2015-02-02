@@ -576,24 +576,16 @@ mono_thread_info_suspend_sync (MonoNativeThreadId tid, gboolean interrupt_kernel
 	MonoThreadHazardPointers *hp = mono_hazard_pointer_get ();	
 	MonoThreadInfo *info = mono_thread_info_lookup (tid); /*info on HP1*/
 	if (!info) {
-g_assert (pending_suspends == 0);
 		*error_condition = "Thread not found";
 		return NULL;
 	}
 
-	g_assert (pending_suspends == 0); /* FIXME remove this assert by better delimiting global ops */
-	// MONO_SEM_WAIT_UNITERRUPTIBLE (&info->suspend_semaphore);
-
 	if (!mono_threads_transition_request_async_suspension (info)) {
-		g_assert (pending_suspends == 0);
 		mono_hazard_pointer_clear (hp, 1); //XXX this is questionable we got to clean the suspend/resume nonsense of critical sections
-		// MONO_SEM_POST (&info->suspend_semaphore);
 		return info;
 	}
 
 	if (!mono_threads_core_begin_async_suspend (info, interrupt_kernel)) {
-		g_assert (pending_suspends == 0);
-		// MONO_SEM_POST (&info->suspend_semaphore);
 		mono_hazard_pointer_clear (hp, 1);
 		*error_condition = "Could not suspend thread";
 		return NULL;
@@ -603,13 +595,11 @@ g_assert (pending_suspends == 0);
 	mono_threads_wait_pending_operations ();
 
 	if (!mono_threads_core_check_suspend_result (info)) {
-		g_assert (pending_suspends == 0);
 
 		mono_hazard_pointer_clear (hp, 1);
 		*error_condition = "Post suspend failed";
 		return NULL;
 	}
-	// MONO_SEM_POST (&info->suspend_semaphore);
 	return info;
 }
 
@@ -701,10 +691,8 @@ mono_thread_info_resume (MonoNativeThreadId tid)
 
 	THREADS_SUSPEND_DEBUG ("RESUMING tid %p\n", (void*)tid);
 
-
 	mono_thread_info_suspend_lock ();
 
-	g_assert (pending_suspends == 0);
 	info = mono_thread_info_lookup (tid); /*info on HP1*/
 	if (!info) {
 		result = FALSE;
@@ -719,7 +707,6 @@ mono_thread_info_resume (MonoNativeThreadId tid)
 cleanup:
 	mono_thread_info_suspend_unlock ();
 	mono_hazard_pointer_clear (hp, 1);
-	g_assert (pending_suspends == 0);
 	return result;
 }
 
@@ -743,7 +730,6 @@ mono_thread_info_begin_resume (MonoThreadInfo *info)
 void
 mono_thread_info_finish_suspend (MonoThreadInfo *info)
 {
-g_assert (pending_suspends == 0);
 	mono_atomic_store_release (&mono_thread_info_current ()->inside_critical_region, FALSE);
 }
 
@@ -754,7 +740,6 @@ mono_thread_info_finish_suspend_and_resume (MonoThreadInfo *info)
 
 	mono_thread_info_suspend_lock ();
 
-g_assert (pending_suspends == 0);
 	/*Resume can access info after the target has resumed, so we must ensure it won't touch freed memory. */
 	mono_hazard_pointer_set (hp, 1, info);
 	mono_thread_info_core_resume (info);
@@ -762,8 +747,6 @@ g_assert (pending_suspends == 0);
 
 	//Wait for the pending resume to finish
 	mono_threads_wait_pending_operations ();
-
-g_assert (pending_suspends == 0);
 
 	mono_atomic_store_release (&mono_thread_info_current ()->inside_critical_region, FALSE);
 
@@ -847,7 +830,6 @@ mono_thread_info_safe_suspend_sync (MonoNativeThreadId id, gboolean interrupt_ke
 	for (;;) {
 		const char *suspend_error = "Unknown error";
 		if (!(info = mono_thread_info_suspend_sync (id, interrupt_kernel, &suspend_error))) {
-			g_assert (pending_suspends == 0);
 			goto fail;
 		}
 
@@ -856,7 +838,6 @@ mono_thread_info_safe_suspend_sync (MonoNativeThreadId id, gboolean interrupt_ke
 			break;
 
 		if (!mono_thread_info_core_resume (info)) {
-			g_assert (pending_suspends == 0);
 			mono_hazard_pointer_clear (mono_hazard_pointer_get (), 1);
 			mono_thread_info_suspend_unlock ();
 			goto fail;
